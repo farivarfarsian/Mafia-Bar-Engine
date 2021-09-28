@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="DiscordSDK">
+      <UniqueIdentifier>{15909afa-b058-4894-b52a-b6e28e63bdc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DiscordSDK\Src">
+      <UniqueIdentifier>{84cec4fd-9355-4174-abde-c305dc7a0faa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DiscordSDK\Include">
+      <UniqueIdentifier>{5910a01a-1b82-4427-8028-d583e59707b1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DiscordSDK\src\connection_win.cpp">
+      <Filter>DiscordSDK\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscordSDK\src\discord_register_win.cpp">
+      <Filter>DiscordSDK\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscordSDK\src\discord_rpc.cpp">
+      <Filter>DiscordSDK\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscordSDK\src\rpc_connection.cpp">
+      <Filter>DiscordSDK\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscordSDK\src\serialization.cpp">
+      <Filter>DiscordSDK\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Discord.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DiscordSDK\include\discord_register.h">
+      <Filter>DiscordSDK\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="DiscordSDK\include\discord_rpc.h">
+      <Filter>DiscordSDK\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="DiscordSDK\src\backoff.h">
+      <Filter>DiscordSDK\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="DiscordSDK\src\msg_queue.h">
+      <Filter>DiscordSDK\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="DiscordSDK\src\rpc_connection.h">
+      <Filter>DiscordSDK\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="DiscordSDK\src\serialization.h">
+      <Filter>DiscordSDK\Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Discord.h" />
+  </ItemGroup>
+</Project>
