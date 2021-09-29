@@ -3,8 +3,14 @@
 LRESULT WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lparam)
 {
 	RenderWindow rw;
+	PAINTSTRUCT paintStruct;
+	HDC hDC;
 	switch (message)
 	{
+	case WM_PAINT:
+		hDC = BeginPaint(hWnd, &paintStruct);
+		EndPaint(hWnd, &paintStruct);
+		break;
 	case WM_KEYDOWN:
 		rw.keyboard.OnKeyPressed(static_cast<unsigned char>(wparam));
 		printf_s("KeyPressed\n");
