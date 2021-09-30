@@ -127,6 +127,7 @@
     <ResourceCompile Include="Mafia Bar Engine.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Resources\cursor.png" />
     <Image Include="Resources\engine.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@
 */
 #include "../Mafia Bar Engine/pch.h"
 #include <bitset>
-#include <queue>
+
 class Keyboard
 {
 	friend class RenderWindow;

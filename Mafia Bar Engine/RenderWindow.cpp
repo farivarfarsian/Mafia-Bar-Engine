@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "RenderWindow.h"
+#include "resource.h"
 LRESULT WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lparam)
 {
 	RenderWindow rw;
@@ -11,6 +12,7 @@ LRESULT WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lparam)
 		hDC = BeginPaint(hWnd, &paintStruct);
 		EndPaint(hWnd, &paintStruct);
 		break;
+
 	case WM_KEYDOWN:
 		rw.keyboard.OnKeyPressed(static_cast<unsigned char>(wparam));
 		printf_s("KeyPressed\n");
@@ -24,9 +26,44 @@ LRESULT WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lparam)
 		printf_s("KeyChar\n");
 		break;
 
+	case WM_MOUSEMOVE:
+	{
+		POINTS pt = MAKEPOINTS(lparam); //Stroing The Mouse Moved Position
+		rw.mouse.OnMouseMove(pt.x, pt.y);
+		break;
+	}
 	case WM_LBUTTONDOWN:
+	{
+		const POINTS pt = MAKEPOINTS(lparam); //Stroing The Mouse Moved Position
+		rw.mouse.OnLeftPressed(pt.x, pt.y);
 		printf("%d, %d\n", GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam));
 		break;
+	}
+	case WM_LBUTTONUP:
+	{
+		const POINTS pt = MAKEPOINTS(lparam); //Stroing The Mouse Moved Position
+		rw.mouse.OnLeftReleased(pt.x, pt.y);
+		break;
+	}
+	case WM_RBUTTONDOWN:
+	{
+		const POINTS pt = MAKEPOINTS(lparam); //Stroing The Mouse Moved Position
+		rw.mouse.OnRightPressed(pt.x, pt.y);
+		break;
+	}
+	case WM_RBUTTONUP:
+	{
+		const POINTS pt = MAKEPOINTS(lparam); //Stroing The Mouse Moved Position
+		rw.mouse.OnRightReleased(pt.x, pt.y);
+		break;
+	}
+	case WM_MOUSEWHEEL:
+	{
+		const POINTS pt = MAKEPOINTS(lparam); //Stroing The Mouse Moved Position
+		if (GET_WHEEL_DELTA_WPARAM(wparam) > 0) { rw.mouse.OnWheelUp(pt.x, pt.y); }
+		else if (GET_WHEEL_DELTA_WPARAM(wparam < 0)) { rw.mouse.OnWheelDown(pt.x, pt.y); }
+		break;
+	}
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
@@ -76,6 +113,7 @@ bool RenderWindow::ProcessMessages()
 		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
+
 			DispatchMessage(&msg);
 
 		}
@@ -96,13 +134,13 @@ RenderWindow::~RenderWindow()
 void RenderWindow::RegisterWindowClass()
 {
 	WNDCLASSEX wcex;
-
 	wcex.cbSize = sizeof(WNDCLASSEX);
 	wcex.style = CS_HREDRAW | CS_VREDRAW;
 	wcex.cbClsExtra = 0;
 	wcex.cbWndExtra = 0;
 
-	wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	wcex.hCursor = LoadCursorFromFileA("Resources/mafia_bar_cursor/normal-select.cur");
+
 	wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 
 	wcex.hIcon = static_cast<HICON>(LoadImage( hInstance, MAKEINTRESOURCE( IDI_ICON1 ), IMAGE_ICON, 32 ,32 , 0));

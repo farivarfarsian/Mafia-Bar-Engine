@@ -14,7 +14,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	Discord::UpdateDiscord();
 	Engine::Console::CreateConsole();
 	Engine::Console::WelcomeMessage(USERNAME);
-	std::cout << Engine::OS_Information::Window_Version();
 	RenderWindow rw;
 	rw.Initialize(hInstance, 1200, 800);
 	rw.ProcessMessages();

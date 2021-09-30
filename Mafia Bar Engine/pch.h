@@ -34,6 +34,7 @@
 
 #include <fstream> //Logger
 
+#include <queue>// Std::queue For Storing Windows Events Like KeyBoard And Mouse
 
 //Definitions
 #define MAX_NAME_STRING 256

@@ -54,5 +54,8 @@
     <Image Include="Resources\engine.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resources\cursor.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

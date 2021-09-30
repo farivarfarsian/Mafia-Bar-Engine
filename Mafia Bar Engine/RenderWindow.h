@@ -2,6 +2,7 @@
 #include "pch.h"
 #include "../Engine Toolkit/Exceptions.h"
 #include "../Engine Toolkit/Keyboard.h" 
+#include "../Engine Toolkit/Mouse.h"
 #include "../Engine Toolkit/Engine_Toolkit.h"
 
 
@@ -11,6 +12,7 @@ class RenderWindow
 {
 public:
 	Keyboard keyboard;
+	Mouse mouse;
 public:
 	struct GENGW_Exceptions : public Exceptions
 	{
