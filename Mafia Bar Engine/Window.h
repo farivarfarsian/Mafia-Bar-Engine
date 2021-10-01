@@ -8,7 +8,7 @@
 
 LRESULT CALLBACK WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lparam);
 
-class RenderWindow
+class Window
 {
 public:
 	Keyboard keyboard;
@@ -30,11 +30,11 @@ public:
 		Half = 0xFF / 2,
 		Full = 0xFF
 	};
-	WCHAR WindowClass[MAX_NAME_STRING] = L"Mafia Bar";
-	WCHAR WindowTitle[MAX_NAME_STRING] = L"Mafia Bar Engine";
-	bool Initialize(HINSTANCE hInstance, int width, int height);
+	Window() = default;
+	Window(HINSTANCE hInstance, const char* WinTitle, int width, int height);
 	bool ProcessMessages();
-	~RenderWindow();
+	void RegisterWindowClass();
+	~Window();
 
 	static void SetWindowTransparency(HWND hwnd, std::uint8_t Transperancy)
 	{
@@ -49,5 +49,4 @@ public:
 	HWND handle = NULL;
 	DWORD ProcID;
 	HINSTANCE hInstance = NULL;
-	void RegisterWindowClass();
 };

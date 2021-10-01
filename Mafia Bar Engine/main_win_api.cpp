@@ -1,7 +1,6 @@
 #include "pch.h"
-#include "RenderWindow.h"
-#include "../Engine Toolkit/System_Informations.h"
-#include "../Discord/Discord.h"
+#include "Window.h"
+#include "App.h"
 #pragma comment(lib, "Engine_Toolkit.lib")
 #pragma comment(lib, "Discord.lib")
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -9,13 +8,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_ LPWSTR    lpCmdLine,
 	_In_ int       nCmdShow)
 {
-	Discord::SetupDiscord();
-	gInit = false;
-	Discord::UpdateDiscord();
-	Engine::Console::CreateConsole();
-	Engine::Console::WelcomeMessage(USERNAME);
-	RenderWindow rw;
-	rw.Initialize(hInstance, 1200, 800);
-	rw.ProcessMessages();
+	App app(hInstance);
 	return 0;
 }
