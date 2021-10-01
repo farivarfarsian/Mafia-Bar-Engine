@@ -15,7 +15,9 @@
 #else
 #define PLATFORM "Others"
 #endif
+
 #define USERNAME getenv("USERNAME")
+#define COMPUTERNAME getenv("COMPUTERNAME")
 
 namespace Engine
 {
