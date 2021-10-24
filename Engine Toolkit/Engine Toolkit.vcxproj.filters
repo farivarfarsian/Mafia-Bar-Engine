@@ -37,5 +37,6 @@
     <ClCompile Include="System_Informations.cpp">
       <Filter>System Information</Filter>
     </ClCompile>
+    <ClCompile Include="Temp" />
   </ItemGroup>
 </Project>

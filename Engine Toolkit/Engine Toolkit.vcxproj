@@ -107,6 +107,7 @@
   <ItemGroup>
     <ClCompile Include="Engine_Toolkit.cpp" />
     <ClCompile Include="System_Informations.cpp" />
+    <ClCompile Include="Temp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
