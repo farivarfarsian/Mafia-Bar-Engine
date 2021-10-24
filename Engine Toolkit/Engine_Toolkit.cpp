@@ -22,24 +22,6 @@ EXP_ENGINE_F void Engine::registry_write(LPCTSTR subkey, LPCTSTR name, DWORD typ
     RegCloseKey(key);
 }
 
-EXP_ENGINE_F void Engine::OpenFileDilog(OPENFILENAMEA& ofn, const char* filter, const HWND& owner)
-{
-    //Tempalte of Filters "All files\0*.*\0Source Files\0*.cpp\0"
-
-    char fileName[MAX_PATH] = "";
-    ZeroMemory(&ofn, sizeof(ofn));
-
-    ofn.lStructSize = sizeof(OPENFILENAME);
-    ofn.hwndOwner = owner;
-    ofn.lpstrFilter = filter;
-    ofn.lpstrFile = fileName;
-    ofn.nMaxFile = MAX_PATH;
-    ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
-    ofn.lpstrDefExt = "";
-
-    GetOpenFileNameA(&ofn);
-}
-
 BOOL Engine::Hotkey::RegisterHotKey(const HWND& handle, int& hotkey_id, const int& fsModifiers, const int& vk)
 {
     return ::RegisterHotKey(handle, hotkey_id, fsModifiers, vk);

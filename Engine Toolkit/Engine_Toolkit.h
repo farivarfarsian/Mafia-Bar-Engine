@@ -14,7 +14,6 @@ namespace Engine
         static BOOL RegisterHotKey(const HWND& handle, int& hotkey_id, const int& fsModifiers, const int& vk);
         static BOOL UnregisterHotKey(const HWND& handle, int& hotkey_id);
     };
-    EXP_ENGINE_F void OpenFileDilog(OPENFILENAMEA& ofn, const char* filter, const HWND& owner);
     struct Console
     {
         static void CreateConsole(const char* cmdcolor = 0)
