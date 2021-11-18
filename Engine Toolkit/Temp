@@ -1,3 +1,4 @@
+/*
 std::string OpenFileDilog(const char* filter, const HWND& owner = nullptr)
 {
     //Tempalte of Filters "All files\0*.*\0Source Files\0*.cpp\0"
@@ -19,3 +20,4 @@ std::string OpenFileDilog(const char* filter, const HWND& owner = nullptr)
         return Filename;
     }
 }
+*/
