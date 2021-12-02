@@ -1,10 +1,8 @@
 #pragma once
 #include "pch.h"
-#include "../Engine Toolkit/Exceptions.h"
-#include "../Engine Toolkit/Keyboard.h" 
-#include "../Engine Toolkit/Mouse.h"
-#include "../Engine Toolkit/Engine_Toolkit.h"
-
+#include "../Engine/MB_Exception.h"
+#include "../Engine/MB_Keyboard.h" 
+#include "../Engine/MB_Mouse.h"
 
 LRESULT CALLBACK WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lparam);
 
@@ -14,7 +12,7 @@ public:
 	Keyboard keyboard;
 	Mouse mouse;
 public:
-	struct GENGW_Exceptions : public Exceptions
+	struct GENGW_Exceptions : public MafiaBar::Exceptions
 	{
 		GENGW_Exceptions(int line, const char* file, HRESULT hr) noexcept;
 		const char* what() const noexcept override;
@@ -32,19 +30,16 @@ public:
 	};
 	Window() = default;
 	Window(const char* WinTitle, int width, int height);
-	bool ProcessMessages();
+	std::optional<int> ProcessMessages();
 	void RegisterWindowClass();
 	~Window();
-	static void SetWindowTransparency(HWND hwnd, std::uint8_t Transperancy)
-	{
-		long wAttr = GetWindowLong(hwnd, GWL_EXSTYLE);
-		SetWindowLong(hwnd, GWL_EXSTYLE, wAttr | WS_EX_LAYERED);
-		SetLayeredWindowAttributes(hwnd, 0, Transperancy, 0x02);
-	}
-	static void SetWindowAsOverlay(const HWND& hwnd)
-	{
-		::SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_DRAWFRAME | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
-	}
+	void SetWindowTransparency(std::uint8_t Transperancy);
+	void SetWindowAsOverlay();
+	void SetTitle(const std::string& title);
+	HWND GetHandle() const { return handle; }
+	HINSTANCE GetInstance() const { return hInstance; }
+	DWORD GetProcessID() const { return ProcID; }
+private:
 	HWND handle = NULL;
 	DWORD ProcID = GetCurrentProcessId();
 	HINSTANCE hInstance = GetModuleHandleA(NULL);

@@ -8,9 +8,7 @@
 #ifdef _CRT_SECURE_NO_WARNINGS_DEBUG
 //Only For Debugging
 #include <iostream>
-#include <chrono> //std::chrono
-#else
-#define NO_DEBUG
+#include <chrono>
 #endif // _CRT_SECURE_NO_WARNINGS_DEBUG
 
 
@@ -34,12 +32,13 @@
 
 #include <queue>// Std::queue For Storing Windows Events Like KeyBoard And Mouse
 
+#include <optional>
+
+
 //Definitions
 #define MAX_NAME_STRING 256
 #define IsDown 0x8000
 
-
-#define CONSOLE_GUI //Using Console Class GUI Functions
 
 #define EXP_ENGINE __declspec(dllexport)
 #define EXP_ENGINE_F extern "C" __declspec(dllexport)

@@ -1,6 +1,6 @@
 #pragma once
 #include "Window.h"
-#include <System_Informations.h>
+#include <MB_Utils.h>
 class App
 {
 public:
@@ -8,6 +8,6 @@ public:
 	int Go();
 private:
 	void DoFrame();
-private:
 	Window win;
+	MafiaBar::Console console;
 };

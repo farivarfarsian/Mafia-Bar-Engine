@@ -125,20 +125,20 @@ void Window::RegisterWindowClass()
 	RegisterClassEx(&wcex);
 }
 /*--------------------------------------Creates The Window Class/Style--------------------------------------*/
-bool Window::ProcessMessages()
+std::optional<int> Window::ProcessMessages()
 {
-	MSG msg = { 0 };
-	while (msg.message != WM_QUIT)
+	MSG msg;
+	while (PeekMessageA(&msg, nullptr, 0, 0, PM_REMOVE))
 	{
-		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
+		if (msg.message == WM_QUIT)
 		{
-			TranslateMessage(&msg);
-
-			DispatchMessage(&msg);
-
+			return msg.wParam;
 		}
+
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
 	}
-	return true;
+	return {};
 }
 Window::~Window()
 {
@@ -150,7 +150,7 @@ Window::~Window()
 }
 /*--------------------------------------Mafia Bar Engine Exceptions--------------------------------------*/
 Window::GENGW_Exceptions::GENGW_Exceptions(int line, const char* file, HRESULT hr) noexcept
-	: Exceptions(line, file), hr( hr )
+	: MafiaBar::Exceptions(line, file), hr( hr )
 {
 	printf_s("[Mafia Bar Engine Exception System]\tAn Exception Threw\n");
 }
@@ -184,4 +184,18 @@ std::string Window::GENGW_Exceptions::TranslteErrorCodes(HRESULT hr) noexcept
 std::string Window::GENGW_Exceptions::GetErrorString() const noexcept
 {
 	return TranslteErrorCodes(hr);
+}
+void Window::SetWindowTransparency(std::uint8_t Transperancy)
+{
+	long wAttr = GetWindowLong(handle, GWL_EXSTYLE);
+	SetWindowLong(handle, GWL_EXSTYLE, wAttr | WS_EX_LAYERED);
+	SetLayeredWindowAttributes(handle, 0, Transperancy, 0x02);
+}
+void Window::SetWindowAsOverlay()
+{
+	::SetWindowPos(handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_DRAWFRAME | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+}
+void Window::SetTitle(const std::string& title)
+{
+	SetWindowTextA(handle, title.c_str());
 }

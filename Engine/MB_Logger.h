@@ -31,17 +31,13 @@
 #define ERRORMESSAGE 0
 #endif
 
-namespace Engine //Engine Namspace
+namespace MafiaBar
 {
-	class EXP_ENGINE Logger //Logger Class
+	class Logger //Logger Class
 	{
 	public:
-		static void  LiveLog(const char* message) //Throwing MessageBox's
-		{
-			MessageBoxA(NULL, message, 0, 0);
-		}
 		template<typename T>
-		static void StaticLog(const char* details, T Value) //Writing Anything You Want into Mafia_Bar_Engine.log
+		void StaticLog(const char* details, T Value) //Writing Anything You Want into Mafia_Bar_Engine.log
 		{
 			std::ofstream StreamW("Mafia_Bar_Engine.log", std::ios::app);
 			StreamW << "[" << __DATE__ << ' ' << __TIME__ << "]" << "\t" << details << ':' << "\t" << Value << std::endl;
