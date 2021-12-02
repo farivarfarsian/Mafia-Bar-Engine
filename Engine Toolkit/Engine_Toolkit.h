@@ -30,9 +30,7 @@ namespace Engine
         }
         static void WelcomeMessage(const char* username)
         {
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
             printf("\t\t\t\t\tWelcome to Mafia Bar Engine %s\n", username);
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
         }
         static int GetColumnWidthConsole()
         {

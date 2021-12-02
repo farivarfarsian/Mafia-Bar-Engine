@@ -9,12 +9,7 @@ LRESULT CALLBACK WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lp
 	HDC hDC;
 	switch (message)
 	{
-	case WM_PAINT:
-	{
-		hDC = BeginPaint(hWnd, &paintStruct);
-		EndPaint(hWnd, &paintStruct);
-		break;
-	}
+		/*------------------------------ Keyboard Events ------------------------------*/
 	case WM_KEYDOWN:
 	{
 		rw.keyboard.OnKeyPressed(static_cast<unsigned char>(wparam));
@@ -33,9 +28,10 @@ LRESULT CALLBACK WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lp
 		printf_s("KeyChar\n");
 		break;
 	}
+		/*------------------------------ Mouse Events ------------------------------*/
 	case WM_MOUSEMOVE:
 	{
-		POINTS pt = MAKEPOINTS(lparam); //Stroing The Mouse Moved Position
+		const POINTS pt = MAKEPOINTS(lparam); //Stroing The Mouse Moved Position
 		rw.mouse.OnMouseMove(pt.x, pt.y);
 		break;
 	}
@@ -71,6 +67,7 @@ LRESULT CALLBACK WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lp
 		else if (GET_WHEEL_DELTA_WPARAM(wparam < 0)) { rw.mouse.OnWheelDown(pt.x, pt.y); }
 		break;
 	}
+
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
@@ -78,10 +75,8 @@ LRESULT CALLBACK WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lp
 	return DefWindowProc(hWnd, message, wparam, lparam);
 }
 /*--------------------------------------Initializing The Mafia Bar Engine Window--------------------------------------*/
-Window::Window(HINSTANCE hInstance, const char* WinTitle, int width, int height)
+Window::Window(const char* WinTitle, int width, int height)
 {
-	this->hInstance = hInstance;
-
 	this->RegisterWindowClass();
 
 	this->handle = CreateWindowExA(WS_EX_ACCEPTFILES | WS_EX_TRANSPARENT,
@@ -97,16 +92,11 @@ Window::Window(HINSTANCE hInstance, const char* WinTitle, int width, int height)
 		hInstance, //handle to the instance of module to be used with this class
 		this); //Param to Create Window
 
-	if (this->handle == NULL)
-	{
-		
-	}
+	if (this->handle == NULL) { MB_LAST_EXCEPTION; }
 
 	//Showing Window
-	ShowWindow(this->handle, SW_SHOW);
-	SetForegroundWindow(this->handle);
 	SetFocus(this->handle);
-
+	ShowWindow(this->handle, SW_SHOW);
 }
 /*--------------------------------------Creates The Window Class/Style--------------------------------------*/
 void Window::RegisterWindowClass()

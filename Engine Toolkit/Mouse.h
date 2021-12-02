@@ -2,7 +2,7 @@
 #include "../Mafia Bar Engine/pch.h"
 class Mouse
 {
-	friend class RenderWindow;
+	friend class Window;
 public:
 	class Event
 	{

@@ -57,25 +57,16 @@ namespace Engine
 	};
 	struct EXP_ENGINE OS_Information
 	{
-	#ifdef WIN32
 		static int Build_Version();
 		static char* Window_Version();
 		static char* Edition();
 		static char* Display_Version();
 		static char* Build_Branch();
-	#else
-		#pragma message(__FILE__ "(" _CRT_STRINGIZE(__LINE__) ")"  ": error: " "Your OS is Not Supported By Mafia Bar Engine")
-	#endif // WIN32
 	};
 	struct EXP_ENGINE General_Information
 	{
 		static std::string Exucate_Name();
 		static std::string Script_Name(const char* script_macro_file);
 		static char* Window_Title(HWND handle);
-		static DWORD ProcessID();
-	};
-	struct EXP_ENGINE  Performance_Information
-	{
-		
 	};
 }

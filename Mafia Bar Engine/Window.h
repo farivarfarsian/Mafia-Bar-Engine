@@ -31,11 +31,10 @@ public:
 		Full = 0xFF
 	};
 	Window() = default;
-	Window(HINSTANCE hInstance, const char* WinTitle, int width, int height);
+	Window(const char* WinTitle, int width, int height);
 	bool ProcessMessages();
 	void RegisterWindowClass();
 	~Window();
-
 	static void SetWindowTransparency(HWND hwnd, std::uint8_t Transperancy)
 	{
 		long wAttr = GetWindowLong(hwnd, GWL_EXSTYLE);
@@ -47,6 +46,6 @@ public:
 		::SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_DRAWFRAME | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
 	}
 	HWND handle = NULL;
-	DWORD ProcID;
-	HINSTANCE hInstance = NULL;
+	DWORD ProcID = GetCurrentProcessId();
+	HINSTANCE hInstance = GetModuleHandleA(NULL);
 };

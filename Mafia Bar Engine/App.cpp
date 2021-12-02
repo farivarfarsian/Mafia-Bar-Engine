@@ -1,27 +1,32 @@
 #include "pch.h"
 #include "App.h"
 
-App::App(HINSTANCE hInstance)
-	: win(hInstance, "Mafia Bar Engine", 1200, 800)
+App::App()
+	: win("Mafia Bar Engine", 1200, 800)
 {
 	Engine::Console::CreateConsole();
 	Engine::Console::WelcomeMessage(USERNAME);
-	SetupDiscord();
-	win.ProcessMessages();
 }
 
 int App::Go()
 {
-	return 0;
-}
+	MSG msg;
+	BOOL gResult;
+	while ( (gResult = GetMessage(&msg, nullptr, 0, 0)) > 0 )
+	{
+		TranslateMessage(&msg);
 
-void App::SetupDiscord()
-{
-	Discord::SetupDiscord();
-	gInit = false;
-	Discord::UpdateDiscord();
+		DispatchMessage(&msg);
+
+		DoFrame();
+	}
+
+	if (gResult == -1) { throw MB_LAST_EXCEPTION; }
+
+	return msg.wParam;
 }
 
 void App::DoFrame()
 {
+
 }

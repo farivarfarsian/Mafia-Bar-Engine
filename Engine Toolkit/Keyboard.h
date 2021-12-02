@@ -10,7 +10,7 @@
 
 class Keyboard
 {
-	friend class RenderWindow;
+	friend class Window;
 public:
 	class Event
 	{

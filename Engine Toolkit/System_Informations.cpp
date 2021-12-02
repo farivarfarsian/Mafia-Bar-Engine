@@ -101,8 +101,3 @@ char* Engine::General_Information::Window_Title(HWND handle)
 	GetWindowTextA(handle, wnd_title, sizeof(wnd_title));
 	return std::move(wnd_title);
 }
-
-DWORD Engine::General_Information::ProcessID()
-{
-	return GetCurrentProcessId();
-}

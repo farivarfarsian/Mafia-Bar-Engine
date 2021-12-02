@@ -9,8 +9,6 @@
 //Only For Debugging
 #include <iostream>
 #include <chrono> //std::chrono
-#define MB_EXCEPTION( hr ) RenderWindow::GENGW_Exceptions(__LINE__, __FILE__, hr);
-#define MB_LAST_EXCEPTION 	RenderWindow::GENGW_Exceptions(__LINE__, __FILE__, GetLastError());
 #else
 #define NO_DEBUG
 #endif // _CRT_SECURE_NO_WARNINGS_DEBUG
@@ -47,6 +45,8 @@
 #define EXP_ENGINE_F extern "C" __declspec(dllexport)
 #define IMP_ENGINE __declspec(dllimport)
 
+#define MB_EXCEPTION( hr ) Window::GENGW_Exceptions(__LINE__, __FILE__, hr);
+#define MB_LAST_EXCEPTION 	Window::GENGW_Exceptions(__LINE__, __FILE__, GetLastError());
 
 //DirectX Lib Files
 #pragma comment(lib, "d3d11.lib")
@@ -56,16 +56,6 @@
 
 
 #pragma comment(lib,"DirectXTK.lib") //DirectXTK Lib File
-
-template<typename T> //Making Sure To Release COM Object
-inline void ComobjReleaseSafe(T& ptr)
-{
-	if (ptr != NULL)
-	{
-		ptr->Release();
-		ptr = NULL;
-	}
-}
 
 
 

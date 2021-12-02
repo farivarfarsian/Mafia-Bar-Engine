@@ -109,7 +109,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="main.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -132,9 +134,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Assembly_Engine_Toolkit\Assembly_Engine_Toolkit.vcxproj">
       <Project>{7414ba41-bcd5-4794-8632-c96719320751}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Discord\Discord.vcxproj">
-      <Project>{c1e25d39-422a-4cba-953f-19f841fe5458}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Engine Toolkit\Engine Toolkit.vcxproj">
       <Project>{c130b7a0-c684-410e-a686-8ec2030af661}</Project>
