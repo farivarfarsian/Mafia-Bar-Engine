@@ -16,27 +16,21 @@
 // DirectX includes
 #include <d3d11.h>
 #pragma comment(lib, "d3d11.lib")
-
 #include <d3dcompiler.h>
-
 #include <DirectXMath.h>
-
 #include <DirectXColors.h>
 
+#include <wrl.h>
 
-#include <windowsx.h> //Windows Mouse Events
-
+#include <windowsx.h>
 
 #include <thread>
-
 #include <fstream>
-
-#include <queue>// Std::queue For Storing Windows Events Like KeyBoard And Mouse
+#include <queue>
 
 //Definitions
 #define MAX_NAME_STRING 256
 #define IsDown 0x8000
-
 
 #define EXP_ENGINE __declspec(dllexport)
 #define EXP_ENGINE_F extern "C" __declspec(dllexport)

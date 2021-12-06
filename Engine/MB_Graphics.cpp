@@ -52,18 +52,9 @@ MafiaBar::Graphics::Graphics(HWND hwnd)
 		&m_Context
 	);
 
-	ID3D11Resource* m_BackBuffer = nullptr;
-	m_Swap->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&m_BackBuffer));
-	m_Device->CreateRenderTargetView(m_BackBuffer, nullptr, &m_RenderTarget);
-	m_BackBuffer->Release();
-}
-
-MafiaBar::Graphics::~Graphics()
-{
-	if (m_Device != nullptr) { m_Device->Release(); }
-	if (m_Swap != nullptr) { m_Swap->Release(); }
-	if (m_Context != nullptr) { m_Context->Release(); }
-	if (m_RenderTarget != nullptr) { m_RenderTarget->Release(); }
+	Microsoft::WRL::ComPtr<ID3D11Resource> m_BackBuffer = nullptr;
+	m_Swap->GetBuffer(0, __uuidof(ID3D11Resource), &m_BackBuffer);
+	m_Device->CreateRenderTargetView(m_BackBuffer.Get(), nullptr, &m_RenderTarget);
 }
 
 void MafiaBar::Graphics::EndFrame() { m_Swap->Present(1u, 0u); }
@@ -71,13 +62,13 @@ void MafiaBar::Graphics::EndFrame() { m_Swap->Present(1u, 0u); }
 void MafiaBar::Graphics::ClearRenderBufferColor(float r, float g, float b, float a)
 {
 	const float colour[] = { r, g, b, a };
-	m_Context->ClearRenderTargetView(m_RenderTarget, colour);
+	m_Context->ClearRenderTargetView(m_RenderTarget.Get(), colour);
 }
 
-ID3D11Device* MafiaBar::Graphics::GetDevice() const { return m_Device; }
+ID3D11Device* MafiaBar::Graphics::GetDevice() const { return m_Device.Get(); }
 
-IDXGISwapChain* MafiaBar::Graphics::GetSwap() const { return m_Swap; }
+IDXGISwapChain* MafiaBar::Graphics::GetSwap() const { return m_Swap.Get(); }
 
-ID3D11DeviceContext* MafiaBar::Graphics::GetContext() const { return m_Context; }
+ID3D11DeviceContext* MafiaBar::Graphics::GetContext() const { return m_Context.Get(); }
 
-ID3D11RenderTargetView* MafiaBar::Graphics::GetRenderTarget() const { return m_RenderTarget; }
+ID3D11RenderTargetView* MafiaBar::Graphics::GetRenderTarget() const { return m_RenderTarget.Get(); }

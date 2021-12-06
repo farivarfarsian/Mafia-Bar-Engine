@@ -63,7 +63,7 @@ MafiaBar::Console::Console(const char* cmdcolor)
 
     system(cmdcolor);
 
-    printf("\t\t\t\t\tWelcome to Mafia Bar Engine \n");
+    printf("\t\t\t\t\t\tWelcome to Mafia Bar Engine\n");
 }
 
 HWND MafiaBar::Console::GetConsoleHandle() const { return GetConsoleWindow(); }

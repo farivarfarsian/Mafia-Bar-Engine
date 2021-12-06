@@ -9,10 +9,7 @@ int App::Go()
 {
 	while (true)
 	{
-		if (const auto ecode = win.ProcessMessages())
-		{
-			return *ecode;
-		}
+		if (const auto ecode = win.ProcessMessages()) { return *ecode; }
 		DoFrame();
 	}
 }
