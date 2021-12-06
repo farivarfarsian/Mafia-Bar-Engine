@@ -97,6 +97,8 @@ Window::Window(const char* WinTitle, int width, int height)
 	//Showing Window
 	SetFocus(this->handle);
 	ShowWindow(this->handle, SW_SHOW);
+
+	m_Graphics = std::make_unique<MafiaBar::Graphics>(handle);
 }
 /*--------------------------------------Creates The Window Class/Style--------------------------------------*/
 void Window::RegisterWindowClass()
@@ -195,7 +197,13 @@ void Window::SetWindowAsOverlay()
 {
 	::SetWindowPos(handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_DRAWFRAME | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
 }
-void Window::SetTitle(const std::string& title)
-{
-	SetWindowTextA(handle, title.c_str());
+void Window::SetTitle(const std::string& title) { SetWindowTextA(handle, title.c_str()); }
+
+MafiaBar::Graphics& Window::GetGraphics() 
+{ 
+	if (!m_Graphics)
+	{
+		throw;
+	}
+	return *m_Graphics; 
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.h"
+#include <MB_Graphics.h>
 #include "../Engine/MB_Exception.h"
 #include "../Engine/MB_Keyboard.h" 
 #include "../Engine/MB_Mouse.h"
@@ -39,8 +40,11 @@ public:
 	HWND GetHandle() const { return handle; }
 	HINSTANCE GetInstance() const { return hInstance; }
 	DWORD GetProcessID() const { return ProcID; }
+public:
+	MafiaBar::Graphics& GetGraphics();
 private:
 	HWND handle = NULL;
 	DWORD ProcID = GetCurrentProcessId();
 	HINSTANCE hInstance = GetModuleHandleA(NULL);
+	std::unique_ptr<MafiaBar::Graphics> m_Graphics;
 };

@@ -6,10 +6,7 @@ bool MafiaBar::Hotkey::RegisterHotKey(const HWND& handle, int hotkey_id, int fsM
     return ::RegisterHotKey(handle, hotkey_id, fsModifiers, vk);
 }
 
-bool MafiaBar::Hotkey::UnregisterHotKey(const HWND& handle, int hotkey_id)
-{
-    return ::UnregisterHotKey(handle, hotkey_id);
-}
+bool MafiaBar::Hotkey::UnregisterHotKey(const HWND& handle, int hotkey_id) { return ::UnregisterHotKey(handle, hotkey_id); }
 
 bool MafiaBar::WindowRegistery::RegistryWrite(LPCTSTR subkey, LPCTSTR name, DWORD type, const char* value)
 {
@@ -67,13 +64,6 @@ MafiaBar::Console::Console(const char* cmdcolor)
     system(cmdcolor);
 
     printf("\t\t\t\t\tWelcome to Mafia Bar Engine \n");
-}
-
-void MafiaBar::Console::SetConsoleTitle(const char* title)
-{
-    SetConsoleTitleA(title);
-    ConsoleTitle.clear();
-    ConsoleTitle = title;
 }
 
 HWND MafiaBar::Console::GetConsoleHandle() const { return GetConsoleWindow(); }

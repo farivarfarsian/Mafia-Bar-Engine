@@ -21,6 +21,7 @@ namespace MafiaBar
 	{
     public:
 		Time(const char* Process_Describ);
+		Time() = default;
 		void End();
 		float Mark()
 		{
@@ -42,11 +43,9 @@ namespace MafiaBar
     class EXP_ENGINE Console
     {
 	//Undefing Useless Microsoft Macros in Windows.h
-		#undef SetConsoleTitle
 		#undef GetConsoleTitle
     public:
         Console(const char* cmdcolor = 0);
-        void SetConsoleTitle(const char* title);
         HWND GetConsoleHandle() const;
         std::string GetConsoleTitle() const;
     private:

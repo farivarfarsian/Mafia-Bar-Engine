@@ -19,6 +19,9 @@
     <Filter Include="MB_Information">
       <UniqueIdentifier>{dd9cfe54-6de6-4633-afb0-a3e47b94eae2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MB_Graphics">
+      <UniqueIdentifier>{83d13879-9d9d-46c8-a19a-644ce8fb2de2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MB_Logger.h">
@@ -40,12 +43,11 @@
     <ClInclude Include="MB_Utils.h">
       <Filter>MB_Utils</Filter>
     </ClInclude>
+    <ClInclude Include="MB_Graphics.h">
+      <Filter>MB_Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MB_Information.cpp">
-      <Filter>MB_Information</Filter>
-    </ClCompile>
-    <ClCompile Include="Temp" />
     <ClCompile Include="MB_Exception.cpp">
       <Filter>MB_Exception</Filter>
     </ClCompile>
@@ -58,5 +60,6 @@
     <ClCompile Include="MB_Mouse.cpp">
       <Filter>MB_Mouse</Filter>
     </ClCompile>
+    <ClCompile Include="MB_Graphics.cpp" />
   </ItemGroup>
 </Project>

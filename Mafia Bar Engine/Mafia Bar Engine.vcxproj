@@ -133,10 +133,10 @@
     <Image Include="Resources\engine.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Assembly_Engine_Toolkit\Assembly_Engine_Toolkit.vcxproj">
+    <ProjectReference Include="..\Assembly_Engine\Assembly_Engine.vcxproj">
       <Project>{7414ba41-bcd5-4794-8632-c96719320751}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Engine Toolkit\Engine Toolkit.vcxproj">
+    <ProjectReference Include="..\Engine\Engine.vcxproj">
       <Project>{c130b7a0-c684-410e-a686-8ec2030af661}</Project>
     </ProjectReference>
   </ItemGroup>

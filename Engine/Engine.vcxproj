@@ -99,6 +99,7 @@
   <ItemGroup>
     <ClInclude Include="Engine.h" />
     <ClInclude Include="MB_Exception.h" />
+    <ClInclude Include="MB_Graphics.h" />
     <ClInclude Include="MB_Keyboard.h" />
     <ClInclude Include="MB_Logger.h" />
     <ClInclude Include="MB_Utils.h" />
@@ -106,11 +107,11 @@
     <ClInclude Include="MB_Information.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MB_Graphics.cpp" />
     <ClCompile Include="MB_Keyboard.cpp" />
     <ClCompile Include="MB_Exception.cpp" />
     <ClCompile Include="MB_Mouse.cpp" />
     <ClCompile Include="MB_Utils.cpp" />
-    <ClCompile Include="MB_Information.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
