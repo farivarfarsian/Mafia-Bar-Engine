@@ -16,7 +16,10 @@ int App::Go()
 
 void App::DoFrame()
 {
-	const float c = sin(time.Peek()) / 2.0f + 0.5f;
-	win.GetGraphics().ClearRenderBufferColor(c, 255.0f, c, 1.0f);
-	win.GetGraphics().EndFrame();
+	//const float c = sin(time.Peek()) / 2.0f + 0.5f;
+	time.Start("Rendering Rainbowed Triangle");
+	win.graphics->ClearRenderBufferColor(0.0f, 0.0f, 0.0f, 1.0f);
+	win.graphics->DrawRainbowedTrinagle();
+	win.graphics->EndFrame();
+	time.End();
 }

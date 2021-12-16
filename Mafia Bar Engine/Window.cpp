@@ -5,8 +5,6 @@
 LRESULT CALLBACK WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lparam)
 {
 	Window rw;
-	PAINTSTRUCT paintStruct;
-	HDC hDC;
 	switch (message)
 	{
 		/*------------------------------ Keyboard Events ------------------------------*/
@@ -98,7 +96,7 @@ Window::Window(const char* WinTitle, int width, int height)
 	SetFocus(this->handle);
 	ShowWindow(this->handle, SW_SHOW);
 
-	m_Graphics = std::make_unique<MafiaBar::Graphics>(handle);
+	graphics = std::make_unique<MafiaBar::Graphics>(handle);
 }
 /*--------------------------------------Creates The Window Class/Style--------------------------------------*/
 void Window::RegisterWindowClass()
@@ -109,7 +107,7 @@ void Window::RegisterWindowClass()
 	wcex.cbClsExtra = 0;
 	wcex.cbWndExtra = 0;
 
-	wcex.hCursor = LoadCursorFromFileA("Resources/mafia_bar_cursor/normal-select.cur");
+	wcex.hCursor = LoadCursorFromFileA("Assets/mafia_bar_cursor/normal-select.cur");
 
 	wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 
@@ -193,17 +191,4 @@ void Window::SetWindowTransparency(std::uint8_t Transperancy)
 	SetWindowLong(handle, GWL_EXSTYLE, wAttr | WS_EX_LAYERED);
 	SetLayeredWindowAttributes(handle, 0, Transperancy, 0x02);
 }
-void Window::SetWindowAsOverlay()
-{
-	::SetWindowPos(handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_DRAWFRAME | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
-}
-void Window::SetTitle(const std::string& title) { SetWindowTextA(handle, title.c_str()); }
-
-MafiaBar::Graphics& Window::GetGraphics() 
-{ 
-	if (!m_Graphics)
-	{
-		throw;
-	}
-	return *m_Graphics; 
-}
+void Window::SetWindowAsOverlay() { ::SetWindowPos(handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_DRAWFRAME | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW); }

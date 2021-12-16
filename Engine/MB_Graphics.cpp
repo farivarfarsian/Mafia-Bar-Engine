@@ -33,10 +33,6 @@ MafiaBar::Graphics::Graphics(HWND hwnd)
 	//No Flags
 	sd.Flags = 0;
 
-
-
-	HRESULT hr; //Should Create This Variable For Using GFX_THROW_FAILED Macro.
-
 	D3D11CreateDeviceAndSwapChain(
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,

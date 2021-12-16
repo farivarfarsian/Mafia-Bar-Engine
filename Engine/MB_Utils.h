@@ -22,7 +22,9 @@ namespace MafiaBar
     public:
 		Time(const char* Process_Describ);
 		Time() = default;
+		void Start(const char* Process_Describ);
 		void End();
+	public:
 		float Mark()
 		{
 			const auto old = last;

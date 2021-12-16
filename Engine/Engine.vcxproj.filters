@@ -1,65 +1,67 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="MB_Exception">
+    <Filter Include="Exception">
       <UniqueIdentifier>{4d8bec38-0342-4a52-a5ac-078b3594333e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MB_Logger">
-      <UniqueIdentifier>{ca710ff3-c154-4f7c-bc6b-5c3f6f82b060}</UniqueIdentifier>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{83d13879-9d9d-46c8-a19a-644ce8fb2de2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MB_Keyboard">
-      <UniqueIdentifier>{cdec1710-9b4a-4ce6-a88d-1df5d4c2a03c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MB_Mouse">
-      <UniqueIdentifier>{215fd634-41f6-4780-a701-c4d04600131b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MB_Utils">
-      <UniqueIdentifier>{9bd70e13-6bff-4b5f-b379-36811816baee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MB_Information">
+    <Filter Include="Information">
       <UniqueIdentifier>{dd9cfe54-6de6-4633-afb0-a3e47b94eae2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MB_Graphics">
-      <UniqueIdentifier>{83d13879-9d9d-46c8-a19a-644ce8fb2de2}</UniqueIdentifier>
+    <Filter Include="Keyboard">
+      <UniqueIdentifier>{cdec1710-9b4a-4ce6-a88d-1df5d4c2a03c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logger">
+      <UniqueIdentifier>{ca710ff3-c154-4f7c-bc6b-5c3f6f82b060}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mouse">
+      <UniqueIdentifier>{215fd634-41f6-4780-a701-c4d04600131b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{9bd70e13-6bff-4b5f-b379-36811816baee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MB_Logger.h">
-      <Filter>MB_Logger</Filter>
+      <Filter>Logger</Filter>
     </ClInclude>
     <ClInclude Include="MB_Keyboard.h">
-      <Filter>MB_Keyboard</Filter>
+      <Filter>Keyboard</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h" />
     <ClInclude Include="MB_Information.h">
-      <Filter>MB_Information</Filter>
+      <Filter>Information</Filter>
     </ClInclude>
     <ClInclude Include="MB_Mouse.h">
-      <Filter>MB_Mouse</Filter>
+      <Filter>Mouse</Filter>
     </ClInclude>
     <ClInclude Include="MB_Exception.h">
-      <Filter>MB_Exception</Filter>
+      <Filter>Exception</Filter>
     </ClInclude>
     <ClInclude Include="MB_Utils.h">
-      <Filter>MB_Utils</Filter>
+      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="MB_Graphics.h">
-      <Filter>MB_Graphics</Filter>
+      <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MB_Exception.cpp">
-      <Filter>MB_Exception</Filter>
+      <Filter>Exception</Filter>
     </ClCompile>
     <ClCompile Include="MB_Utils.cpp">
-      <Filter>MB_Utils</Filter>
+      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="MB_Keyboard.cpp">
-      <Filter>MB_Keyboard</Filter>
+      <Filter>Keyboard</Filter>
     </ClCompile>
     <ClCompile Include="MB_Mouse.cpp">
-      <Filter>MB_Mouse</Filter>
+      <Filter>Mouse</Filter>
     </ClCompile>
-    <ClCompile Include="MB_Graphics.cpp" />
+    <ClCompile Include="MB_Graphics.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

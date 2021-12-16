@@ -43,6 +43,14 @@ MafiaBar::Time::Time(const char* Process_Describ)
     last = std::chrono::steady_clock::now();
 }
 
+void MafiaBar::Time::Start(const char* Process_Describ)
+{
+    start = std::chrono::high_resolution_clock::now();
+    label = Process_Describ;
+    printf_s("Timer Started\t%s\n", Process_Describ);
+    last = std::chrono::steady_clock::now();
+}
+
 void MafiaBar::Time::End()
 {
     end = std::chrono::high_resolution_clock::now();

@@ -1,7 +1,7 @@
 #pragma once
 /*
 * 
-*PreCompiled Header File
+*	PreCompiled Header File
 * 
 */
 
@@ -17,6 +17,7 @@
 #include <d3d11.h>
 #pragma comment(lib, "d3d11.lib")
 #include <d3dcompiler.h>
+#pragma comment(lib, "D3DCompiler.lib")
 #include <DirectXMath.h>
 #include <DirectXColors.h>
 
@@ -28,9 +29,7 @@
 #include <fstream>
 #include <queue>
 
-//Definitions
 #define MAX_NAME_STRING 256
-#define IsDown 0x8000
 
 #define EXP_ENGINE __declspec(dllexport)
 #define EXP_ENGINE_F extern "C" __declspec(dllexport)

@@ -1,9 +1,9 @@
 #pragma once
 #include "pch.h"
 #include <MB_Graphics.h>
-#include "../Engine/MB_Exception.h"
-#include "../Engine/MB_Keyboard.h" 
-#include "../Engine/MB_Mouse.h"
+#include <MB_Exception.h>
+#include <MB_Keyboard.h>
+#include <MB_Mouse.h>
 
 LRESULT CALLBACK WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lparam);
 
@@ -12,6 +12,7 @@ class Window
 public:
 	Keyboard keyboard;
 	Mouse mouse;
+	std::unique_ptr<MafiaBar::Graphics> graphics;
 public:
 	struct GENGW_Exceptions : public MafiaBar::Exceptions
 	{
@@ -23,28 +24,26 @@ public:
 		HRESULT hr;
 	};
 public:
+	Window() = default;
+	Window(const char* WinTitle, int width, int height);
+	std::optional<int> ProcessMessages();
+	void RegisterWindowClass();
+	~Window();
+public:
 	enum Transparency
 	{
 		Nothing = 0x00,
 		Half = 0xFF / 2,
 		Full = 0xFF
 	};
-	Window() = default;
-	Window(const char* WinTitle, int width, int height);
-	std::optional<int> ProcessMessages();
-	void RegisterWindowClass();
-	~Window();
 	void SetWindowTransparency(std::uint8_t Transperancy);
 	void SetWindowAsOverlay();
-	void SetTitle(const std::string& title);
+public:
 	HWND GetHandle() const { return handle; }
 	HINSTANCE GetInstance() const { return hInstance; }
 	DWORD GetProcessID() const { return ProcID; }
-public:
-	MafiaBar::Graphics& GetGraphics();
 private:
 	HWND handle = NULL;
 	DWORD ProcID = GetCurrentProcessId();
 	HINSTANCE hInstance = GetModuleHandleA(NULL);
-	std::unique_ptr<MafiaBar::Graphics> m_Graphics;
 };

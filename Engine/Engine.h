@@ -13,3 +13,5 @@
 #include "MB_Information.h"
 
 #include "MB_Utils.h"
+
+#include "MB_Graphics.h"
