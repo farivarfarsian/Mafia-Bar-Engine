@@ -59,7 +59,7 @@ void MafiaBar::Time::End()
     printf("The Procces: %s Took: %fms\n", label, ms);
 }
 
-MafiaBar::Console::Console(const char* cmdcolor)
+void MafiaBar::Console::CreateWIN32Console()
 {
     AllocConsole();
     FILE* fp;
@@ -67,24 +67,52 @@ MafiaBar::Console::Console(const char* cmdcolor)
 
     freopen_s(&fp, "CONIN$", "r", stdin); //input only
 
-    SetConsoleTitleA(ConsoleTitle.c_str());
-
-    system(cmdcolor);
-
-    printf("\t\t\t\t\t\tWelcome to Mafia Bar Engine\n");
+    SetConsoleTitleA("Mafia Bar Engine: Debug Console");
 }
 
-HWND MafiaBar::Console::GetConsoleHandle() const { return GetConsoleWindow(); }
-
-std::string MafiaBar::Console::GetConsoleTitle() const { return ConsoleTitle; }
-
-int MafiaBar::Console::GetColumnWidthConsole()
+void MafiaBar::Console::CreateConsole(HWND ParentWindowHandle)
 {
-    CONSOLE_SCREEN_BUFFER_INFO info;
-    HANDLE out;
-
-    if (!(out = GetStdHandle(STD_OUTPUT_HANDLE)) ||
-        !GetConsoleScreenBufferInfo(out, &info))
-        return 80;
-    return info.dwSize.X;
+    ConsoleHandle = CreateWindowExA(WS_EX_TRANSPARENT | WS_EX_CLIENTEDGE, "Edit", "\t\t\t\t\t\t\t\tMafia Bar Engine : Debug Console", WS_CHILD | WS_VISIBLE | ES_LEFT |
+        ES_MULTILINE| ES_READONLY, 0, 620, 1199, 200, ParentWindowHandle, NULL, NULL, NULL);
+    ChangeFont(8, "Segoe UI Light");
 }
+
+int MafiaBar::Console::GetConsoleTextLength() { return GetWindowTextLengthA(ConsoleHandle); }
+
+char* MafiaBar::Console::GetAllConsoleText()
+{
+    int length = GetConsoleTextLength() + 1;
+    char* message = (char*)alloca(length * sizeof(char));
+    GetWindowTextA(ConsoleHandle, message, length);
+    return message;
+}
+
+void MafiaBar::Console::Print(const std::string& Message)
+{
+    int TextLen = SendMessageA(ConsoleHandle, WM_GETTEXTLENGTH, 0, 0);
+    SendMessageA(ConsoleHandle, EM_SETSEL, (WPARAM)TextLen, (LPARAM)TextLen);
+    SendMessageA(ConsoleHandle, EM_REPLACESEL, FALSE, (LPARAM)Message.c_str());
+}
+
+HWND MafiaBar::Console::GetConsoleHandle() const { return ConsoleHandle; }
+
+void MafiaBar::Console::ClearConsole() { SetWindowTextA(ConsoleHandle, "\0"); }
+
+void MafiaBar::Console::ShowConsole() { ShowWindow(ConsoleHandle, SW_SHOW); }
+
+void MafiaBar::Console::HideConsole() { ShowWindow(ConsoleHandle, SW_HIDE); }
+
+void MafiaBar::Console::SetTextColor(int r, int g, int b)
+{
+    this->r = r;
+    this->g = g;
+    this->b = b;
+}
+
+void MafiaBar::Console::ChangeFont(int Font_Size, const char* Font_Name)
+{
+    HFONT hFont = CreateFontA(0, Font_Size, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Font_Name);
+    SendMessageA(ConsoleHandle, WM_SETFONT, (WPARAM)hFont, 0);
+}
+
+std::tuple<int, int, int> MafiaBar::Console::GetColors() const { return std::make_tuple(r, g, b); }

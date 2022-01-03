@@ -1,5 +1,4 @@
 #pragma once
-#include "../Mafia Bar Engine/pch.h"
 
 #define USERNAME getenv("USERNAME")
 #define COMPUTERNAME getenv("COMPUTERNAME")

@@ -9,6 +9,5 @@ public:
 private:
 	void DoFrame();
 	Window win;
-	MafiaBar::Console console;
 	MafiaBar::Time time;
 };

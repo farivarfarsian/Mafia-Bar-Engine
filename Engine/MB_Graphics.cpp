@@ -48,17 +48,25 @@ MafiaBar::Graphics::Graphics(HWND hwnd)
 		&m_Context
 	);
 
+	//Creating Render Target View
 	Microsoft::WRL::ComPtr<ID3D11Resource> m_BackBuffer = nullptr;
 	m_Swap->GetBuffer(0, __uuidof(ID3D11Resource), &m_BackBuffer);
 	m_Device->CreateRenderTargetView(m_BackBuffer.Get(), nullptr, &m_RenderTarget);
+
+	//Creating Depth And Stencil View Buffer 
+	Microsoft::WRL::ComPtr<ID3D11Resource> m_BackBufferDepthStencilView = nullptr;
+	m_Swap->GetBuffer(0, __uuidof(ID3D11Resource), &m_BackBufferDepthStencilView);
+	m_Device->CreateDepthStencilView(m_BackBufferDepthStencilView.Get(), nullptr, &m_DepthStencilView);
 }
 
 void MafiaBar::Graphics::EndFrame() { m_Swap->Present(1u, 0u); }
 
-void MafiaBar::Graphics::ClearRenderBufferColor(float r, float g, float b, float a)
+void MafiaBar::Graphics::SetViewport(const D3D11_VIEWPORT& Viewport, uint32_t ViewportsNumbers) { m_Context->RSSetViewports(ViewportsNumbers, &Viewport); }
+
+void MafiaBar::Graphics::Clear(const float ClearRenderColor[4], float ClearDepthBuffer, UINT8 ClearStencilBuffer)
 {
-	const float colour[] = { r, g, b, a };
-	m_Context->ClearRenderTargetView(m_RenderTarget.Get(), colour);
+	m_Context->ClearRenderTargetView(m_RenderTarget.Get(), ClearRenderColor);
+	m_Context->ClearDepthStencilView(m_DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, ClearDepthBuffer, ClearStencilBuffer);
 }
 
 ID3D11Device* MafiaBar::Graphics::GetDevice() const { return m_Device.Get(); }
@@ -68,3 +76,5 @@ IDXGISwapChain* MafiaBar::Graphics::GetSwap() const { return m_Swap.Get(); }
 ID3D11DeviceContext* MafiaBar::Graphics::GetContext() const { return m_Context.Get(); }
 
 ID3D11RenderTargetView* MafiaBar::Graphics::GetRenderTarget() const { return m_RenderTarget.Get(); }
+
+ID3D11DepthStencilView* MafiaBar::Graphics::GetDepthStencilView() const { return m_DepthStencilView.Get(); }

@@ -44,14 +44,23 @@ namespace MafiaBar
 	};
     class EXP_ENGINE Console
     {
-	//Undefing Useless Microsoft Macros in Windows.h
-		#undef GetConsoleTitle
-    public:
-        Console(const char* cmdcolor = 0);
-        HWND GetConsoleHandle() const;
-        std::string GetConsoleTitle() const;
+	public:
+		Console() = default;
+		void CreateWIN32Console();
+		void CreateConsole(HWND ParentWindowHandle);
+		void Print(const std::string& Message);
+		void ClearConsole();
+		void ShowConsole();
+		void HideConsole();
+		void SetTextColor(int r, int g, int b);
+		void ChangeFont(int Font_Size, const char* Font_Name);
+	public:
+		int GetConsoleTextLength();
+		char* GetAllConsoleText();
+		HWND GetConsoleHandle() const;
+		std::tuple<int, int, int> GetColors() const;
     private:
-        std::string ConsoleTitle = "Mafia Bar Engine: Debug Console";
-		int GetColumnWidthConsole();
+		HWND ConsoleHandle = nullptr;
+		int r = 255, g = 255, b = 255;
     };
 }

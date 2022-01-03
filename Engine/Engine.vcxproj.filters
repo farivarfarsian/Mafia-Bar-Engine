@@ -57,9 +57,6 @@
     <ClCompile Include="MB_Keyboard.cpp">
       <Filter>Keyboard</Filter>
     </ClCompile>
-    <ClCompile Include="MB_Mouse.cpp">
-      <Filter>Mouse</Filter>
-    </ClCompile>
     <ClCompile Include="MB_Graphics.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>

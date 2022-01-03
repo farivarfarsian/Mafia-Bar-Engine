@@ -7,6 +7,15 @@ LRESULT CALLBACK WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lp
 	Window rw;
 	switch (message)
 	{
+		/*------------------------------ Console Window Events ------------------------------*/
+	case WM_CTLCOLORSTATIC:
+	{
+		HDC hdc = (HDC)wparam;
+		SetBkMode(hdc, TRANSPARENT);
+		rw.console.SetTextColor(0, 0, 255);
+		SetTextColor(hdc, RGB(std::get<0>(rw.console.GetColors()), std::get<1>(rw.console.GetColors()), std::get<2>(rw.console.GetColors())));
+		return (LRESULT)GetStockObject(BLACK_BRUSH);
+	}
 		/*------------------------------ Keyboard Events ------------------------------*/
 	case WM_KEYDOWN:
 	{
@@ -29,8 +38,10 @@ LRESULT CALLBACK WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lp
 		/*------------------------------ Mouse Events ------------------------------*/
 	case WM_MOUSEMOVE:
 	{
+		#pragma message(__FILE__ "(" _CRT_STRINGIZE(__LINE__) ")"  ": warning: " "This Mouse Class Doesn't Work, Pls Fix")
 		const POINTS pt = MAKEPOINTS(lparam); //Stroing The Mouse Moved Position
 		rw.mouse.OnMouseMove(pt.x, pt.y);
+		//printf_s("%d, %d\n", rw.mouse.GetPosX(), rw.mouse.GetPosY());
 		break;
 	}
 	case WM_LBUTTONDOWN:
@@ -92,9 +103,11 @@ Window::Window(const char* WinTitle, int width, int height)
 
 	if (this->handle == NULL) { MB_LAST_EXCEPTION; }
 
-	//Showing Window
+	CenterWindow(this->handle);
 	SetFocus(this->handle);
 	ShowWindow(this->handle, SW_SHOW);
+
+	console.CreateWIN32Console();
 
 	graphics = std::make_unique<MafiaBar::Graphics>(handle);
 }
@@ -109,7 +122,7 @@ void Window::RegisterWindowClass()
 
 	wcex.hCursor = LoadCursorFromFileA("Assets/mafia_bar_cursor/normal-select.cur");
 
-	wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+	wcex.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 
 	wcex.hIcon = static_cast<HICON>(LoadImage(hInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 32, 32, 0));
 	wcex.hIconSm = static_cast<HICON>(LoadImage(hInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 16, 16, 0));;
@@ -192,3 +205,37 @@ void Window::SetWindowTransparency(std::uint8_t Transperancy)
 	SetLayeredWindowAttributes(handle, 0, Transperancy, 0x02);
 }
 void Window::SetWindowAsOverlay() { ::SetWindowPos(handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_DRAWFRAME | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW); }
+
+BOOL Window::CenterWindow(HWND hwndWindow)
+{
+	HWND hwndParent;
+	RECT rectWindow, rectParent;
+
+	// make the window relative to its parent
+	if ((hwndParent = GetParent(hwndWindow)) != NULL)
+	{
+		GetWindowRect(hwndWindow, &rectWindow);
+		GetWindowRect(hwndParent, &rectParent);
+
+		int nWidth = rectWindow.right - rectWindow.left;
+		int nHeight = rectWindow.bottom - rectWindow.top;
+
+		int nX = ((rectParent.right - rectParent.left) - nWidth) / 2 + rectParent.left;
+		int nY = ((rectParent.bottom - rectParent.top) - nHeight) / 2 + rectParent.top;
+
+		int nScreenWidth = GetSystemMetrics(SM_CXSCREEN);
+		int nScreenHeight = GetSystemMetrics(SM_CYSCREEN);
+
+		// make sure that the dialog box never moves outside of the screen
+		if (nX < 0) nX = 0;
+		if (nY < 0) nY = 0;
+		if (nX + nWidth > nScreenWidth) nX = nScreenWidth - nWidth;
+		if (nY + nHeight > nScreenHeight) nY = nScreenHeight - nHeight;
+
+		MoveWindow(hwndWindow, nX, nY, nWidth, nHeight, FALSE);
+
+		return TRUE;
+	}
+
+	return FALSE;
+}

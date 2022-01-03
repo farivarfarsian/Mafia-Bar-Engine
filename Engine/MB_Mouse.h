@@ -1,5 +1,5 @@
 #pragma once
-#include "../Mafia Bar Engine/pch.h"
+
 class Mouse
 {
 	friend class Window;
@@ -47,8 +47,8 @@ public:
 	Mouse(const Mouse&) = delete;
 	Mouse& operator= (const Mouse&) = delete;
 	std::pair<int, int> GetPos() const { return { x, y }; }
-	int GetPoxX() const { return x; }
-	int GetPoxY() const { return y; }
+	int GetPosX() const { return x; }
+	int GetPosY() const { return y; }
 	bool LeftIsPressed() const { return IsLeftPressed; }
 	bool RightIsPressed() const { return IsRightPressed; }
 	Mouse::Event ReadState() 

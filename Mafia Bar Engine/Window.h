@@ -4,6 +4,8 @@
 #include <MB_Exception.h>
 #include <MB_Keyboard.h>
 #include <MB_Mouse.h>
+#include <MB_Utils.h>
+
 
 LRESULT CALLBACK WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lparam);
 
@@ -12,6 +14,7 @@ class Window
 public:
 	Keyboard keyboard;
 	Mouse mouse;
+	MafiaBar::Console console;
 	std::unique_ptr<MafiaBar::Graphics> graphics;
 public:
 	struct GENGW_Exceptions : public MafiaBar::Exceptions
@@ -38,6 +41,7 @@ public:
 	};
 	void SetWindowTransparency(std::uint8_t Transperancy);
 	void SetWindowAsOverlay();
+	BOOL CenterWindow(HWND hwndWindow);
 public:
 	HWND GetHandle() const { return handle; }
 	HINSTANCE GetInstance() const { return hInstance; }
