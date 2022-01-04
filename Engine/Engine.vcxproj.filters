@@ -60,5 +60,8 @@
     <ClCompile Include="MB_Graphics.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="MB_Mouse.cpp">
+      <Filter>Mouse</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -16,8 +16,7 @@ int App::Go()
 
 void App::DoFrame()
 {
-	int MouseX = 0, MouseY = 0;
 	win.graphics->Clear(DirectX::Colors::Black, 1.0f, 0);
-	win.graphics->TestRenderingTriangle(time.Peek(), MouseX / 1200.0f /*win.mouse.GetPosX() / 1200.0f*/, MouseY / 800.0f /*win.mouse.GetPosY() / 1200.0f*/);
+	win.graphics->TestRenderingTriangle(time.Peek(), win.mouse.GetPosX() / 600.0f - 1.0f, -win.mouse.GetPosY() / 400.0f + 1.0f);
 	win.graphics->EndFrame();
 }

@@ -6,14 +6,11 @@
 #include <MB_Mouse.h>
 #include <MB_Utils.h>
 
-
-LRESULT CALLBACK WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lparam);
-
 class Window
 {
 public:
-	Keyboard keyboard;
-	Mouse mouse;
+	MafiaBar::Keyboard keyboard;
+	MafiaBar::Mouse mouse;
 	MafiaBar::Console console;
 	std::unique_ptr<MafiaBar::Graphics> graphics;
 public:
@@ -30,6 +27,9 @@ public:
 	Window() = default;
 	Window(const char* WinTitle, int width, int height);
 	std::optional<int> ProcessMessages();
+	static LRESULT __stdcall WindowProcedureSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	static LRESULT __stdcall WindowProcedureThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	LRESULT WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	void RegisterWindowClass();
 	~Window();
 public:
@@ -46,8 +46,11 @@ public:
 	HWND GetHandle() const { return handle; }
 	HINSTANCE GetInstance() const { return hInstance; }
 	DWORD GetProcessID() const { return ProcID; }
+	int GetWindowWidth() const { return Width; }
+	int GetWindowHeight() const { return Height; }
 private:
 	HWND handle = NULL;
 	DWORD ProcID = GetCurrentProcessId();
 	HINSTANCE hInstance = GetModuleHandleA(NULL);
+	int Width, Height;
 };

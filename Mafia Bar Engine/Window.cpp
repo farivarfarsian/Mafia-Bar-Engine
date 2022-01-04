@@ -1,92 +1,14 @@
 #include "pch.h"
 #include "Window.h"
 #include "resource.h"
-/*--------------------------------------WNDPROC For Mafia Bar Engine--------------------------------------*/
-LRESULT CALLBACK WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lparam)
-{
-	Window rw;
-	switch (message)
-	{
-		/*------------------------------ Console Window Events ------------------------------*/
-	case WM_CTLCOLORSTATIC:
-	{
-		HDC hdc = (HDC)wparam;
-		SetBkMode(hdc, TRANSPARENT);
-		rw.console.SetTextColor(0, 0, 255);
-		SetTextColor(hdc, RGB(std::get<0>(rw.console.GetColors()), std::get<1>(rw.console.GetColors()), std::get<2>(rw.console.GetColors())));
-		return (LRESULT)GetStockObject(BLACK_BRUSH);
-	}
-		/*------------------------------ Keyboard Events ------------------------------*/
-	case WM_KEYDOWN:
-	{
-		rw.keyboard.OnKeyPressed(static_cast<unsigned char>(wparam));
-		printf_s("KeyPressed\n");
-		break;
-	}
-	case WM_KEYUP:
-	{
-		rw.keyboard.OnKeyReleased(static_cast<unsigned char>(wparam));
-		printf_s("KeyReleased\n");
-		break;
-	}
-	case WM_CHAR:
-	{
-		rw.keyboard.OnChar(static_cast<char>(wparam));
-		printf_s("KeyChar\n");
-		break;
-	}
-		/*------------------------------ Mouse Events ------------------------------*/
-	case WM_MOUSEMOVE:
-	{
-		#pragma message(__FILE__ "(" _CRT_STRINGIZE(__LINE__) ")"  ": warning: " "This Mouse Class Doesn't Work, Pls Fix")
-		const POINTS pt = MAKEPOINTS(lparam); //Stroing The Mouse Moved Position
-		rw.mouse.OnMouseMove(pt.x, pt.y);
-		//printf_s("%d, %d\n", rw.mouse.GetPosX(), rw.mouse.GetPosY());
-		break;
-	}
-	case WM_LBUTTONDOWN:
-	{
-		const POINTS pt = MAKEPOINTS(lparam); //Stroing The Mouse Moved Position
-		rw.mouse.OnLeftPressed(pt.x, pt.y);
-		printf("%d, %d\n", GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam));
-		break;
-	}
-	case WM_LBUTTONUP:
-	{
-		const POINTS pt = MAKEPOINTS(lparam); //Stroing The Mouse Moved Position
-		rw.mouse.OnLeftReleased(pt.x, pt.y);
-		break;
-	}
-	case WM_RBUTTONDOWN:
-	{
-		const POINTS pt = MAKEPOINTS(lparam); //Stroing The Mouse Moved Position
-		rw.mouse.OnRightPressed(pt.x, pt.y);
-		break;
-	}
-	case WM_RBUTTONUP:
-	{
-		const POINTS pt = MAKEPOINTS(lparam); //Stroing The Mouse Moved Position
-		rw.mouse.OnRightReleased(pt.x, pt.y);
-		break;
-	}
-	case WM_MOUSEWHEEL:
-	{
-		const POINTS pt = MAKEPOINTS(lparam); //Stroing The Mouse Moved Position
-		if (GET_WHEEL_DELTA_WPARAM(wparam) > 0) { rw.mouse.OnWheelUp(pt.x, pt.y); }
-		else if (GET_WHEEL_DELTA_WPARAM(wparam < 0)) { rw.mouse.OnWheelDown(pt.x, pt.y); }
-		break;
-	}
 
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-	}
-	return DefWindowProc(hWnd, message, wparam, lparam);
-}
 /*--------------------------------------Initializing The Mafia Bar Engine Window--------------------------------------*/
 Window::Window(const char* WinTitle, int width, int height)
 {
 	this->RegisterWindowClass();
+
+	this->Width = width;
+	this->Height = height;
 
 	this->handle = CreateWindowExA(WS_EX_ACCEPTFILES | WS_EX_TRANSPARENT,
 		"Mafia Bar", //Window Class name
@@ -133,11 +55,11 @@ void Window::RegisterWindowClass()
 
 	wcex.hInstance = hInstance;
 
-	wcex.lpfnWndProc = WindowProcess;
+	wcex.lpfnWndProc = WindowProcedureSetup;
 
 	RegisterClassEx(&wcex);
 }
-/*--------------------------------------Creates The Window Class/Style--------------------------------------*/
+/*--------------------------------------WNDPROC For Mafia Bar Engine Window--------------------------------------*/
 std::optional<int> Window::ProcessMessages()
 {
 	MSG msg;
@@ -152,6 +74,114 @@ std::optional<int> Window::ProcessMessages()
 		DispatchMessage(&msg);
 	}
 	return {};
+}
+LRESULT __stdcall Window::WindowProcedureSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	if (msg == WM_NCCREATE)
+	{
+		const CREATESTRUCTW* const pCreate = reinterpret_cast<CREATESTRUCTW*>(lParam);
+
+		Window* const pWnd = static_cast<Window*>(pCreate->lpCreateParams);
+
+		SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pWnd));
+
+		SetWindowLongPtr(hWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(&Window::WindowProcedureThunk));
+
+		return pWnd->WindowProcedure(hWnd, msg, wParam, lParam);
+	}
+	return DefWindowProc(hWnd, msg, wParam, lParam);
+}
+LRESULT __stdcall Window::WindowProcedureThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	Window* const pWnd = reinterpret_cast<Window*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+	return pWnd->WindowProcedure(hWnd, msg, wParam, lParam);
+}
+LRESULT Window::WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	switch (msg)
+	{
+	/*------------------------------ Console Window Events ------------------------------*/
+	case WM_CTLCOLORSTATIC:
+	{
+		HDC hdc = (HDC)wParam;
+		SetBkMode(hdc, TRANSPARENT);
+		console.SetTextColor(0, 0, 255);
+		SetTextColor(hdc, RGB(std::get<0>(console.GetColors()), std::get<1>(console.GetColors()), std::get<2>(console.GetColors())));
+		return (LRESULT)GetStockObject(BLACK_BRUSH);
+	}
+	/*------------------------------ Keyboard Events ------------------------------*/
+	case WM_KILLFOCUS:
+	{
+		keyboard.ClearState();
+		break;
+	}
+	case WM_KEYDOWN:
+	{
+		keyboard.OnKeyPressed(static_cast<unsigned char>(wParam));
+		printf_s("KeyPressed\n");
+		break;
+	}
+	case WM_KEYUP:
+	{
+		keyboard.OnKeyReleased(static_cast<unsigned char>(wParam));
+		printf_s("KeyReleased\n");
+		break;
+	}
+	case WM_CHAR:
+	{
+		keyboard.OnChar(static_cast<char>(wParam));
+		printf_s("KeyChar\n");
+		break;
+	}
+	/*------------------------------ Mouse Events ------------------------------*/
+	case WM_MOUSEMOVE:
+	{
+#pragma message(__FILE__ "(" _CRT_STRINGIZE(__LINE__) ")"  ": warning: " "This Mouse Class Doesn't Work, Pls Fix")
+		const POINTS pt = MAKEPOINTS(lParam); //Stroing The Mouse Moved Position
+		mouse.OnMouseMove(pt.x, pt.y);
+		//printf_s("%d, %d\n", rw.mouse.GetPosX(), rw.mouse.GetPosY());
+		break;
+	}
+	case WM_LBUTTONDOWN:
+	{
+		const POINTS pt = MAKEPOINTS(lParam); //Stroing The Mouse Moved Position
+		mouse.OnLeftPressed(pt.x, pt.y);
+		printf("%d, %d\n", GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		break;
+	}
+	case WM_LBUTTONUP:
+	{
+		const POINTS pt = MAKEPOINTS(lParam); //Stroing The Mouse Moved Position
+		mouse.OnLeftReleased(pt.x, pt.y);
+		break;
+	}
+	case WM_RBUTTONDOWN:
+	{
+		const POINTS pt = MAKEPOINTS(lParam); //Stroing The Mouse Moved Position
+		mouse.OnRightPressed(pt.x, pt.y);
+		break;
+	}
+	case WM_RBUTTONUP:
+	{
+		const POINTS pt = MAKEPOINTS(lParam); //Stroing The Mouse Moved Position
+		mouse.OnRightReleased(pt.x, pt.y);
+		break;
+	}
+	case WM_MOUSEWHEEL:
+	{
+		const POINTS pt = MAKEPOINTS(lParam); //Stroing The Mouse Moved Position
+		if (GET_WHEEL_DELTA_WPARAM(wParam) > 0) { mouse.OnWheelUp(pt.x, pt.y); }
+		else if (GET_WHEEL_DELTA_WPARAM(wParam < 0)) { mouse.OnWheelDown(pt.x, pt.y); }
+		break;
+	}
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		return 0;
+	case WM_CLOSE:
+		PostQuitMessage(0);
+		return 0;
+	}
+	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 Window::~Window()
 {
@@ -198,6 +228,7 @@ std::string Window::GENGW_Exceptions::GetErrorString() const noexcept
 {
 	return TranslteErrorCodes(hr);
 }
+/*--------------------------------------Window Utils Functions--------------------------------------*/
 void Window::SetWindowTransparency(std::uint8_t Transperancy)
 {
 	long wAttr = GetWindowLong(handle, GWL_EXSTYLE);
@@ -205,7 +236,6 @@ void Window::SetWindowTransparency(std::uint8_t Transperancy)
 	SetLayeredWindowAttributes(handle, 0, Transperancy, 0x02);
 }
 void Window::SetWindowAsOverlay() { ::SetWindowPos(handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_DRAWFRAME | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW); }
-
 BOOL Window::CenterWindow(HWND hwndWindow)
 {
 	HWND hwndParent;

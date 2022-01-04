@@ -110,6 +110,7 @@
     <ClCompile Include="MB_Graphics.cpp" />
     <ClCompile Include="MB_Keyboard.cpp" />
     <ClCompile Include="MB_Exception.cpp" />
+    <ClCompile Include="MB_Mouse.cpp" />
     <ClCompile Include="MB_Utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

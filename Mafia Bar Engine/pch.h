@@ -28,6 +28,7 @@
 #include <thread>
 #include <fstream>
 #include <queue>
+#include <bitset>
 
 #define MAX_NAME_STRING 256
 
