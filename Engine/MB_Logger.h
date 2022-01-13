@@ -33,15 +33,26 @@
 
 namespace MafiaBar
 {
-	class Logger //Logger Class
+	class Logger
 	{
 	public:
-		template<typename T>
-		void StaticLog(const char* details, T Value) //Writing Anything You Want into Mafia_Bar_Engine.log
+		void LogToFile(const char* detail, const char* value = "\0")
 		{
-			std::ofstream StreamW("Mafia_Bar_Engine.log", std::ios::app);
-			StreamW << "[" << __DATE__ << ' ' << __TIME__ << "]" << "\t" << details << ':' << "\t" << Value << std::endl;
-			StreamW.close();
+			LoggerStream.open("Mafia Bar Engine.log", std::ios::app | std::ios::out);
+			if (LoggerStream.is_open())
+			{
+				long long CurrentTime;
+				time(&CurrentTime);
+				LoggerStream << '[' << strtok(ctime(&CurrentTime), "\n") << ']' << '\t' << detail << ':' << '\t' << value << '\n';
+				LoggerStream.close();
+			}
+			else { Message("Logger Class Error Stream File", "We have some kind of problems to Access the Mafia Bar Engine.log", MB_ICONWARNING); }
 		}
+		void Message(const char* title, const char* message, UINT Type, HWND WindowHandle = NULL) { MessageBoxA(WindowHandle, message, title, Type); }
+	public:
+		const char* GetFileName() const { return MafiaBarFileLogName; }
+	private:;
+		std::fstream LoggerStream;
+		const char* MafiaBarFileLogName = "Mafia_Bar_Engine.log";
 	};
 }

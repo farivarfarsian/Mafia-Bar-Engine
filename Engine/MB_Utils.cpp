@@ -59,6 +59,23 @@ void MafiaBar::Time::End()
     printf("The Procces: %s Took: %fms\n", label, ms);
 }
 
+float MafiaBar::Time::Mark() 
+{
+    const auto old = last;
+    last = std::chrono::steady_clock::now();
+    const std::chrono::duration<float> frameTime = last - old;
+    return frameTime.count();
+}
+
+float MafiaBar::Time::Peek() const { return std::chrono::duration<float>(std::chrono::steady_clock::now() - last).count(); }
+
+const char* MafiaBar::Time::GetCurrentDateAndTime()
+{
+    time_t rawtime;
+    time(&rawtime);
+    return ctime(&rawtime);
+}
+
 void MafiaBar::Console::CreateWIN32Console()
 {
     AllocConsole();
@@ -72,6 +89,7 @@ void MafiaBar::Console::CreateWIN32Console()
 
 void MafiaBar::Console::CreateConsole(HWND ParentWindowHandle)
 {
+    #pragma message(__FILE__ "(" _CRT_STRINGIZE(__LINE__) ")"  ": warning: " "Creating a Window as the child of ParentDirectX Window Doesn't Work well No idea why, Pls Fix")
     ConsoleHandle = CreateWindowExA(WS_EX_TRANSPARENT | WS_EX_CLIENTEDGE, "Edit", "\t\t\t\t\t\t\t\tMafia Bar Engine : Debug Console", WS_CHILD | WS_VISIBLE | ES_LEFT |
         ES_MULTILINE| ES_READONLY, 0, 620, 1199, 200, ParentWindowHandle, NULL, NULL, NULL);
     ChangeFont(8, "Segoe UI Light");

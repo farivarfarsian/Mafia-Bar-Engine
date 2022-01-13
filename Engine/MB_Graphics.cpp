@@ -1,11 +1,12 @@
 #include "MB_Graphics.h"
 
-MafiaBar::Graphics::Graphics(HWND hwnd)
+MafiaBar::Graphics::Graphics(HWND hwnd, int Width, int Height)
 {
+
 	DXGI_SWAP_CHAIN_DESC sd = {};
 	//Changing to The Width And Height of the Windows
-	sd.BufferDesc.Width = 0;
-	sd.BufferDesc.Height = 0;
+	sd.BufferDesc.Width = Width;
+	sd.BufferDesc.Height = Height;
 
 	sd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM; //Pixel Layouts
 
@@ -31,7 +32,7 @@ MafiaBar::Graphics::Graphics(HWND hwnd)
 	sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 
 	//No Flags
-	sd.Flags = 0;
+	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
 	D3D11CreateDeviceAndSwapChain(
 		nullptr,
@@ -53,10 +54,38 @@ MafiaBar::Graphics::Graphics(HWND hwnd)
 	m_Swap->GetBuffer(0, __uuidof(ID3D11Resource), &m_BackBuffer);
 	m_Device->CreateRenderTargetView(m_BackBuffer.Get(), nullptr, &m_RenderTarget);
 
-	//Creating Depth And Stencil View Buffer 
-	Microsoft::WRL::ComPtr<ID3D11Resource> m_BackBufferDepthStencilView = nullptr;
-	m_Swap->GetBuffer(0, __uuidof(ID3D11Resource), &m_BackBufferDepthStencilView);
-	m_Device->CreateDepthStencilView(m_BackBufferDepthStencilView.Get(), nullptr, &m_DepthStencilView);
+	//Creating Depth And Stencil State Buffer 
+	D3D11_DEPTH_STENCIL_DESC DepthStencilBufferDESC = {};
+	DepthStencilBufferDESC.DepthEnable = TRUE;
+	DepthStencilBufferDESC.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	DepthStencilBufferDESC.DepthFunc = D3D11_COMPARISON_LESS;
+	m_Device->CreateDepthStencilState(&DepthStencilBufferDESC, &m_DepthStencilState);
+	//bind depth state
+	m_Context->OMSetDepthStencilState(m_DepthStencilState.Get(), 1u);
+
+	//create depth stencil texture
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> DepthStencilTexure;
+	D3D11_TEXTURE2D_DESC DepthStencilTextureDESC = {};
+	DepthStencilTextureDESC.Width = Width;
+	DepthStencilTextureDESC.Height = Height;
+	DepthStencilTextureDESC.MipLevels = 1u;
+	DepthStencilTextureDESC.ArraySize = 1u;
+	DepthStencilTextureDESC.Format = DXGI_FORMAT_D32_FLOAT;
+	DepthStencilTextureDESC.SampleDesc.Count = 1u;
+	DepthStencilTextureDESC.SampleDesc.Quality = 0u;
+	DepthStencilTextureDESC.Usage = D3D11_USAGE_DEFAULT;
+	DepthStencilTextureDESC.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+
+	m_Device->CreateTexture2D(&DepthStencilTextureDESC, nullptr, &DepthStencilTexure);
+
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC DepthStencilViewDESC = {};
+	DepthStencilViewDESC.Format = DXGI_FORMAT_D32_FLOAT;
+	DepthStencilViewDESC.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	DepthStencilViewDESC.Texture2D.MipSlice = 0u;
+	m_Device->CreateDepthStencilView(DepthStencilTexure.Get(), &DepthStencilViewDESC, &m_DepthStencilView);
+
+	m_Context->OMSetRenderTargets(1u, m_RenderTarget.GetAddressOf(), m_DepthStencilView.Get());
 }
 
 void MafiaBar::Graphics::EndFrame() { m_Swap->Present(1u, 0u); }
@@ -76,5 +105,7 @@ IDXGISwapChain* MafiaBar::Graphics::GetSwap() const { return m_Swap.Get(); }
 ID3D11DeviceContext* MafiaBar::Graphics::GetContext() const { return m_Context.Get(); }
 
 ID3D11RenderTargetView* MafiaBar::Graphics::GetRenderTarget() const { return m_RenderTarget.Get(); }
+
+ID3D11DepthStencilState* MafiaBar::Graphics::GetDepthStencilState() const { return m_DepthStencilState.Get(); }
 
 ID3D11DepthStencilView* MafiaBar::Graphics::GetDepthStencilView() const { return m_DepthStencilView.Get(); }

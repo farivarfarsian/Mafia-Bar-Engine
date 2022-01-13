@@ -2,8 +2,12 @@
 #include "Window.h"
 #include "resource.h"
 
+/*--------------------------------------The Mafia Bar Engine Window Menus ID Definitions--------------------------------------*/
+#define FILE_QUIT 20091
+#define FILE_TAKE_SCREENSHOT 20092
+
 /*--------------------------------------Initializing The Mafia Bar Engine Window--------------------------------------*/
-Window::Window(const char* WinTitle, int width, int height)
+Window::Window(const char* WinTitle, int width, int height, bool fullscreen)
 {
 	this->RegisterWindowClass();
 
@@ -14,8 +18,8 @@ Window::Window(const char* WinTitle, int width, int height)
 		"Mafia Bar", //Window Class name
 		WinTitle, //Windows Title
 		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, //Windows Styles
-		CW_USEDEFAULT, //Window X Position
-		CW_USEDEFAULT, //Windows Y Posiontion
+		0, //Window X Position
+		0, //Windows Y Posiontion
 		width, //Window Width
 		height, //Window Height
 		nullptr, //Handle of Parent of this Windows
@@ -31,7 +35,20 @@ Window::Window(const char* WinTitle, int width, int height)
 
 	console.CreateWIN32Console();
 
-	graphics = std::make_unique<MafiaBar::Graphics>(handle);
+	graphics = std::make_unique<MafiaBar::Graphics>(handle, Width, Height);
+
+	//Setting Fullscreen
+	if (fullscreen == true)
+	{
+		if (graphics->GetSwap()->SetFullscreenState(TRUE, nullptr) == S_OK) { this->fullscreen = true; }
+		else { log.LogToFile("Setting Fullscreen On, Using SwapChain D3D11", "Failed"); }
+	}
+	if(fullscreen == false) 
+	{
+		if (graphics->GetSwap()->SetFullscreenState(false, nullptr) == S_OK) { this->fullscreen = false; }
+		else { log.LogToFile("Setting Fullscreen Off, Using SwapChain D3D11", "Failed"); }
+	}
+	
 }
 /*--------------------------------------Creates The Window Class/Style--------------------------------------*/
 void Window::RegisterWindowClass()
@@ -44,7 +61,7 @@ void Window::RegisterWindowClass()
 
 	wcex.hCursor = LoadCursorFromFileA("Assets/mafia_bar_cursor/normal-select.cur");
 
-	wcex.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 
 	wcex.hIcon = static_cast<HICON>(LoadImage(hInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 32, 32, 0));
 	wcex.hIconSm = static_cast<HICON>(LoadImage(hInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 16, 16, 0));;
@@ -100,7 +117,7 @@ LRESULT Window::WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 {
 	switch (msg)
 	{
-	/*------------------------------ Console Window Events ------------------------------*/
+		/*------------------------------ Console Window Events ------------------------------*/
 	case WM_CTLCOLORSTATIC:
 	{
 		HDC hdc = (HDC)wParam;
@@ -136,51 +153,128 @@ LRESULT Window::WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 	/*------------------------------ Mouse Events ------------------------------*/
 	case WM_MOUSEMOVE:
 	{
-#pragma message(__FILE__ "(" _CRT_STRINGIZE(__LINE__) ")"  ": warning: " "This Mouse Class Doesn't Work, Pls Fix")
 		const POINTS pt = MAKEPOINTS(lParam); //Stroing The Mouse Moved Position
 		mouse.OnMouseMove(pt.x, pt.y);
-		//printf_s("%d, %d\n", rw.mouse.GetPosX(), rw.mouse.GetPosY());
 		break;
 	}
 	case WM_LBUTTONDOWN:
 	{
-		const POINTS pt = MAKEPOINTS(lParam); //Stroing The Mouse Moved Position
+		const POINTS pt = MAKEPOINTS(lParam);
 		mouse.OnLeftPressed(pt.x, pt.y);
 		printf("%d, %d\n", GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 		break;
 	}
 	case WM_LBUTTONUP:
 	{
-		const POINTS pt = MAKEPOINTS(lParam); //Stroing The Mouse Moved Position
+		const POINTS pt = MAKEPOINTS(lParam);
 		mouse.OnLeftReleased(pt.x, pt.y);
 		break;
 	}
 	case WM_RBUTTONDOWN:
 	{
-		const POINTS pt = MAKEPOINTS(lParam); //Stroing The Mouse Moved Position
+		const POINTS pt = MAKEPOINTS(lParam);
 		mouse.OnRightPressed(pt.x, pt.y);
 		break;
 	}
 	case WM_RBUTTONUP:
 	{
-		const POINTS pt = MAKEPOINTS(lParam); //Stroing The Mouse Moved Position
+		const POINTS pt = MAKEPOINTS(lParam);
 		mouse.OnRightReleased(pt.x, pt.y);
 		break;
 	}
 	case WM_MOUSEWHEEL:
 	{
-		const POINTS pt = MAKEPOINTS(lParam); //Stroing The Mouse Moved Position
+		const POINTS pt = MAKEPOINTS(lParam);
 		if (GET_WHEEL_DELTA_WPARAM(wParam) > 0) { mouse.OnWheelUp(pt.x, pt.y); }
 		else if (GET_WHEEL_DELTA_WPARAM(wParam < 0)) { mouse.OnWheelDown(pt.x, pt.y); }
 		break;
 	}
+	/*------------------------------Mafia Bar Engine Window Events ------------------------------*/
+	case WM_CREATE:
+		AddMenus(hWnd);
+		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
 	case WM_CLOSE:
 		PostQuitMessage(0);
 		return 0;
+	case WM_SIZING:
+		printf_s("You're Resizing The Window");
+		break;
+	case WM_HOTKEY:
+		if (wParam == hotkey.ESC)
+		{
+			graphics->GetSwap()->SetFullscreenState(FALSE, NULL);
+		}
+		if (wParam == hotkey.QUIT)
+		{
+			PostQuitMessage(0);
+			return 0;
+		}
+		break;
+	case WM_COMMAND:
+		switch (wParam)
+		{
+		case FILE_QUIT:
+			PostQuitMessage(0);
+			return 0;
+			break;
+		case FILE_TAKE_SCREENSHOT:
+			ScreenShot(handle, MafiaBar::WindowDialogs::FileOperations::SaveFileDialog("Bitmap Image Files\0 * .bmp\0", hWnd).c_str());
+			//blTakeScreenShot();
+			break;
+		default:
+			break;
+		}
+		break;
+	/*
+	case WM_NCCALCSIZE:
+	{
+		LPNCCALCSIZE_PARAMS ncParams = (LPNCCALCSIZE_PARAMS)lParam;
+		ncParams->rgrc[0].top += 4;
+		ncParams->rgrc[0].left += 4;
+		ncParams->rgrc[0].bottom -= 4;
+		ncParams->rgrc[0].right -= 4;
+		return 0;
 	}
+	case WM_NCPAINT:
+	{
+		RECT rect;
+		GetWindowRect(hWnd, &rect);
+		HRGN region = NULL;
+		if (wParam == NULLREGION) {
+			region = CreateRectRgn(rect.left, rect.top, rect.right, rect.bottom);
+		}
+		else {
+			HRGN copy = CreateRectRgn(0, 0, 0, 0);
+			if (CombineRgn(copy, (HRGN)wParam, NULL, RGN_COPY)) {
+				region = copy;
+			}
+			else {
+				DeleteObject(copy);
+			}
+		}
+
+		HDC dc = GetDCEx(hWnd, region, DCX_WINDOW | DCX_CACHE | DCX_LOCKWINDOWUPDATE);
+		if (!dc && region) {
+			DeleteObject(region);
+		}
+		HPEN pen = CreatePen(PS_INSIDEFRAME, 4, RGB(0, 0, 0));
+		HGDIOBJ old = SelectObject(dc, pen);
+		Rectangle(dc, 0, 0, Width, Height);
+		SelectObject(dc, old);
+		ReleaseDC(hWnd, dc);
+		DeleteObject(pen);
+		return 0;
+	}
+	case WM_NCACTIVATE:
+		RedrawWindow(hWnd, NULL, NULL, RDW_UPDATENOW);
+		return 0;
+		break;
+	*/
+	}
+
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 Window::~Window()
@@ -236,6 +330,18 @@ void Window::SetWindowTransparency(std::uint8_t Transperancy)
 	SetLayeredWindowAttributes(handle, 0, Transperancy, 0x02);
 }
 void Window::SetWindowAsOverlay() { ::SetWindowPos(handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_DRAWFRAME | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW); }
+void Window::AddMenus(HWND hwnd)
+{
+	WindowMenus = CreateMenu();
+	HMENU hFileMenu = CreateMenu();
+
+	AppendMenuA(WindowMenus, MF_POPUP, (UINT_PTR)hFileMenu, "File");
+		AppendMenuA(hFileMenu, MF_STRING, FILE_TAKE_SCREENSHOT, "Take a Screenshot");
+		AppendMenuA(hFileMenu, MF_SEPARATOR, NULL, NULL);
+		AppendMenuA(hFileMenu, MF_STRING, FILE_QUIT, "Quit");
+
+	SetMenu(hwnd, WindowMenus);
+}
 BOOL Window::CenterWindow(HWND hwndWindow)
 {
 	HWND hwndParent;
