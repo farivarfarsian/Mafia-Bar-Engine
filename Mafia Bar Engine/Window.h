@@ -48,6 +48,7 @@ public:
 	BOOL CenterWindow(HWND hwndWindow);
 	void ScreenShot(HWND hwnd, const char* BmpName)
 	{
+		/*
 		if (BmpName != "\0")
 		{
 			HDC WindowDC = GetDC(hwnd);
@@ -85,6 +86,7 @@ public:
 			CloseHandle(FH);
 			GlobalFree(BmpFileData);
 		}
+		*/
 	}
 	/*
 	HRESULT blTakeScreenShot()
