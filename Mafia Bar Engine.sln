@@ -7,8 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mafia Bar Engine", "Mafia B
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine\Engine.vcxproj", "{C130B7A0-C684-410E-A686-8EC2030AF661}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Assembly_Engine", "Assembly_Engine\Assembly_Engine.vcxproj", "{7414BA41-BCD5-4794-8632-C96719320751}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -23,10 +21,6 @@ Global
 		{C130B7A0-C684-410E-A686-8EC2030AF661}.Debug|x64.Build.0 = Debug|x64
 		{C130B7A0-C684-410E-A686-8EC2030AF661}.Release|x64.ActiveCfg = Release|x64
 		{C130B7A0-C684-410E-A686-8EC2030AF661}.Release|x64.Build.0 = Release|x64
-		{7414BA41-BCD5-4794-8632-C96719320751}.Debug|x64.ActiveCfg = Debug|x64
-		{7414BA41-BCD5-4794-8632-C96719320751}.Debug|x64.Build.0 = Debug|x64
-		{7414BA41-BCD5-4794-8632-C96719320751}.Release|x64.ActiveCfg = Release|x64
-		{7414BA41-BCD5-4794-8632-C96719320751}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -47,15 +47,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(SolutionDir)libs\x64\Debug;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)includes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath);$(SolutionDir)libs\x64\Debug;$(DXSDK_DIR)Lib\x64</LibraryPath>
+    <IncludePath>$(IncludePath);$(SolutionDir)includes;$(DXSDK_DIR)Include</IncludePath>
     <IntDir>$(SolutionDir)Build\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)Build\$(Configuration)\Bin</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(SolutionDir)libs\x64\Release;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)includes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath);$(SolutionDir)libs\x64\Release;$(DXSDK_DIR)Lib\x64</LibraryPath>
+    <IncludePath>$(IncludePath);$(SolutionDir)includes;$(DXSDK_DIR)Include</IncludePath>
     <IntDir>$(SolutionDir)Build\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)Build\$(Configuration)\Bin</OutDir>
   </PropertyGroup>
@@ -121,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="Information.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="resource.h" />
@@ -138,15 +139,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="PixelShader.hlsl">
+    <None Include="Resources\mafia_bar_cursor\normal-select.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\PixelShader.hlsl">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="VertexShader.hlsl">
+    <FxCompile Include="Shaders\VertexShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>

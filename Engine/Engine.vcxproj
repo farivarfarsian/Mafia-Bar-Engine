@@ -48,11 +48,15 @@
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(SolutionDir)Build\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)Build\$(Configuration)\Bin</OutDir>
+    <IncludePath>$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
+    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)Lib\x64</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)Build\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)Build\$(Configuration)\Bin</OutDir>
+    <IncludePath>$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
+    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)Lib\x64</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -104,7 +108,6 @@
     <ClInclude Include="MB_Logger.h" />
     <ClInclude Include="MB_Utils.h" />
     <ClInclude Include="MB_Mouse.h" />
-    <ClInclude Include="MB_Information.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MB_Graphics.cpp" />

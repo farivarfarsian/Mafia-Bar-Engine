@@ -13,6 +13,7 @@ Window::Window(const char* WinTitle, int width, int height, bool fullscreen)
 
 	this->Width = width;
 	this->Height = height;
+	this->AppName = WinTitle;
 
 	this->handle = CreateWindowExA(WS_EX_ACCEPTFILES | WS_EX_TRANSPARENT,
 		"Mafia Bar", //Window Class name
@@ -58,8 +59,8 @@ void Window::RegisterWindowClass()
 	wcex.style = CS_HREDRAW | CS_VREDRAW;
 	wcex.cbClsExtra = 0;
 	wcex.cbWndExtra = 0;
-
-	wcex.hCursor = LoadCursorFromFileA("Assets/mafia_bar_cursor/normal-select.cur");
+	
+	wcex.hCursor = LoadCursorA(hInstance, MAKEINTRESOURCEA(103));
 
 	wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 
@@ -197,7 +198,11 @@ LRESULT Window::WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 		PostQuitMessage(0);
 		return 0;
 	case WM_CLOSE:
-		PostQuitMessage(0);
+		if (MessageBoxA(hWnd, "Are you sure you want to quit?", AppName, MB_OKCANCEL) == IDOK)
+		{
+			PostQuitMessage(0);
+			return 0;
+		}
 		return 0;
 	case WM_SIZING:
 		printf_s("You're Resizing The Window");
@@ -221,8 +226,7 @@ LRESULT Window::WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 			return 0;
 			break;
 		case FILE_TAKE_SCREENSHOT:
-			ScreenShot(handle, MafiaBar::WindowDialogs::FileOperations::SaveFileDialog("Bitmap Image Files\0 * .bmp\0", hWnd).c_str());
-			//blTakeScreenShot();
+			ScreenShot();
 			break;
 		default:
 			break;

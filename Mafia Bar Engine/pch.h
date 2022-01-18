@@ -5,26 +5,26 @@
 * 
 */
 
-#ifdef _CRT_SECURE_NO_WARNINGS_DEBUG
-//Only For Debugging
-#include <iostream>
-#include <chrono>
-#endif // _CRT_SECURE_NO_WARNINGS_DEBUG
-
-#include "resource.h" //Resources
-
-// DirectX includes
+//Implementing DirectX Libraries
 #include <d3d11.h>
 #pragma comment(lib, "d3d11.lib")
+
 #include <d3dcompiler.h>
 #pragma comment(lib, "D3DCompiler.lib")
+
+#include <d3dx11.h>
+#pragma comment(lib, "d3dx11.lib")
+
 #include <DirectXMath.h>
 #include <DirectXColors.h>
 
+//Microsoft Windows Includes
+#include <Windows.h>
 #include <wrl.h>
-
 #include <windowsx.h>
 
+//STD Includes
+#include <chrono>
 #include <thread>
 #include <fstream>
 #include <queue>

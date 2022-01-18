@@ -55,7 +55,12 @@ END
 IDI_ICON1               ICON                    "Resources\\engine.ico"
 
 
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
 
+IDC_CURSOR1             CURSOR                  "Resources\\mafia_bar_cursor\\normal-select.cur"
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////

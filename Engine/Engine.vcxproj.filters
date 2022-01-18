@@ -7,9 +7,6 @@
     <Filter Include="Graphics">
       <UniqueIdentifier>{83d13879-9d9d-46c8-a19a-644ce8fb2de2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Information">
-      <UniqueIdentifier>{dd9cfe54-6de6-4633-afb0-a3e47b94eae2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Keyboard">
       <UniqueIdentifier>{cdec1710-9b4a-4ce6-a88d-1df5d4c2a03c}</UniqueIdentifier>
     </Filter>
@@ -31,9 +28,6 @@
       <Filter>Keyboard</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h" />
-    <ClInclude Include="MB_Information.h">
-      <Filter>Information</Filter>
-    </ClInclude>
     <ClInclude Include="MB_Mouse.h">
       <Filter>Mouse</Filter>
     </ClInclude>
