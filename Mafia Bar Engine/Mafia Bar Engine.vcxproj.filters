@@ -17,6 +17,9 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{976a51e6-b094-4098-9d73-5ec9ecbe2df9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System Information">
+      <UniqueIdentifier>{37a66097-cf98-40aa-a63e-73a9ada433e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -44,7 +47,7 @@
       <Filter>Window</Filter>
     </ClInclude>
     <ClInclude Include="Information.h">
-      <Filter>App</Filter>
+      <Filter>System Information</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

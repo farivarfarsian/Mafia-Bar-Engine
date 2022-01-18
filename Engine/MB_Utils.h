@@ -9,7 +9,8 @@ namespace MafiaBar
 		static enum DefaultHotkeyIDs
 		{
 			ESC = 1,
-			QUIT = 2
+			QUIT = 2,
+			FULLSCREEN = 3
 		};
 		bool RegisterHotKey(const HWND& handle, int hotkey_id, int fsModifiers, int vk);
 		bool UnregisterHotKey(const HWND& handle, int hotkey_id);

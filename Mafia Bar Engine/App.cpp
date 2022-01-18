@@ -6,6 +6,7 @@ App::App()
 	//Registering Mafia Bar Engine Default Hotkeys
 	win.hotkey.RegisterHotKey(win.GetHandle(), win.hotkey.ESC, NULL, VK_ESCAPE);
 	win.hotkey.RegisterHotKey(win.GetHandle(), win.hotkey.QUIT, MOD_CONTROL, 0x51);
+	win.hotkey.RegisterHotKey(win.GetHandle(), win.hotkey.FULLSCREEN, MOD_CONTROL, 0x46);
 }
 
 int App::Go()

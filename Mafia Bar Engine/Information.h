@@ -1,4 +1,5 @@
 #pragma once
+#include "pch.h"
 
 #define USERNAME getenv("USERNAME")
 #define COMPUTERNAME getenv("COMPUTERNAME")

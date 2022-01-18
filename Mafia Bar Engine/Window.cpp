@@ -211,11 +211,17 @@ LRESULT Window::WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 		if (wParam == hotkey.ESC)
 		{
 			graphics->GetSwap()->SetFullscreenState(FALSE, NULL);
+			fullscreen = false;
 		}
 		if (wParam == hotkey.QUIT)
 		{
 			PostQuitMessage(0);
 			return 0;
+		}
+		if (wParam == hotkey.FULLSCREEN) 
+		{ 
+			graphics->GetSwap()->SetFullscreenState(TRUE, NULL);
+			fullscreen = true;
 		}
 		break;
 	case WM_COMMAND:
