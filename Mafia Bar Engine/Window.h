@@ -1,9 +1,7 @@
 #pragma once
 #include "pch.h"
-#include <MB_Graphics.h>
-#include <MB_Exception.h>
-#include <MB_Keyboard.h>
-#include <MB_Mouse.h>
+#include <Engine.h>
+
 #include <MB_Utils.h>
 
 class Window
@@ -47,13 +45,34 @@ public:
 	void AddMenus(HWND hwnd);
 	BOOL CenterWindow(HWND hwndWindow);
 	void ScreenShot() /* It doesn't work, pls fix */
-	{
-		HRESULT hr;
-		Microsoft::WRL::ComPtr<ID3D11Resource> backBuffer = nullptr;
-		graphics->GetSwap()->GetBuffer(0, __uuidof(ID3D11Resource), &backBuffer);
+	{		
+		D3D11_TEXTURE2D_DESC desc{};
+		HRESULT hr = S_OK;
+		ID3D11Resource* pSurface = nullptr;
+		ID3D11Texture2D* pTexture = nullptr;
 
-		hr = D3DX11SaveTextureToFileA(graphics->GetContext(), backBuffer.Get(), D3DX11_IFF_JPG, "SCREENSHOT.JPG"); //This Function fails
-		if (FAILED(hr)) { log.Message("Getting Screenshot", "Failed", 0, handle); }
+
+		hr = graphics->GetSwap()->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&pSurface));
+
+		desc.ArraySize = 1u;
+		desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		desc.Width = Width;
+		desc.Height = Height;
+		desc.MipLevels = 1u;
+		desc.SampleDesc.Count = 1u;
+		desc.SampleDesc.Quality = 0u;
+		desc.BindFlags = D3D11_BIND_RENDER_TARGET;
+		desc.Usage = D3D11_USAGE_DEFAULT;
+
+
+		hr = graphics->GetDevice()->CreateTexture2D(&desc, nullptr, &pTexture);
+		if (pTexture)
+		{
+			graphics->GetContext()->ResolveSubresource(pTexture, 0, pSurface, 0, DXGI_FORMAT_R8G8B8A8_UNORM);
+			hr = D3DX11SaveTextureToFileA(graphics->GetContext(), pTexture, D3DX11_IFF_BMP, "test.bmp");
+			pTexture->Release();
+		}
+		pSurface->Release();
 	}
 public:
 	HWND GetHandle() const { return handle; }

@@ -1,4 +1,4 @@
-#include "MB_Exception.h"
+#include "Exception.h"
 
 const char* MafiaBar::Exceptions::what() const noexcept
 {

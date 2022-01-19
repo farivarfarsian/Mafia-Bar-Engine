@@ -1,4 +1,4 @@
-#include "MB_Graphics.h"
+#include "Graphics.h"
 
 MafiaBar::Graphics::Graphics(HWND hwnd, int Width, int Height)
 {

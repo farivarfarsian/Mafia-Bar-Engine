@@ -102,19 +102,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h" />
-    <ClInclude Include="MB_Exception.h" />
-    <ClInclude Include="MB_Graphics.h" />
-    <ClInclude Include="MB_Keyboard.h" />
-    <ClInclude Include="MB_Logger.h" />
+    <ClInclude Include="Information.h" />
+    <ClInclude Include="Exception.h" />
+    <ClInclude Include="Graphics.h" />
+    <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="MB_Utils.h" />
-    <ClInclude Include="MB_Mouse.h" />
+    <ClInclude Include="Mouse.h" />
+    <ClInclude Include="WinRegistery.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MB_Graphics.cpp" />
-    <ClCompile Include="MB_Keyboard.cpp" />
-    <ClCompile Include="MB_Exception.cpp" />
-    <ClCompile Include="MB_Mouse.cpp" />
+    <ClCompile Include="Information.cpp" />
+    <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="Exception.cpp" />
+    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="MB_Utils.cpp" />
+    <ClCompile Include="WinRegistery.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

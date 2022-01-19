@@ -18,12 +18,6 @@ namespace MafiaBar
 	private:
 		int HotkeyID = 0;
 	};
-	class EXP_ENGINE WindowRegistery
-	{
-	public:
-		bool RegistryWrite(LPCTSTR subkey, LPCTSTR name, DWORD type, const char* value);
-		char* RegistryRead(LPCTSTR subkey, LPCTSTR name, DWORD type);
-	};
 	class EXP_ENGINE Time
 	{
     public:

@@ -1,4 +1,4 @@
-#include "MB_Mouse.h"
+#include "Mouse.h"
 
 std::pair<int, int> MafiaBar::Mouse::GetPos() const { return { x, y }; }
 

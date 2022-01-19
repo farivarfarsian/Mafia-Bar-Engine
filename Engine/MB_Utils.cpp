@@ -8,33 +8,6 @@ bool MafiaBar::Hotkey::RegisterHotKey(const HWND& handle, int hotkey_id, int fsM
 
 bool MafiaBar::Hotkey::UnregisterHotKey(const HWND& handle, int hotkey_id) { return ::UnregisterHotKey(handle, hotkey_id); }
 
-bool MafiaBar::WindowRegistery::RegistryWrite(LPCTSTR subkey, LPCTSTR name, DWORD type, const char* value)
-{
-    HKEY key;
-    if (RegOpenKey(HKEY_LOCAL_MACHINE, subkey, &key) == ERROR_SUCCESS)
-    {
-        if (RegSetValueEx(key, name, 0, type, (LPBYTE)value, strlen(value) * sizeof(char)) == ERROR_SUCCESS)
-        {
-            RegCloseKey(key);
-            return true;
-        }
-        else { return false; }
-    }
-    else { return false; }
-}
-
-char* MafiaBar::WindowRegistery::RegistryRead(LPCTSTR subkey, LPCTSTR name, DWORD type)
-{
-    HKEY key;
-    TCHAR value[255];
-    DWORD value_length = 255;
-    RegOpenKey(HKEY_LOCAL_MACHINE, subkey, &key);
-    RegQueryValueEx(key, name, NULL, &type, (LPBYTE)&value, &value_length);
-    RegCloseKey(key);
-    static char converted[MAX_NAME_STRING];
-    wcstombs(converted, value, wcslen(value) + 1);
-    return std::move(converted);
-}
 
 MafiaBar::Time::Time(const char* Process_Describ)
     : start(std::chrono::high_resolution_clock::now()), label(Process_Describ)  
