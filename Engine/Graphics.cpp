@@ -1,6 +1,6 @@
 #include "Graphics.h"
 
-MafiaBar::Graphics::Graphics(HWND hwnd, int Width, int Height)
+MafiaBar::Engine::Graphics::Graphics::Graphics(HWND hwnd, int Width, int Height)
 {
 
 	DXGI_SWAP_CHAIN_DESC sd = {};
@@ -88,24 +88,24 @@ MafiaBar::Graphics::Graphics(HWND hwnd, int Width, int Height)
 	m_Context->OMSetRenderTargets(1u, m_RenderTarget.GetAddressOf(), m_DepthStencilView.Get());
 }
 
-void MafiaBar::Graphics::EndFrame() { m_Swap->Present(1u, 0u); }
+void MafiaBar::Engine::Graphics::Graphics::EndFrame() { m_Swap->Present(1u, 0u); }
 
-void MafiaBar::Graphics::SetViewport(const D3D11_VIEWPORT& Viewport, uint32_t ViewportsNumbers) { m_Context->RSSetViewports(ViewportsNumbers, &Viewport); }
+void MafiaBar::Engine::Graphics::Graphics::SetViewport(const D3D11_VIEWPORT& Viewport, uint32_t ViewportsNumbers) { m_Context->RSSetViewports(ViewportsNumbers, &Viewport); }
 
-void MafiaBar::Graphics::Clear(const float ClearRenderColor[4], float ClearDepthBuffer, UINT8 ClearStencilBuffer)
+void MafiaBar::Engine::Graphics::Graphics::Clear(const float ClearRenderColor[4], float ClearDepthBuffer, UINT8 ClearStencilBuffer)
 {
 	m_Context->ClearRenderTargetView(m_RenderTarget.Get(), ClearRenderColor);
 	m_Context->ClearDepthStencilView(m_DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, ClearDepthBuffer, ClearStencilBuffer);
 }
 
-ID3D11Device* MafiaBar::Graphics::GetDevice() const { return m_Device.Get(); }
+ID3D11Device* MafiaBar::Engine::Graphics::Graphics::GetDevice() const { return m_Device.Get(); }
 
-IDXGISwapChain* MafiaBar::Graphics::GetSwap() const { return m_Swap.Get(); }
+IDXGISwapChain* MafiaBar::Engine::Graphics::Graphics::GetSwap() const { return m_Swap.Get(); }
 
-ID3D11DeviceContext* MafiaBar::Graphics::GetContext() const { return m_Context.Get(); }
+ID3D11DeviceContext* MafiaBar::Engine::Graphics::Graphics::GetContext() const { return m_Context.Get(); }
 
-ID3D11RenderTargetView* MafiaBar::Graphics::GetRenderTarget() const { return m_RenderTarget.Get(); }
+ID3D11RenderTargetView* MafiaBar::Engine::Graphics::Graphics::GetRenderTarget() const { return m_RenderTarget.Get(); }
 
-ID3D11DepthStencilState* MafiaBar::Graphics::GetDepthStencilState() const { return m_DepthStencilState.Get(); }
+ID3D11DepthStencilState* MafiaBar::Engine::Graphics::Graphics::GetDepthStencilState() const { return m_DepthStencilState.Get(); }
 
-ID3D11DepthStencilView* MafiaBar::Graphics::GetDepthStencilView() const { return m_DepthStencilView.Get(); }
+ID3D11DepthStencilView* MafiaBar::Engine::Graphics::Graphics::GetDepthStencilView() const { return m_DepthStencilView.Get(); }

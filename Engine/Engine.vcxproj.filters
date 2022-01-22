@@ -28,6 +28,9 @@
     <Filter Include="Graphics">
       <UniqueIdentifier>{83d13879-9d9d-46c8-a19a-644ce8fb2de2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\Bindable">
+      <UniqueIdentifier>{bdcf6e66-04e8-4331-8c20-77913a0b0c98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger.h">
@@ -55,6 +58,10 @@
     <ClInclude Include="MB_Utils.h">
       <Filter>Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Bindable.h">
+      <Filter>Graphics\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="DataTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Exception.cpp">
