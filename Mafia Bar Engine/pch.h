@@ -33,6 +33,10 @@
 #include <queue>
 #include <bitset>
 
+
+//MafiaBar SDK Includes
+#include <Vector.h>
+
 #define MAX_NAME_STRING 256
 
 #define EXP_ENGINE __declspec(dllexport)

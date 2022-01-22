@@ -40,22 +40,24 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="CustomMacros.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="CustomMacrosRelease.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(LibraryPath);$(SolutionDir)libs\x64\Debug;$(DXSDK_DIR)Lib\x64</LibraryPath>
-    <IncludePath>$(IncludePath);$(SolutionDir)includes;$(DXSDK_DIR)Include</IncludePath>
+    <IncludePath>$(IncludePath);$(SolutionDir)includes;$(DXSDK_DIR)Include;$(MB_SDK_DIR)\Include</IncludePath>
     <IntDir>$(SolutionDir)Build\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)Build\$(Configuration)\Bin</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(LibraryPath);$(SolutionDir)libs\x64\Release;$(DXSDK_DIR)Lib\x64</LibraryPath>
-    <IncludePath>$(IncludePath);$(SolutionDir)includes;$(DXSDK_DIR)Include</IncludePath>
+    <IncludePath>$(IncludePath);$(SolutionDir)includes;$(DXSDK_DIR)Include;$(MB_SDK_DIR)\Include</IncludePath>
     <IntDir>$(SolutionDir)Build\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)Build\$(Configuration)\Bin</OutDir>
   </PropertyGroup>

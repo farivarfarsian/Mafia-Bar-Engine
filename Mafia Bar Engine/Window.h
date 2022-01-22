@@ -13,7 +13,7 @@ public:
 	MafiaBar::Hotkey hotkey;
 	MafiaBar::Logger log;
 	MafiaBar::WindowDialogs windialogs;
-	std::unique_ptr<MafiaBar::Graphics> graphics;
+	std::unique_ptr<MafiaBar::Engine::Graphics::Graphics> graphics;
 public:
 	struct GENGW_Exceptions : public MafiaBar::Exceptions
 	{

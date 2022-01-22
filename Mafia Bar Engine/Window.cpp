@@ -9,47 +9,50 @@
 /*--------------------------------------Initializing The Mafia Bar Engine Window--------------------------------------*/
 Window::Window(const char* WinTitle, int width, int height, bool fullscreen)
 {
-	this->RegisterWindowClass();
-
-	this->Width = width;
-	this->Height = height;
-	this->AppName = WinTitle;
-
-	this->handle = CreateWindowExA(WS_EX_ACCEPTFILES | WS_EX_TRANSPARENT,
-		"Mafia Bar", //Window Class name
-		WinTitle, //Windows Title
-		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, //Windows Styles
-		0, //Window X Position
-		0, //Windows Y Posiontion
-		width, //Window Width
-		height, //Window Height
-		nullptr, //Handle of Parent of this Windows
-		nullptr, //Handle to menu or Child Windows Identifier
-		hInstance, //handle to the instance of module to be used with this class
-		this); //Param to Create Window
-
-	if (this->handle == NULL) { MB_LAST_EXCEPTION; }
-
-	CenterWindow(this->handle);
-	SetFocus(this->handle);
-	ShowWindow(this->handle, SW_SHOW);
-
-	console.CreateWIN32Console();
-
-	graphics = std::make_unique<MafiaBar::Graphics>(handle, Width, Height);
-
-	//Setting Fullscreen
-	if (fullscreen == true)
+	if(FindWindowA(NULL, WinTitle) == NULL)
 	{
-		if (graphics->GetSwap()->SetFullscreenState(TRUE, nullptr) == S_OK) { this->fullscreen = true; }
-		else { log.LogToFile("Setting Fullscreen On, Using SwapChain D3D11", "Failed"); }
+		this->RegisterWindowClass();
+
+		this->Width = width;
+		this->Height = height;
+		this->AppName = WinTitle;
+
+		this->handle = CreateWindowExA(WS_EX_ACCEPTFILES | WS_EX_TRANSPARENT,
+			"Mafia Bar", //Window Class name
+			WinTitle, //Windows Title
+			WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, //Windows Styles
+			0, //Window X Position
+			0, //Windows Y Posiontion
+			width, //Window Width
+			height, //Window Height
+			nullptr, //Handle of Parent of this Windows
+			nullptr, //Handle to menu or Child Windows Identifier
+			hInstance, //handle to the instance of module to be used with this class
+			this); //Param to Create Window
+
+		if (this->handle == NULL) { MB_LAST_EXCEPTION; }
+
+		CenterWindow(this->handle);
+		SetFocus(this->handle);
+		ShowWindow(this->handle, SW_SHOW);
+
+		console.CreateWIN32Console();
+
+		graphics = std::make_unique<MafiaBar::Engine::Graphics::Graphics>(handle, Width, Height);
+
+		//Setting Fullscreen
+		if (fullscreen == true)
+		{
+			if (graphics->GetSwap()->SetFullscreenState(TRUE, nullptr) == S_OK) { this->fullscreen = true; }
+			else { log.LogToFile("Setting Fullscreen On, Using SwapChain D3D11", "Failed"); }
+		}
+		if (fullscreen == false)
+		{
+			if (graphics->GetSwap()->SetFullscreenState(false, nullptr) == S_OK) { this->fullscreen = false; }
+			else { log.LogToFile("Setting Fullscreen Off, Using SwapChain D3D11", "Failed"); }
+		}
 	}
-	if(fullscreen == false) 
-	{
-		if (graphics->GetSwap()->SetFullscreenState(false, nullptr) == S_OK) { this->fullscreen = false; }
-		else { log.LogToFile("Setting Fullscreen Off, Using SwapChain D3D11", "Failed"); }
-	}
-	
+	else { log.Message("Mafia Bar Engine", "One of the Instance of Mafia Bar Engine is running, first close it and run the program again", MB_ICONERROR); }
 }
 /*--------------------------------------Creates The Window Class/Style--------------------------------------*/
 void Window::RegisterWindowClass()
@@ -198,7 +201,7 @@ LRESULT Window::WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 		PostQuitMessage(0);
 		return 0;
 	case WM_CLOSE:
-		if (MessageBoxA(hWnd, "Are you sure you want to quit?", AppName, MB_OKCANCEL) == IDOK)
+		if (MessageBoxA(hWnd, "Are you sure you want to quit?", AppName, MB_OKCANCEL | MB_ICONINFORMATION) == IDOK)
 		{
 			PostQuitMessage(0);
 			return 0;

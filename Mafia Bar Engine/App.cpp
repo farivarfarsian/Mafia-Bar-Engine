@@ -1,12 +1,12 @@
 #include "App.h"
 
 App::App()
-	: win("Mafia Bar Engine", 1200, 800, false)
+	: win("Mafia Bar Engine", 1200, 800, true)
 {
 	//Registering Mafia Bar Engine Default Hotkeys
 	win.hotkey.RegisterHotKey(win.GetHandle(), win.hotkey.ESC, NULL, VK_ESCAPE);
-	win.hotkey.RegisterHotKey(win.GetHandle(), win.hotkey.QUIT, MOD_CONTROL, 0x51);
-	win.hotkey.RegisterHotKey(win.GetHandle(), win.hotkey.FULLSCREEN, MOD_CONTROL, 0x46);
+	win.hotkey.RegisterHotKey(win.GetHandle(), win.hotkey.QUIT, MOD_CONTROL, win.keyboard.Q);
+	win.hotkey.RegisterHotKey(win.GetHandle(), win.hotkey.FULLSCREEN, MOD_CONTROL, win.keyboard.F);
 } 
 
 int App::Go()
