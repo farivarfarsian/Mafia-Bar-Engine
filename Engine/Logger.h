@@ -48,7 +48,7 @@ namespace MafiaBar
 			}
 			else { Message("Logger Class Error Stream File", "We have some kind of problems to Access the Mafia Bar Engine.log", MB_ICONWARNING); }
 		}
-		void Message(const char* title, const char* message, UINT Type, HWND WindowHandle = NULL) { MessageBoxA(WindowHandle, message, title, Type); }
+		static void Message(const char* title, const char* message, UINT Type, HWND WindowHandle = NULL) { MessageBoxA(WindowHandle, message, title, Type); }
 	public:
 		const char* GetFileName() const { return MafiaBarFileLogName; }
 	private:;

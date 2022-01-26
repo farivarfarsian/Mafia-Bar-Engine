@@ -81,6 +81,7 @@ public:
 	int GetWindowWidth() const { return Width; }
 	int GetWindowHeight() const { return Height; }
 	bool GetFullscreenBoolean() const { return fullscreen; }
+	MafiaBar::Engine::Graphics::Graphics& GetGraphics() const { return *graphics; }
 private:
 	HWND handle = NULL;
 	DWORD ProcID = GetCurrentProcessId();

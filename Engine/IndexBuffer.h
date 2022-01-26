@@ -1,0 +1,26 @@
+#pragma once
+#include "Engine.h"
+#include "Bindable.h"
+
+namespace MafiaBar
+{
+	namespace Engine
+	{
+		namespace Graphics
+		{
+			class EXP_ENGINE IndexBuffer : public Bindable
+			{
+			public:
+				IndexBuffer(MafiaBar::Engine::Graphics::Graphics& graphics, const MafiaBar::SDK::Vector<uint16_t>& indicies);
+				void Bind(MafiaBar::Engine::Graphics::Graphics& graphics) override;
+			public:
+				unsigned int GetIndexBufferOffset() const;
+				unsigned int GetIndiciesCount() const;
+			private:
+				Microsoft::WRL::ComPtr<ID3D11Buffer> m_IndexBuffer;
+				unsigned int Offset = 0u;
+				unsigned int Count = 0u;
+			};
+		}
+	}
+}

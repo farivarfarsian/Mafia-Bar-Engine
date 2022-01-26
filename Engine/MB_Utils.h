@@ -6,7 +6,7 @@ namespace MafiaBar
 	class EXP_ENGINE Hotkey
 	{
 	public:
-		static enum DefaultHotkeyIDs
+		enum DefaultHotkeyIDs
 		{
 			ESC = 1,
 			QUIT = 2,

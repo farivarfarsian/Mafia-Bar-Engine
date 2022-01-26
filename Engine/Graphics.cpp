@@ -1,8 +1,8 @@
 #include "Graphics.h"
 
 MafiaBar::Engine::Graphics::Graphics::Graphics(HWND hwnd, int Width, int Height)
+	: Width(Width), Height(Height)
 {
-
 	DXGI_SWAP_CHAIN_DESC sd = {};
 	//Changing to The Width And Height of the Windows
 	sd.BufferDesc.Width = Width;
@@ -90,7 +90,7 @@ MafiaBar::Engine::Graphics::Graphics::Graphics(HWND hwnd, int Width, int Height)
 
 void MafiaBar::Engine::Graphics::Graphics::EndFrame() { m_Swap->Present(1u, 0u); }
 
-void MafiaBar::Engine::Graphics::Graphics::SetViewport(const D3D11_VIEWPORT& Viewport, uint32_t ViewportsNumbers) { m_Context->RSSetViewports(ViewportsNumbers, &Viewport); }
+void MafiaBar::Engine::Graphics::Graphics::DrawIndexed(unsigned int Count) { m_Context->DrawIndexed(Count, 0u, 0u); }
 
 void MafiaBar::Engine::Graphics::Graphics::Clear(const float ClearRenderColor[4], float ClearDepthBuffer, UINT8 ClearStencilBuffer)
 {
@@ -109,3 +109,11 @@ ID3D11RenderTargetView* MafiaBar::Engine::Graphics::Graphics::GetRenderTarget() 
 ID3D11DepthStencilState* MafiaBar::Engine::Graphics::Graphics::GetDepthStencilState() const { return m_DepthStencilState.Get(); }
 
 ID3D11DepthStencilView* MafiaBar::Engine::Graphics::Graphics::GetDepthStencilView() const { return m_DepthStencilView.Get(); }
+
+int MafiaBar::Engine::Graphics::Graphics::GetWidth() const { return Width; }
+
+int MafiaBar::Engine::Graphics::Graphics::GetHeight() const { return Height; }
+
+DirectX::XMMATRIX MafiaBar::Engine::Graphics::Graphics::GetProjection() const { return m_ProjectionGraphics; }
+
+void MafiaBar::Engine::Graphics::Graphics::SetProjection(DirectX::FXMMATRIX projection) { m_ProjectionGraphics = projection; }

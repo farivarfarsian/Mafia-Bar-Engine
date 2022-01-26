@@ -1,7 +1,7 @@
 #include "App.h"
 
 App::App()
-	: win("Mafia Bar Engine", 1200, 800, true)
+	: win("Mafia Bar Engine", 1200, 800, false)
 {
 	//Registering Mafia Bar Engine Default Hotkeys
 	win.hotkey.RegisterHotKey(win.GetHandle(), win.hotkey.ESC, NULL, VK_ESCAPE);

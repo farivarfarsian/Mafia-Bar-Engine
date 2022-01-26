@@ -1,8 +1,6 @@
 #pragma once
 #include "Engine.h"
 
-#include "DataTypes.h"
-
 namespace MafiaBar
 {
 	namespace Engine
@@ -11,7 +9,6 @@ namespace MafiaBar
 		{
 			class EXP_ENGINE Graphics
 			{
-			public:
 				friend class Bindable;
 			public:
 				//Initialize DirectX 11
@@ -21,7 +18,7 @@ namespace MafiaBar
 				~Graphics() = default;
 				void TestRenderingTriangle(float angle, float x, float z)
 				{
-					MafiaBar::DataTypes::Vertex vertices[] =
+					MafiaBar::Graphics::Vertex vertices[] =
 					{
 						{-1.0f, -1.0f, -1.0f},
 						{1.0f, -1.0f, -1.0f},
@@ -40,13 +37,13 @@ namespace MafiaBar
 					VertexBufferDECRIBTOR.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 					VertexBufferDECRIBTOR.CPUAccessFlags = 0u;
 					VertexBufferDECRIBTOR.MiscFlags = 0u;
-					VertexBufferDECRIBTOR.StructureByteStride = sizeof(MafiaBar::DataTypes::Vertex);
+					VertexBufferDECRIBTOR.StructureByteStride = sizeof(MafiaBar::Graphics::Vertex);
 					D3D11_SUBRESOURCE_DATA VertexSUBRESOURCE_DATA;
 					VertexSUBRESOURCE_DATA.pSysMem = vertices;
 					Microsoft::WRL::ComPtr<ID3D11Buffer> VertexBuffer;
 					m_Device->CreateBuffer(&VertexBufferDECRIBTOR, &VertexSUBRESOURCE_DATA, &VertexBuffer);
 					//Bind the Vertex buffer to the pipeline
-					const UINT VertexBufferStride = sizeof(MafiaBar::DataTypes::Vertex);
+					const UINT VertexBufferStride = sizeof(MafiaBar::Graphics::Vertex);
 					const UINT offset = 0u;
 					m_Context->IASetVertexBuffers(0u, 1u, VertexBuffer.GetAddressOf(), &VertexBufferStride, &offset);
 
@@ -80,7 +77,7 @@ namespace MafiaBar
 					m_Device->CreateVertexShader(VertexShaderBlob->GetBufferPointer(), VertexShaderBlob->GetBufferSize(), nullptr, &VertexShader);
 					m_Context->VSSetShader(VertexShader.Get(), nullptr, 0u);
 
-					const MafiaBar::DataTypes::ConstantBuffer constantbuffer =
+					const MafiaBar::Graphics::ConstantBuffer constantbuffer =
 					{
 						{
 							DirectX::XMMatrixTranspose(
@@ -104,7 +101,7 @@ namespace MafiaBar
 					m_Device->CreateBuffer(&ConstantBufferDECRIBTOR, &ConstantSUBRESOURCE_DATA, &ConstantBuffer);
 					m_Context->VSSetConstantBuffers(0u, 1u, ConstantBuffer.GetAddressOf());
 
-					const MafiaBar::DataTypes::ConstantBuffer2 constantbuffer2 =
+					const MafiaBar::Graphics::ConstantBuffer2 constantbuffer2 =
 					{
 						{
 							{1.0f,0.0f,1.0f},
@@ -130,8 +127,6 @@ namespace MafiaBar
 
 					Microsoft::WRL::ComPtr<ID3D11PixelShader> PixelShader;
 					Microsoft::WRL::ComPtr<ID3DBlob> PixelShaderBlob;
-
-
 					D3DReadFileToBlob(L"Shaders/PixelShader.cso", &PixelShaderBlob);
 					m_Device->CreatePixelShader(PixelShaderBlob->GetBufferPointer(), PixelShaderBlob->GetBufferSize(), nullptr, &PixelShader);
 					m_Context->PSSetShader(PixelShader.Get(), nullptr, 0u);
@@ -148,19 +143,21 @@ namespace MafiaBar
 					m_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 					D3D11_VIEWPORT Viewport = {};
-					Viewport.Width = 1200; //1200
-					Viewport.Height = 800; //800
+					Viewport.Width = 1200;
+					Viewport.Height = 800;
 					Viewport.MinDepth = 0;
 					Viewport.MaxDepth = 1;
 					Viewport.TopLeftX = 0;
 					Viewport.TopLeftY = 0;
-					SetViewport(Viewport, 1u);
-
-					m_Context->DrawIndexed((UINT)indicies.GetSize(), 0u, 0);
+					m_Context->RSSetViewports(1u, &Viewport);
+					
+					DrawIndexed((UINT)indicies.GetSize());
 				}
 			public:
-				// Sets D3D11 viewport (the viewports Numbers is optional by default is 1)
-				void SetViewport(const D3D11_VIEWPORT& Viewport, uint32_t ViewportsNumbers = 1u);
+				//Set Graphics Projection
+				void SetProjection(DirectX::FXMMATRIX projection);
+				//Draw Indexed Indicies 
+				void DrawIndexed(unsigned int Count);
 				// This functions clears the both Back buffer and the Depth and Stencil buffer
 				void Clear(const float ClearRenderColor[4], float ClearDepthBuffer, UINT8 ClearStencilBuffer);
 				// Render the scene
@@ -178,6 +175,12 @@ namespace MafiaBar
 				ID3D11DepthStencilState* GetDepthStencilState() const;
 				//Get D3D11 DepthStencilView Object
 				ID3D11DepthStencilView* GetDepthStencilView() const;
+				//Get Width of the Window
+				int GetWidth() const;
+				//Get Height of the Window
+				int GetHeight() const;
+				//Get Graphics Projection
+				DirectX::XMMATRIX GetProjection() const;
 			private:
 				Microsoft::WRL::ComPtr<ID3D11Device> m_Device = nullptr;
 				Microsoft::WRL::ComPtr<IDXGISwapChain> m_Swap = nullptr;
@@ -185,6 +188,8 @@ namespace MafiaBar
 				Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTarget = nullptr;
 				Microsoft::WRL::ComPtr<ID3D11DepthStencilState> m_DepthStencilState = nullptr;
 				Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_DepthStencilView = nullptr;
+				DirectX::XMMATRIX m_ProjectionGraphics;
+				int Width, Height;
 			};
 		}
 	}

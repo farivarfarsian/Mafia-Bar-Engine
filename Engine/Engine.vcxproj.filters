@@ -31,13 +31,43 @@
     <Filter Include="Graphics\Bindable">
       <UniqueIdentifier>{bdcf6e66-04e8-4331-8c20-77913a0b0c98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\VertexBuffer">
+      <UniqueIdentifier>{f5592544-9016-49ca-bf77-bbcadeffb707}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\IndexBuffer">
+      <UniqueIdentifier>{269cc8ef-050c-4e72-8d0c-0866650c8059}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Shader">
+      <UniqueIdentifier>{791572ac-3824-4fd8-8380-a3eb9b637ee7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\ConstantBuffer">
+      <UniqueIdentifier>{6415a945-bd51-49f8-912f-97b19482b925}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Topology">
+      <UniqueIdentifier>{22ea411b-6e23-4661-af66-dc6d1f12f5c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\InputLayout">
+      <UniqueIdentifier>{147af4b1-6e89-4ffd-b42a-5b0590e61e87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Viewport">
+      <UniqueIdentifier>{48ce92d0-11d3-47a3-9d84-eb4c963b13a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataTypes">
+      <UniqueIdentifier>{4aa19878-be2c-44db-9f2a-9d58fd0c9896}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataTypes\String">
+      <UniqueIdentifier>{d45857f3-a30b-4d3e-b21a-fcbd7f41076a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataTypes\WString">
+      <UniqueIdentifier>{10954886-d801-463e-9cd0-c0eae02aea4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataTypes\FileStream">
+      <UniqueIdentifier>{0260ea27-7cb1-4176-8e24-6e4545a4b0f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger.h">
       <Filter>I/O\Logger</Filter>
-    </ClInclude>
-    <ClInclude Include="Keyboard.h">
-      <Filter>I/O\Keyboard</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Mouse.h">
@@ -61,7 +91,45 @@
     <ClInclude Include="Bindable.h">
       <Filter>Graphics\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="DataTypes.h" />
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>Graphics\VertexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>Graphics\IndexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>I/O\Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBuffer.h">
+      <Filter>Graphics\ConstantBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Topology.h">
+      <Filter>Graphics\Topology</Filter>
+    </ClInclude>
+    <ClInclude Include="InputLayout.h">
+      <Filter>Graphics\InputLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewport.h">
+      <Filter>Graphics\Viewport</Filter>
+    </ClInclude>
+    <ClInclude Include="DataTypes.h">
+      <Filter>DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="MafiaBarString.h">
+      <Filter>DataTypes\String</Filter>
+    </ClInclude>
+    <ClInclude Include="MafiaBarWString.h">
+      <Filter>DataTypes\WString</Filter>
+    </ClInclude>
+    <ClInclude Include="MafiaBarFileStream.h">
+      <Filter>DataTypes\FileStream</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicDataTypes.h">
+      <Filter>DataTypes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Exception.cpp">
@@ -84,6 +152,36 @@
     </ClCompile>
     <ClCompile Include="MB_Utils.cpp">
       <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBuffer.cpp">
+      <Filter>Graphics\VertexBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexBuffer.cpp">
+      <Filter>Graphics\IndexBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Topology.cpp">
+      <Filter>Graphics\Topology</Filter>
+    </ClCompile>
+    <ClCompile Include="InputLayout.cpp">
+      <Filter>Graphics\InputLayout</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantBuffer.cpp">
+      <Filter>Graphics\ConstantBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Viewport.cpp">
+      <Filter>Graphics\Viewport</Filter>
+    </ClCompile>
+    <ClCompile Include="MafiaBarString.cpp">
+      <Filter>DataTypes\String</Filter>
+    </ClCompile>
+    <ClCompile Include="MafiaBarWString.cpp">
+      <Filter>DataTypes\WString</Filter>
+    </ClCompile>
+    <ClCompile Include="MafiaBarFileStream.cpp">
+      <Filter>DataTypes\FileStream</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
