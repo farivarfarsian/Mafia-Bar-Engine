@@ -1,5 +1,6 @@
 #pragma once
 #include "Window.h"
+#include <Cube.h>
 class App
 {
 public:
@@ -10,4 +11,5 @@ private:
 	void DoFrame();
 	Window win;
 	MafiaBar::Time time;
+	std::vector<std::unique_ptr<Cube>> boxes;
 };

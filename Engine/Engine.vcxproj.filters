@@ -130,6 +130,10 @@
     <ClInclude Include="GraphicDataTypes.h">
       <Filter>DataTypes</Filter>
     </ClInclude>
+    <ClInclude Include="GraphicsPipline.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Exception.cpp">
@@ -167,9 +171,6 @@
     </ClCompile>
     <ClCompile Include="InputLayout.cpp">
       <Filter>Graphics\InputLayout</Filter>
-    </ClCompile>
-    <ClCompile Include="ConstantBuffer.cpp">
-      <Filter>Graphics\ConstantBuffer</Filter>
     </ClCompile>
     <ClCompile Include="Viewport.cpp">
       <Filter>Graphics\Viewport</Filter>
