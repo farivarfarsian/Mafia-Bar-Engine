@@ -191,6 +191,14 @@ namespace MafiaBar
 				DirectX::XMMATRIX m_ProjectionGraphics;
 				int Width, Height;
 			};
+			class Object
+			{
+			public:
+				virtual void Input() {};
+				virtual void Update(float delta_time) {};
+				virtual void Draw(MafiaBar::Engine::Graphics::Graphics& graphics) {};
+				virtual DirectX::XMMATRIX GetTransformation() const { return DirectX::XMMATRIX(); };
+			};
 		}
 	}
 }
