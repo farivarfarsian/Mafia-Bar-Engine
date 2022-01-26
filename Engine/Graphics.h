@@ -84,7 +84,7 @@ namespace MafiaBar
 								DirectX::XMMatrixRotationZ(angle) *
 								DirectX::XMMatrixRotationX(angle) *
 								DirectX::XMMatrixTranslation(x,0.0f,z + 4.0f) *
-								DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 10.0f)
+								GetProjection() //DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 10.0f)
 							)
 						}
 					};

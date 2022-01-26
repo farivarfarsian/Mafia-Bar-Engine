@@ -7,7 +7,9 @@ App::App()
 	win.hotkey.RegisterHotKey(win.GetHandle(), win.hotkey.ESC, NULL, VK_ESCAPE);
 	win.hotkey.RegisterHotKey(win.GetHandle(), win.hotkey.QUIT, MOD_CONTROL, win.keyboard.Q);
 	win.hotkey.RegisterHotKey(win.GetHandle(), win.hotkey.FULLSCREEN, MOD_CONTROL, win.keyboard.F);
-} 
+
+	win.graphics->SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
+}
 
 int App::Go()
 {
@@ -16,6 +18,10 @@ int App::Go()
 		if (const auto ecode = win.ProcessMessages()) { return *ecode; }
 		DoFrame();
 	}
+}
+
+App::~App()
+{
 }
 
 void App::DoFrame()
