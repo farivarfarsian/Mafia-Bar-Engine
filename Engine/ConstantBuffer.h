@@ -25,7 +25,7 @@ namespace MafiaBar
 					ConstantBufferDECRIBTOR.StructureByteStride = 0u;
 					D3D11_SUBRESOURCE_DATA ConstantSUBRESOURCE_DATA{};
 					ConstantSUBRESOURCE_DATA.pSysMem = &ConstantType;
-					graphics.GetDevice()->CreateBuffer(&ConstantBufferDECRIBTOR, &ConstantSUBRESOURCE_DATA, &mConstantBuffer);
+					MB_GRAPHIC_EXCEPTION(graphics.GetDevice()->CreateBuffer(&ConstantBufferDECRIBTOR, &ConstantSUBRESOURCE_DATA, &mConstantBuffer));
 				}
 				ConstantBuffer(MafiaBar::Engine::Graphics::Graphics& graphics)
 				{
@@ -36,12 +36,12 @@ namespace MafiaBar
 					ConstantBufferDECRIBTOR.MiscFlags = 0u;
 					ConstantBufferDECRIBTOR.ByteWidth = sizeof(ConstantTemplateType);
 					ConstantBufferDECRIBTOR.StructureByteStride = 0u;
-					graphics.GetDevice()->CreateBuffer(&ConstantBufferDECRIBTOR, nullptr, &mConstantBuffer);
+					MB_GRAPHIC_EXCEPTION(graphics.GetDevice()->CreateBuffer(&ConstantBufferDECRIBTOR, nullptr, &mConstantBuffer));
 				}
 				void Update(MafiaBar::Engine::Graphics::Graphics& graphics, const ConstantTemplateType& ConstantType)
 				{
 					D3D11_MAPPED_SUBRESOURCE MappedSubSource;
-					graphics.GetContext()->Map(mConstantBuffer.Get(), 0u, D3D11_MAP_WRITE_DISCARD, 0u, &MappedSubSource);
+					MB_GRAPHIC_EXCEPTION(graphics.GetContext()->Map(mConstantBuffer.Get(), 0u, D3D11_MAP_WRITE_DISCARD, 0u, &MappedSubSource));
 					memcpy(MappedSubSource.pData, &ConstantType, sizeof(ConstantType));
 					graphics.GetContext()->Unmap(mConstantBuffer.Get(), 0u);
 				}

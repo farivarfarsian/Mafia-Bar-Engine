@@ -22,7 +22,7 @@ namespace MafiaBar
 	{
     public:
 		Time(const char* Process_Describ);
-		Time() = default;
+		Time();
 		void Start(const char* Process_Describ);
 		void End();
 	public:

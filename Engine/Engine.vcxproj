@@ -109,6 +109,7 @@
     <ClInclude Include="DataTypes.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="GraphicDataTypes.h" />
+    <ClInclude Include="GraphicException.h" />
     <ClInclude Include="GraphicsPipline.h" />
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="Information.h" />
@@ -124,6 +125,7 @@
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Topology.h" />
+    <ClInclude Include="TransformCbuf.h" />
     <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="Viewport.h" />
     <ClInclude Include="WinRegistery.h" />

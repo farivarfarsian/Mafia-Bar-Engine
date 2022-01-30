@@ -12,7 +12,7 @@ namespace MafiaBar
 			{
 			public:
 				VertexBuffer(MafiaBar::Engine::Graphics::Graphics& graphics, MafiaBar::Graphics::Vertex* vertices);
-				VertexBuffer(MafiaBar::Engine::Graphics::Graphics& graphics, MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>& vertices);
+				VertexBuffer(MafiaBar::Engine::Graphics::Graphics& graphics, MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>& vertices) {};
 				void Bind(MafiaBar::Engine::Graphics::Graphics& graphics) override;
 			public:
 				unsigned int GetVertexBufferStride() const;

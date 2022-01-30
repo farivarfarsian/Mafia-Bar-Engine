@@ -16,6 +16,8 @@ MafiaBar::Time::Time(const char* Process_Describ)
     last = std::chrono::steady_clock::now();
 }
 
+MafiaBar::Time::Time() { last = std::chrono::steady_clock::now(); }
+
 void MafiaBar::Time::Start(const char* Process_Describ)
 {
     start = std::chrono::high_resolution_clock::now();

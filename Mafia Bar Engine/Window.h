@@ -74,6 +74,8 @@ public:
 		}
 		pSurface->Release();
 	}
+	void Restart();
+	void Exit(int ExitCode); 
 public:
 	HWND GetHandle() const { return handle; }
 	HINSTANCE GetInstance() const { return hInstance; }
@@ -81,8 +83,15 @@ public:
 	int GetWindowWidth() const { return Width; }
 	int GetWindowHeight() const { return Height; }
 	bool GetFullscreenBoolean() const { return fullscreen; }
+	char* GetProgramFullPath() const
+	{
+	   static char pathtofile[MAX_PATH] {};
+	   GetModuleFileNameA(hInstance, pathtofile, sizeof(pathtofile));
+	   return pathtofile;
+	}
 	MafiaBar::Engine::Graphics::Graphics& GetGraphics() const { return *graphics; }
 private:
+
 	HWND handle = NULL;
 	DWORD ProcID = GetCurrentProcessId();
 	HINSTANCE hInstance = GetModuleHandleA(NULL);
@@ -91,3 +100,6 @@ private:
 	bool fullscreen;
 	HMENU WindowMenus;
 };
+
+extern Window* window;
+

@@ -34,11 +34,16 @@ MafiaBar::Engine::Graphics::Graphics::Graphics(HWND hwnd, int Width, int Height)
 	//No Flags
 	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
+	UINT swapCreateFlags = 0u;
+#ifndef _CRT_SECURE_NO_WARNINGS_CRT_SECURE_NO_WARNINGSNDEBUG
+	swapCreateFlags |= D3D11_CREATE_DEVICE_DEBUG;
+#endif
+
 	D3D11CreateDeviceAndSwapChain(
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
 		nullptr,
-		0,
+		swapCreateFlags,
 		nullptr,
 		0,
 		D3D11_SDK_VERSION,

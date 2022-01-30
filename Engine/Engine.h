@@ -2,10 +2,6 @@
 
 #include "../Mafia Bar Engine/pch.h"
 
-#include "GraphicDataTypes.h"
-
-#include "Graphics.h"
-
 #include "Keyboard.h"
 
 #include "Mouse.h"
@@ -14,4 +10,9 @@
 
 #include "Logger.h"
 
+#include "GraphicDataTypes.h"
+
+#include "GraphicException.h"
+
+#include "Graphics.h"
 

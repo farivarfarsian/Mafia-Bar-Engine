@@ -13,7 +13,7 @@ App::App()
 	std::uniform_real_distribution<float> ddist(0.0f, 3.1415f * 2.0f);
 	std::uniform_real_distribution<float> odist(0.0f, 3.1415f * 0.3f);
 	std::uniform_real_distribution<float> rdist(6.0f, 20.0f);
-	for (auto i = 0; i < 3; i++)
+	for (auto i = 0; i < 80; i++)
 	{
 		boxes.push_back(std::make_unique<Cube>(
 			win.GetGraphics(), rng, adist,
@@ -38,10 +38,11 @@ App::~App()
 
 void App::DoFrame()
 {
+	float delta_time = time.Mark();
 	win.graphics->Clear(DirectX::Colors::Black, 1.0f, 0);
 	for (auto& b : boxes)
 	{
-		b->Update(time.Mark());
+		b->Update(delta_time);
 		b->Draw(win.GetGraphics());
 	}
 	//win.graphics->TestRenderingTriangle(-time.Peek(), 0, 0);

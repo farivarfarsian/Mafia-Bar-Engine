@@ -2,6 +2,9 @@
 #include "Window.h"
 #include "resource.h"
 
+/*--------------------------------------Initialie The Mafia Bar Engine Window Global Ojbect For Use In Everywhere--------------------------------------*/
+Window* window = nullptr;
+
 /*--------------------------------------The Mafia Bar Engine Window Menus ID Definitions--------------------------------------*/
 #define FILE_QUIT 20091
 #define FILE_TAKE_SCREENSHOT 20092
@@ -51,6 +54,8 @@ Window::Window(const char* WinTitle, int width, int height, bool fullscreen)
 			if (graphics->GetSwap()->SetFullscreenState(false, nullptr) == S_OK) { this->fullscreen = false; }
 			else { log.LogToFile("Setting Fullscreen Off, Using SwapChain D3D11", "Failed"); }
 		}
+
+		window = this;
 	}
 	else { log.Message("Mafia Bar Engine", "One of the Instance of Mafia Bar Engine is running, first close it and run the program again", MB_ICONERROR); }
 }
@@ -387,4 +392,23 @@ BOOL Window::CenterWindow(HWND hwndWindow)
 	}
 
 	return FALSE;
+}
+
+void Window::Restart()
+{
+	log.LogToFile("Mafia Bar Engine", "The Application Have Restarted");
+	ShellExecuteA(handle, "open", GetProgramFullPath(), NULL, NULL, SW_RESTORE);
+	PostQuitMessage(0);
+	ExitProcess(0);
+}
+
+void Window::Exit(int ExitCode)
+{
+	PostQuitMessage(ExitCode);
+	if (this->handle != NULL)
+	{
+		UnregisterClassA("Mafia Bar", this->hInstance);
+		DestroyWindow(handle);
+	}
+
 }

@@ -10,8 +10,9 @@ namespace MafiaBar
 		{
 			class EXP_ENGINE IndexBuffer : public Bindable
 			{
+				//Please Replace The STD::vector with MafiaBar::SDK::Vector (In Future)
 			public:
-				IndexBuffer(MafiaBar::Engine::Graphics::Graphics& graphics, const MafiaBar::SDK::Vector<uint16_t>& indicies);
+				IndexBuffer(MafiaBar::Engine::Graphics::Graphics& graphics, const std::vector<unsigned short>& indicies);
 				void Bind(MafiaBar::Engine::Graphics::Graphics& graphics) override;
 			public:
 				unsigned int GetIndexBufferOffset() const;

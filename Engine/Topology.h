@@ -13,7 +13,6 @@ namespace MafiaBar
 			public:
 				Topology(D3D_PRIMITIVE_TOPOLOGY Topolgy);
 				void Bind(MafiaBar::Engine::Graphics::Graphics& graphics) override;
-			public:
 			private:
 				D3D_PRIMITIVE_TOPOLOGY mTopolgyType;
 			};

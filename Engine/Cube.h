@@ -23,7 +23,7 @@ public:
 		pipeline.BindToPipline(std::make_unique<MafiaBar::Engine::Graphics::VertexBuffer>(graphics, vertices));
 
 
-		const MafiaBar::SDK::Vector<uint16_t> indicies =
+		const std::vector<unsigned short> indices =
 		{
 			0,2,1, 2,3,1,
 			1,3,5, 3,7,5,
@@ -32,7 +32,7 @@ public:
 			0,4,2, 2,4,6,
 			0,1,4, 1,5,4
 		};
-		auto IndexBufferP = std::make_unique<MafiaBar::Engine::Graphics::IndexBuffer>(graphics, indicies);
+		auto IndexBufferP = std::make_unique<MafiaBar::Engine::Graphics::IndexBuffer>(graphics, indices);
 		indexbuffer = IndexBufferP.get();
 		pipeline.BindToPipline(std::move(IndexBufferP));
 
@@ -58,8 +58,10 @@ public:
 
 		pipeline.BindToPipline(std::make_unique<MafiaBar::Engine::Graphics::PixelShader>(graphics, "Shaders/PixelShader.cso"));
 
-		MafiaBar::SDK::Vector<D3D11_INPUT_ELEMENT_DESC> ied;
-			ied.PushBack({"Position",0,DXGI_FORMAT_R32G32B32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0});
+		const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
+		{
+			{ "Position",0,DXGI_FORMAT_R32G32B32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0 },
+		};
 		pipeline.BindToPipline(std::make_unique<MafiaBar::Engine::Graphics::InputLayout>(graphics, ied, pvsbc));
 
 		pipeline.BindToPipline(std::make_unique<MafiaBar::Engine::Graphics::Topology>(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));

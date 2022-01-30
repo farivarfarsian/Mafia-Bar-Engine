@@ -6,11 +6,11 @@ MafiaBar::Engine::Graphics::Shader::Shader(MafiaBar::Engine::Graphics::Graphics&
 	switch (shadertype)
 	{
 	case ShaderType::VertexShader:
-		if (ReadFile(ShaderPathName) == true) { graphics.GetDevice()->CreateVertexShader(ShaderBlob->GetBufferPointer(), ShaderBlob->GetBufferSize(), nullptr, &mVertexShader); }
+		if (ReadFile(ShaderPathName) == true) { MB_GRAPHIC_EXCEPTION(graphics.GetDevice()->CreateVertexShader(ShaderBlob->GetBufferPointer(), ShaderBlob->GetBufferSize(), nullptr, &mVertexShader)); }
 		else { Logger::Message("Mafia Bar Engine: Shader Class: Error", "Shader Class: Failed to read the Vertex Shader to Blob", MB_ICONERROR); }
 		break;
 	case ShaderType::PixelShader:
-		if (ReadFile(ShaderPathName) == true) { graphics.GetDevice()->CreatePixelShader(ShaderBlob->GetBufferPointer(), ShaderBlob->GetBufferSize(), nullptr, &mPixelShader); }
+		if (ReadFile(ShaderPathName) == true) { MB_GRAPHIC_EXCEPTION(graphics.GetDevice()->CreatePixelShader(ShaderBlob->GetBufferPointer(), ShaderBlob->GetBufferSize(), nullptr, &mPixelShader)); }
 		else { Logger::Message("Mafia Bar Engine: Shader Class: Error", "Shader Class: Failed to read the Pixel Shader to Blob", MB_ICONERROR); }
 		break;
 	case ShaderType::GeometryShader:
@@ -28,8 +28,10 @@ ID3DBlob* MafiaBar::Engine::Graphics::Shader::GetShaderBlob() const { return Sha
 
 bool MafiaBar::Engine::Graphics::Shader::ReadFile(const MafiaBar::MafiaBarString& ShaderPath)
 {
-
-	if (D3DReadFileToBlob(ShaderPath.GetWString().c_str(), &ShaderBlob) == S_FALSE) { return false; }
+	#pragma message(__FILE__ "(" _CRT_STRINGIZE(__LINE__) ")"  ": warning: " "Fix this function, Improve")
+	HRESULT hr = D3DReadFileToBlob(ShaderPath.GetWString().c_str(), &ShaderBlob);
+	MB_GRAPHIC_EXCEPTION(hr);
+	if (hr == S_FALSE) { return false; }
 	else { return true; }
 }
 

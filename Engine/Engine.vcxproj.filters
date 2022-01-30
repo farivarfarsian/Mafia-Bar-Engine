@@ -64,6 +64,9 @@
     <Filter Include="DataTypes\FileStream">
       <UniqueIdentifier>{0260ea27-7cb1-4176-8e24-6e4545a4b0f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\GraphicException">
+      <UniqueIdentifier>{2ee23dfc-96f6-47ad-9c24-07c30d17cac1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger.h">
@@ -134,6 +137,12 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h" />
+    <ClInclude Include="GraphicException.h">
+      <Filter>Graphics\GraphicException</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformCbuf.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Exception.cpp">

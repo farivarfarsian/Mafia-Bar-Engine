@@ -12,6 +12,7 @@ namespace MafiaBar
 		const char* what() const noexcept;
 		virtual const char* GetType() const noexcept;
 		std::string GetOriginString() const noexcept;
+	protected:
 		int line;
 		std::string file;
 	protected:
