@@ -91,9 +91,17 @@ MafiaBar::Engine::Graphics::Graphics::Graphics(HWND hwnd, int Width, int Height)
 	m_Device->CreateDepthStencilView(DepthStencilTexure.Get(), &DepthStencilViewDESC, &m_DepthStencilView);
 
 	m_Context->OMSetRenderTargets(1u, m_RenderTarget.GetAddressOf(), m_DepthStencilView.Get());
+
+
 }
 
 void MafiaBar::Engine::Graphics::Graphics::EndFrame() { m_Swap->Present(1u, 0u); }
+
+void MafiaBar::Engine::Graphics::Graphics::CreateSprite(const wchar_t* font_path)
+{
+	m_SpriteBatch = std::make_unique<DirectX::SpriteBatch>(m_Context.Get());
+	m_SpriteFont = std::make_unique<DirectX::SpriteFont>(m_Device.Get(), font_path);
+}
 
 void MafiaBar::Engine::Graphics::Graphics::DrawIndexed(unsigned int Count) { m_Context->DrawIndexed(Count, 0u, 0u); }
 
@@ -127,5 +135,9 @@ int MafiaBar::Engine::Graphics::Graphics::GetWidth() const { return Width; }
 int MafiaBar::Engine::Graphics::Graphics::GetHeight() const { return Height; }
 
 DirectX::XMMATRIX MafiaBar::Engine::Graphics::Graphics::GetProjection() const { return m_ProjectionGraphics; }
+
+DirectX::SpriteBatch* MafiaBar::Engine::Graphics::Graphics::GetSpriteBatch() const { return m_SpriteBatch.get(); }
+
+DirectX::SpriteFont* MafiaBar::Engine::Graphics::Graphics::GetSpriteFont() const { return m_SpriteFont.get(); }
 
 void MafiaBar::Engine::Graphics::Graphics::SetProjection(DirectX::FXMMATRIX projection) { m_ProjectionGraphics = projection; }

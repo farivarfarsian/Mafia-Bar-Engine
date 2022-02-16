@@ -1,6 +1,10 @@
 #pragma once
 #include "Engine.h"
 
+#include "DirectXTK/SpriteBatch.h"
+#include "DirectXTK/SpriteFont.h"
+LINK_LIBRARY("../Engine/DirectXTK/Bin_x64/DirectXTK.lib")
+
 namespace MafiaBar
 {
 	namespace Engine
@@ -26,6 +30,8 @@ namespace MafiaBar
 				void Clear(float ClearRenderColorR, float ClearRenderColorG, float ClearRenderColorB, float ClearRenderColorA, float ClearDepthBuffer, UINT8 ClearStencilBuffer);
 				// Render the scene
 				void EndFrame();
+				//Initializing Sprite Fonts
+				void CreateSprite(const wchar_t* path_name);
 			public:
 				//Get D3D11 Device Object
 				ID3D11Device* GetDevice() const;
@@ -45,6 +51,10 @@ namespace MafiaBar
 				int GetHeight() const;
 				//Get Graphics Projection
 				DirectX::XMMATRIX GetProjection() const;
+				//Get Sprite Batch
+				DirectX::SpriteBatch* GetSpriteBatch() const;
+				//Get Sprite Font
+				DirectX::SpriteFont* GetSpriteFont() const;
 			private:
 				Microsoft::WRL::ComPtr<ID3D11Device> m_Device = nullptr;
 				Microsoft::WRL::ComPtr<IDXGISwapChain> m_Swap = nullptr;
@@ -52,6 +62,8 @@ namespace MafiaBar
 				Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTarget = nullptr;
 				Microsoft::WRL::ComPtr<ID3D11DepthStencilState> m_DepthStencilState = nullptr;
 				Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_DepthStencilView = nullptr;
+				std::unique_ptr<DirectX::SpriteBatch> m_SpriteBatch;
+				std::unique_ptr<DirectX::SpriteFont> m_SpriteFont;
 				DirectX::XMMATRIX m_ProjectionGraphics;
 				int Width, Height;
 			};

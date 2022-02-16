@@ -40,6 +40,7 @@ App::~App()
 
 void App::DoFrame()
 {
+
 	win.GetGraphics().Clear(DirectX::Colors::Black, 1.0f, 0);
 	const float delta_time = time.Mark();
 	for (int i = 0; i < boxes.size(); i++)
@@ -47,5 +48,18 @@ void App::DoFrame()
 		boxes[i]->Update(delta_time);
 		boxes[i]->Draw(win.GetGraphics());
 	}
+
+	win.GetGraphics().CreateSprite(L"Assets/ConsoleFont.spritefont");
+	win.GetGraphics().GetSpriteBatch()->Begin();
+	win.GetGraphics().GetSpriteFont()->DrawString(
+		win.GetGraphics().GetSpriteBatch(), 
+		L"Hello World", 
+		DirectX::XMFLOAT2(0,0), 
+		DirectX::Colors::White, 0.0f, 
+		DirectX::XMFLOAT2(0,0), 
+		DirectX::XMFLOAT2(1.0f, 1.0f));
+
+	win.GetGraphics().GetSpriteBatch()->End();
+
 	win.GetGraphics().EndFrame();
 }
