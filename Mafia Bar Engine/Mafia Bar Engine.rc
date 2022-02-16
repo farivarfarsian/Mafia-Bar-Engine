@@ -52,7 +52,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON1               ICON                    "Resources\\engine.ico"
+IDI_ICON1               ICON                    "..\\Assets\\engine.ico"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -60,7 +60,7 @@ IDI_ICON1               ICON                    "Resources\\engine.ico"
 // Cursor
 //
 
-IDC_CURSOR1             CURSOR                  "Resources\\mafia_bar_cursor\\normal-select.cur"
+IDC_CURSOR1             CURSOR                  "..\\Assets\\mafia_bar_cursor\\normal-select.cur"
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////

@@ -67,6 +67,9 @@
     <Filter Include="Graphics\GraphicException">
       <UniqueIdentifier>{2ee23dfc-96f6-47ad-9c24-07c30d17cac1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Precompiled Header">
+      <UniqueIdentifier>{081c1aca-b151-4521-9e07-e0a2a7dd0abc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger.h">
@@ -118,9 +121,6 @@
     <ClInclude Include="Viewport.h">
       <Filter>Graphics\Viewport</Filter>
     </ClInclude>
-    <ClInclude Include="DataTypes.h">
-      <Filter>DataTypes</Filter>
-    </ClInclude>
     <ClInclude Include="MafiaBarString.h">
       <Filter>DataTypes\String</Filter>
     </ClInclude>
@@ -143,6 +143,10 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h" />
+    <ClInclude Include="pch.h">
+      <Filter>Precompiled Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Definitions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Exception.cpp">
@@ -193,5 +197,9 @@
     <ClCompile Include="MafiaBarFileStream.cpp">
       <Filter>DataTypes\FileStream</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Precompiled Header</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp" />
   </ItemGroup>
 </Project>

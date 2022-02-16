@@ -1,6 +1,4 @@
-#include "pch.h"
 #include "Window.h"
-#include "resource.h"
 
 /*--------------------------------------Initialie The Mafia Bar Engine Window Global Ojbect For Use In Everywhere--------------------------------------*/
 Window* window = nullptr;
@@ -47,17 +45,17 @@ Window::Window(const char* WinTitle, int width, int height, bool fullscreen)
 		if (fullscreen == true)
 		{
 			if (graphics->GetSwap()->SetFullscreenState(TRUE, nullptr) == S_OK) { this->fullscreen = true; }
-			else { log.LogToFile("Setting Fullscreen On, Using SwapChain D3D11", "Failed"); }
+			else { log.Log("Setting Fullscreen On, Using SwapChain D3D11", "Failed"); }
 		}
 		if (fullscreen == false)
 		{
 			if (graphics->GetSwap()->SetFullscreenState(false, nullptr) == S_OK) { this->fullscreen = false; }
-			else { log.LogToFile("Setting Fullscreen Off, Using SwapChain D3D11", "Failed"); }
+			else { log.Log("Setting Fullscreen Off, Using SwapChain D3D11", "Failed"); }
 		}
 
 		window = this;
 	}
-	else { log.Message("Mafia Bar Engine", "One of the Instance of Mafia Bar Engine is running, first close it and run the program again", MB_ICONERROR); }
+	else { MafiaBar::Engine::Logger::Message("Mafia Bar Engine", "One of the Instance of Mafia Bar Engine is running, first close it and run the program again", MB_ICONERROR); }
 }
 /*--------------------------------------Creates The Window Class/Style--------------------------------------*/
 void Window::RegisterWindowClass()
@@ -310,7 +308,7 @@ LRESULT Window::WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 			RedrawWindow(hWnd, NULL, NULL, RDW_UPDATENOW);
 			return 0;
 		}
-		*/
+		*/	
 	}
 
 	return DefWindowProc(hWnd, msg, wParam, lParam);
@@ -416,7 +414,7 @@ BOOL Window::CenterWindow(HWND hwndWindow)
 
 void Window::Restart()
 {
-	log.LogToFile("Mafia Bar Engine", "The Application Have Restarted");
+	log.Log("Mafia Bar Engine", "The Application Have Restarted");
 	ShellExecuteA(handle, "open", GetProgramFullPath(), NULL, NULL, SW_RESTORE);
 	PostQuitMessage(0);
 	ExitProcess(0);

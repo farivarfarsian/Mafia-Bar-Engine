@@ -5,9 +5,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="PreCompiled header">
-      <UniqueIdentifier>{9214ecbc-abd4-472a-8ec2-fd01add95c82}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Window">
       <UniqueIdentifier>{e9a9db76-202f-4dfb-9952-b0813c566199}</UniqueIdentifier>
     </Filter>
@@ -19,9 +16,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>PreCompiled header</Filter>
-    </ClCompile>
     <ClCompile Include="App.cpp">
       <Filter>App</Filter>
     </ClCompile>
@@ -31,9 +25,6 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>PreCompiled header</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Resource Files</Filter>
     </ClInclude>

@@ -1,5 +1,7 @@
 #pragma once
-#include "../Mafia Bar Engine/pch.h"
+#include "Definitions.h"
+#include <queue>
+
 namespace MafiaBar
 {
 	class EXP_ENGINE Mouse

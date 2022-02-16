@@ -1,5 +1,7 @@
 #pragma once
-#include "../Mafia Bar Engine/pch.h"
+#include "Definitions.h"
+#include <bitset>
+#include <queue>
 
 namespace MafiaBar
 {

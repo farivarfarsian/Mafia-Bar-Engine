@@ -28,7 +28,7 @@ namespace MafiaBar
 							(LPSTR)&Description,
 							0,
 							NULL);
-
+						
 						if (NULL != Description)
 						{
 							StringStream << GetType() << '\n'
@@ -39,11 +39,11 @@ namespace MafiaBar
 								<< "[Line] " << std::to_string(Line);
 
 							int MessageBoxMessages = Logger::Message("Mafia Bar Engine", StringStream.str().c_str(), MB_ABORTRETRYIGNORE | MB_ICONERROR);
-							//Try to replace with window object
+							//Try to replace with window object restart function
 							if (MessageBoxMessages == IDABORT) { PostQuitMessage(0); }
 							if (MessageBoxMessages == IDRETRY)
 							{
-								log.LogToFile("Mafia Bar Engine", "The Application Have Restarted");
+								log.Log("Mafia Bar Engine", "The Application Have Restarted");
 								ShellExecuteA(FindWindowA(NULL, "Mafia Bar Engine"), "open", "Mafia Bar Engine.exe", NULL, NULL, SW_RESTORE);
 								PostQuitMessage(0);
 								ExitProcess(0);
@@ -77,5 +77,3 @@ namespace MafiaBar
 		}
 	}
 }
-
-#define MB_GRAPHIC_EXCEPTION(DEBUG_CODE) MafiaBar::Engine::Graphics::GraphicException(__FILE__, __FUNCSIG__, __LINE__, DEBUG_CODE)

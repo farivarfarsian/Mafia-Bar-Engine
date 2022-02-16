@@ -1,6 +1,8 @@
 #pragma once
 
-#include "../Mafia Bar Engine/pch.h"
+#include "Definitions.h"
+
+#include "pch.h"
 
 #include "Keyboard.h"
 

@@ -1,8 +1,13 @@
 #pragma once
-#include "pch.h"
+#include <pch.h>
+
 #include <Engine.h>
 
 #include <MB_Utils.h>
+
+#include "resource.h"
+
+extern class Window* window;
 
 class Window
 {
@@ -99,9 +104,9 @@ private:
 	MafiaBar::Mouse mouse;
 	MafiaBar::Console console;
 	MafiaBar::Hotkey hotkey;
-	MafiaBar::Logger log;
+	MafiaBar::Engine::Logger log;
 	std::unique_ptr<MafiaBar::Engine::Graphics::Graphics> graphics;
 };
 
-extern Window* window;
+
 

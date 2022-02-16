@@ -7,8 +7,8 @@ App::App()
 	win.GetHotkey().RegisterHotKey(win.GetHandle(), win.GetHotkey().ESC, NULL, VK_ESCAPE);
 	win.GetHotkey().RegisterHotKey(win.GetHandle(), win.GetHotkey().QUIT, MOD_CONTROL, win.GetKeyboard().Q);
 	win.GetHotkey().RegisterHotKey(win.GetHandle(), win.GetHotkey().FULLSCREEN, MOD_CONTROL, win.GetKeyboard().F);
-	
 
+	
 	std::mt19937 rng(std::random_device{}());
 	std::uniform_real_distribution<float> adist(0.0f, 3.1415f * 2.0f);
 	std::uniform_real_distribution<float> ddist(0.0f, 3.1415f * 2.0f);

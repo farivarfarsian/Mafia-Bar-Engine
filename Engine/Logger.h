@@ -1,60 +1,26 @@
 #pragma once
-#include "../Mafia Bar Engine/pch.h"
 /*
-	-----------------Logger.h By Mafia Bar------------------
+		-----------------Logger.h------------------
 	-----This File is For Sending/Creating LOG Messages-----
 */
-
-
-/*
-*	Mafia Bar Engine Toolkit Compiler Error Messages
-* Just use #define ERRORMESSAGE 1
-* And Then Whatever Text you Want in LOG Like:
-* #define LOG "This is a Compiler Error"
-*	Mafia Bar Engine Toolkit Compiler Error Messages
-*	Mafia Bar Engine Toolkit Compiler Warning Messages
-* Just use #define WARNMESSAGE 1
-* And Then Whatever Text You Want in LOG Like:
-* #define LOG "This is a Compiler Warning Message
-* Mafia Bar Engine Toolkit Compiler Warning Messages
-*/
-
-#if WARNMESSAGE == 1
-#pragma message(__FILE__ "(" _CRT_STRINGIZE(__LINE__) ")"  ": warning: " LOG)
-#else
-#define WARNMESSAGE 0
-#endif
-
-#if ERRORMESSAGE == 1
-#pragma message(__FILE__ "(" _CRT_STRINGIZE(__LINE__) ")"  ": error: " LOG)
-#else
-#define ERRORMESSAGE 0
-#endif
+#include "Definitions.h"
+#include "pch.h"
 
 namespace MafiaBar
 {
-	class Logger
-	{
-	public:
-		Logger() = default;
-		void LogToFile(const char* detail, const char* value = "\0")
+	namespace Engine
+	{		
+		class EXP_ENGINE Logger
 		{
-			LoggerStream.open("Mafia Bar Engine.log", std::ios::app | std::ios::out);
-			if (LoggerStream.is_open())
-			{
-				long long CurrentTime;
-				time(&CurrentTime);
-				LoggerStream << '[' << strtok(ctime(&CurrentTime), "\n") << ']' << '\t' << detail << ':' << '\t' << value << '\n';
-				LoggerStream.close();
-			}
-			else { Message("Logger Class Error Stream File", "We have some kind of problems to Access the Mafia Bar Engine.log", MB_ICONWARNING); }
-		}
-
-		static int Message(const char* title, const char* message, UINT Type, HWND WindowHandle = FindWindowA(NULL, "Mafia Bar Engine")) { return MessageBoxA(WindowHandle, message, title, Type); }
-	public:
-		const char* GetFileName() const { return MafiaBarFileLogName; }
-	private:;
-		std::fstream LoggerStream;
-		const char* MafiaBarFileLogName = "Mafia_Bar_Engine.log";
-	};
+		public:
+			Logger() = default;
+			void Log(const char* Detail, const char* Value = "\0");
+			static void FetalError(const char* Description, const char* File, const char* Function, int Line);
+			static int Message(const char* title, const char* message, UINT Type, HWND WindowHandle = FindWindowA(NULL, "Mafia Bar Engine"));
+			const char* GetLoggerFileName() const;
+		private:
+			std::fstream LoggerStream;
+			const char* LoggerName = "Mafia Bar Engine.log";
+		};
+	}
 }

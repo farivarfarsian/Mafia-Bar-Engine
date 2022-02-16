@@ -1,8 +1,7 @@
 #pragma once
 /*
-* 
-*	PreCompiled Header File
-* 
+		-----------------pch.h------------------
+			-----PreCompiled Header File-----
 */
 
 //Implementing DirectX Libraries
@@ -30,23 +29,12 @@
 #include <chrono>
 #include <thread>
 #include <fstream>
-#include <queue>
-#include <bitset>
 #include <random>
 #include <yvals.h>
 
 //MafiaBar SDK Includes
 #include <Vector.h>
 
-//Definitions
-#define MAX_NAME_STRING 512
-
-#define EXP_ENGINE __declspec(dllexport)
-#define EXP_ENGINE_F extern "C" __declspec(dllexport)
-#define IMP_ENGINE __declspec(dllimport)
-
-#define MB_EXCEPTION( hr ) Window::GENGW_Exceptions(__LINE__, __FILE__, hr);
-#define MB_LAST_EXCEPTION 	Window::GENGW_Exceptions(__LINE__, __FILE__, GetLastError());
 
 typedef HRESULT DebugCode;
 
