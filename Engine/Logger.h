@@ -36,6 +36,7 @@ namespace MafiaBar
 	class Logger
 	{
 	public:
+		Logger() = default;
 		void LogToFile(const char* detail, const char* value = "\0")
 		{
 			LoggerStream.open("Mafia Bar Engine.log", std::ios::app | std::ios::out);

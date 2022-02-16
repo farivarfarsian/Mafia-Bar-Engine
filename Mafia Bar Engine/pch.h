@@ -32,11 +32,13 @@
 #include <fstream>
 #include <queue>
 #include <bitset>
-#include <random> //Using Random Numbers for Rotating/Moving Object in Scene
+#include <random>
+#include <yvals.h>
 
 //MafiaBar SDK Includes
 #include <Vector.h>
 
+//Definitions
 #define MAX_NAME_STRING 512
 
 #define EXP_ENGINE __declspec(dllexport)
@@ -45,6 +47,9 @@
 
 #define MB_EXCEPTION( hr ) Window::GENGW_Exceptions(__LINE__, __FILE__, hr);
 #define MB_LAST_EXCEPTION 	Window::GENGW_Exceptions(__LINE__, __FILE__, GetLastError());
+
+typedef HRESULT DebugCode;
+
 
 
 

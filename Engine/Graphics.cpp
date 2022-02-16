@@ -103,6 +103,13 @@ void MafiaBar::Engine::Graphics::Graphics::Clear(const float ClearRenderColor[4]
 	m_Context->ClearDepthStencilView(m_DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, ClearDepthBuffer, ClearStencilBuffer);
 }
 
+void MafiaBar::Engine::Graphics::Graphics::Clear(float ClearRenderColorR, float ClearRenderColorG, float ClearRenderColorB, float ClearRenderColorA, float ClearDepthBuffer, UINT8 ClearStencilBuffer)
+{
+	const float color[] = { ClearRenderColorR,ClearRenderColorG, ClearRenderColorB, ClearRenderColorA};
+	m_Context->ClearRenderTargetView(m_RenderTarget.Get(), color);
+	m_Context->ClearDepthStencilView(m_DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, ClearDepthBuffer, ClearStencilBuffer);
+}
+
 ID3D11Device* MafiaBar::Engine::Graphics::Graphics::GetDevice() const { return m_Device.Get(); }
 
 IDXGISwapChain* MafiaBar::Engine::Graphics::Graphics::GetSwap() const { return m_Swap.Get(); }

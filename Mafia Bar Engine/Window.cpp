@@ -122,175 +122,195 @@ LRESULT __stdcall Window::WindowProcedureThunk(HWND hWnd, UINT msg, WPARAM wPara
 	Window* const pWnd = reinterpret_cast<Window*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
 	return pWnd->WindowProcedure(hWnd, msg, wParam, lParam);
 }
+
 LRESULT Window::WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
 		/*------------------------------ Console Window Events ------------------------------*/
-	case WM_CTLCOLORSTATIC:
-	{
-		HDC hdc = (HDC)wParam;
-		SetBkMode(hdc, TRANSPARENT);
-		console.SetTextColor(0, 0, 255);
-		SetTextColor(hdc, RGB(std::get<0>(console.GetColors()), std::get<1>(console.GetColors()), std::get<2>(console.GetColors())));
-		return (LRESULT)GetStockObject(BLACK_BRUSH);
-	}
-	/*------------------------------ Keyboard Events ------------------------------*/
-	case WM_KILLFOCUS:
-	{
-		keyboard.ClearState();
-		break;
-	}
-	case WM_KEYDOWN:
-	{
-		keyboard.OnKeyPressed(static_cast<unsigned char>(wParam));
-		printf_s("KeyPressed\n");
-		break;
-	}
-	case WM_KEYUP:
-	{
-		keyboard.OnKeyReleased(static_cast<unsigned char>(wParam));
-		printf_s("KeyReleased\n");
-		break;
-	}
-	case WM_CHAR:
-	{
-		keyboard.OnChar(static_cast<char>(wParam));
-		printf_s("KeyChar\n");
-		break;
-	}
-	/*------------------------------ Mouse Events ------------------------------*/
-	case WM_MOUSEMOVE:
-	{
-		const POINTS pt = MAKEPOINTS(lParam); //Stroing The Mouse Moved Position
-		mouse.OnMouseMove(pt.x, pt.y);
-		break;
-	}
-	case WM_LBUTTONDOWN:
-	{
-		const POINTS pt = MAKEPOINTS(lParam);
-		mouse.OnLeftPressed(pt.x, pt.y);
-		printf("%d, %d\n", GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-		break;
-	}
-	case WM_LBUTTONUP:
-	{
-		const POINTS pt = MAKEPOINTS(lParam);
-		mouse.OnLeftReleased(pt.x, pt.y);
-		break;
-	}
-	case WM_RBUTTONDOWN:
-	{
-		const POINTS pt = MAKEPOINTS(lParam);
-		mouse.OnRightPressed(pt.x, pt.y);
-		break;
-	}
-	case WM_RBUTTONUP:
-	{
-		const POINTS pt = MAKEPOINTS(lParam);
-		mouse.OnRightReleased(pt.x, pt.y);
-		break;
-	}
-	case WM_MOUSEWHEEL:
-	{
-		const POINTS pt = MAKEPOINTS(lParam);
-		if (GET_WHEEL_DELTA_WPARAM(wParam) > 0) { mouse.OnWheelUp(pt.x, pt.y); }
-		else if (GET_WHEEL_DELTA_WPARAM(wParam < 0)) { mouse.OnWheelDown(pt.x, pt.y); }
-		break;
-	}
-	/*------------------------------Mafia Bar Engine Window Events ------------------------------*/
-	case WM_CREATE:
-		AddMenus(hWnd);
-		break;
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		return 0;
-	case WM_CLOSE:
-		if (MessageBoxA(hWnd, "Are you sure you want to quit?", AppName, MB_OKCANCEL | MB_ICONINFORMATION) == IDOK)
+		case WM_CTLCOLORSTATIC:
+		{
+			HDC hdc = (HDC)wParam;
+			SetBkMode(hdc, TRANSPARENT);
+			console.SetTextColor(0, 0, 255);
+			SetTextColor(hdc, RGB(std::get<0>(console.GetColors()), std::get<1>(console.GetColors()), std::get<2>(console.GetColors())));
+			return (LRESULT)GetStockObject(BLACK_BRUSH);
+		}
+		/*------------------------------ Keyboard Events ------------------------------*/
+		case WM_KEYDOWN:
+		{
+			keyboard.OnKeyPressed(static_cast<unsigned char>(wParam));
+			break;
+		}
+		case WM_KEYUP:
+		{
+			keyboard.OnKeyReleased(static_cast<unsigned char>(wParam));
+			break;
+		}
+		case WM_CHAR:
+		{
+			keyboard.OnChar(static_cast<char>(wParam));
+			break;
+		}
+		/*------------------------------ Mouse Events ------------------------------*/
+		case WM_MOUSEMOVE:
+		{
+			const POINTS pt = MAKEPOINTS(lParam); //Stroing The Mouse Moved Position
+			mouse.OnMouseMove(pt.x, pt.y);
+			break;
+		}
+		case WM_LBUTTONDOWN:
+		{
+			const POINTS pt = MAKEPOINTS(lParam);
+			mouse.OnLeftPressed(pt.x, pt.y);
+			printf("%d, %d\n", GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+		}
+		case WM_LBUTTONUP:
+		{
+			const POINTS pt = MAKEPOINTS(lParam);
+			mouse.OnLeftReleased(pt.x, pt.y);
+			break;
+		}
+		case WM_RBUTTONDOWN:
+		{
+			const POINTS pt = MAKEPOINTS(lParam);
+			mouse.OnRightPressed(pt.x, pt.y);
+			break;
+		}
+		case WM_RBUTTONUP:
+		{
+			const POINTS pt = MAKEPOINTS(lParam);
+			mouse.OnRightReleased(pt.x, pt.y);
+			break;
+		}
+		case WM_MOUSEWHEEL:
+		{
+			const POINTS pt = MAKEPOINTS(lParam);
+			if (GET_WHEEL_DELTA_WPARAM(wParam) > 0) { mouse.OnWheelUp(pt.x, pt.y); }
+			else if (GET_WHEEL_DELTA_WPARAM(wParam < 0)) { mouse.OnWheelDown(pt.x, pt.y); }
+			break;
+		}
+		/*------------------------------Mafia Bar Engine Window Events ------------------------------*/
+		case WM_CREATE:
+		{
+			AddMenus(hWnd);
+			break;
+		}
+		case WM_DESTROY:
 		{
 			PostQuitMessage(0);
 			return 0;
 		}
-		return 0;
-	case WM_SIZING:
-		printf_s("You're Resizing The Window");
-		break;
-	case WM_HOTKEY:
-		if (wParam == hotkey.ESC)
+		case WM_CLOSE:
 		{
-			graphics->GetSwap()->SetFullscreenState(FALSE, NULL);
-			fullscreen = false;
-		}
-		if (wParam == hotkey.QUIT)
-		{
-			PostQuitMessage(0);
+			if (MessageBoxA(hWnd, "Are you sure you want to quit?", AppName, MB_OKCANCEL | MB_ICONINFORMATION) == IDOK)
+			{
+				PostQuitMessage(0);
+				return 0;
+			}
 			return 0;
 		}
-		if (wParam == hotkey.FULLSCREEN) 
-		{ 
-			graphics->GetSwap()->SetFullscreenState(TRUE, NULL);
-			fullscreen = true;
-		}
-		break;
-	case WM_COMMAND:
-		switch (wParam)
+		case WM_HOTKEY:
 		{
-		case FILE_QUIT:
-			PostQuitMessage(0);
+			if (wParam == hotkey.ESC)
+			{
+				if (focus == true)
+				{
+					graphics->GetSwap()->SetFullscreenState(FALSE, NULL);
+					fullscreen = false;
+				}
+			}
+			if (wParam == hotkey.QUIT)
+			{
+				if (focus == true)
+				{
+					PostQuitMessage(0);
+					return 0;
+				}
+			}
+			if (wParam == hotkey.FULLSCREEN)
+			{
+				if (focus == true)
+				{
+					graphics->GetSwap()->SetFullscreenState(TRUE, NULL);
+					fullscreen = true;
+				}
+			}
+			break;
+		}
+		case WM_COMMAND:
+		{
+			switch (wParam)
+			{
+			case FILE_QUIT:
+				PostQuitMessage(0);
+				return 0;
+				break;
+			case FILE_TAKE_SCREENSHOT:
+				ScreenShot();
+				break;
+			default:
+				break;
+			}
+			break;
+		}
+		case WM_SETFOCUS:
+		{
+			focus = true;
+			break;
+		}
+		case WM_KILLFOCUS:
+		{
+			focus = false;
+			break;
+		}
+		/*
+		case WM_NCCALCSIZE:
+		{
+			LPNCCALCSIZE_PARAMS ncParams = (LPNCCALCSIZE_PARAMS)lParam;
+			ncParams->rgrc[0].top += 4;
+			ncParams->rgrc[0].left += 4;
+			ncParams->rgrc[0].bottom -= 4;
+			ncParams->rgrc[0].right -= 4;
 			return 0;
-			break;
-		case FILE_TAKE_SCREENSHOT:
-			ScreenShot();
-			break;
-		default:
-			break;
 		}
-		break;
-	/*
-	case WM_NCCALCSIZE:
-	{
-		LPNCCALCSIZE_PARAMS ncParams = (LPNCCALCSIZE_PARAMS)lParam;
-		ncParams->rgrc[0].top += 4;
-		ncParams->rgrc[0].left += 4;
-		ncParams->rgrc[0].bottom -= 4;
-		ncParams->rgrc[0].right -= 4;
-		return 0;
-	}
-	case WM_NCPAINT:
-	{
-		RECT rect;
-		GetWindowRect(hWnd, &rect);
-		HRGN region = NULL;
-		if (wParam == NULLREGION) {
-			region = CreateRectRgn(rect.left, rect.top, rect.right, rect.bottom);
-		}
-		else {
-			HRGN copy = CreateRectRgn(0, 0, 0, 0);
-			if (CombineRgn(copy, (HRGN)wParam, NULL, RGN_COPY)) {
-				region = copy;
+		case WM_NCPAINT:
+		{
+			RECT rect;
+			GetWindowRect(hWnd, &rect);
+			HRGN region = NULL;
+			if (wParam == NULLREGION) {
+				region = CreateRectRgn(rect.left, rect.top, rect.right, rect.bottom);
 			}
 			else {
-				DeleteObject(copy);
+				HRGN copy = CreateRectRgn(0, 0, 0, 0);
+				if (CombineRgn(copy, (HRGN)wParam, NULL, RGN_COPY)) {
+					region = copy;
+				}
+				else {
+					DeleteObject(copy);
+				}
 			}
-		}
 
-		HDC dc = GetDCEx(hWnd, region, DCX_WINDOW | DCX_CACHE | DCX_LOCKWINDOWUPDATE);
-		if (!dc && region) {
-			DeleteObject(region);
+			HDC dc = GetDCEx(hWnd, region, DCX_WINDOW | DCX_CACHE | DCX_LOCKWINDOWUPDATE);
+			if (!dc && region) {
+				DeleteObject(region);
+			}
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 4, RGB(0, 0, 0));
+			HGDIOBJ old = SelectObject(dc, pen);
+			Rectangle(dc, 0, 0, Width, Height);
+			SelectObject(dc, old);
+			ReleaseDC(hWnd, dc);
+			DeleteObject(pen);
+			return 0;
 		}
-		HPEN pen = CreatePen(PS_INSIDEFRAME, 4, RGB(0, 0, 0));
-		HGDIOBJ old = SelectObject(dc, pen);
-		Rectangle(dc, 0, 0, Width, Height);
-		SelectObject(dc, old);
-		ReleaseDC(hWnd, dc);
-		DeleteObject(pen);
-		return 0;
-	}
-	case WM_NCACTIVATE:
-		RedrawWindow(hWnd, NULL, NULL, RDW_UPDATENOW);
-		return 0;
-		break;
-	*/
+		case WM_NCACTIVATE:
+		{
+			RedrawWindow(hWnd, NULL, NULL, RDW_UPDATENOW);
+			return 0;
+		}
+		*/
 	}
 
 	return DefWindowProc(hWnd, msg, wParam, lParam);

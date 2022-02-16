@@ -136,13 +136,13 @@
     <ClInclude Include="GraphicsPipline.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Cube.h" />
     <ClInclude Include="GraphicException.h">
       <Filter>Graphics\GraphicException</Filter>
     </ClInclude>
     <ClInclude Include="TransformCbuf.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Cube.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Exception.cpp">

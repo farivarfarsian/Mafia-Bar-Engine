@@ -11,8 +11,21 @@ namespace MafiaBar
 			class EXP_ENGINE VertexBuffer : public Bindable
 			{
 			public:
-				VertexBuffer(MafiaBar::Engine::Graphics::Graphics& graphics, MafiaBar::Graphics::Vertex* vertices);
-				VertexBuffer(MafiaBar::Engine::Graphics::Graphics& graphics, MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>& vertices) {};
+				template<typename VerticesType>
+				VertexBuffer(MafiaBar::Engine::Graphics::Graphics& graphics, const MafiaBar::SDK::Vector<VerticesType>& vertices)
+					: VertexBufferStride(sizeof(VerticesType))
+				{
+					D3D11_BUFFER_DESC VertexBufferDECRIBTOR = {};
+					VertexBufferDECRIBTOR.Usage = D3D11_USAGE_DEFAULT;
+					VertexBufferDECRIBTOR.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+					VertexBufferDECRIBTOR.CPUAccessFlags = 0u;
+					VertexBufferDECRIBTOR.MiscFlags = 0u;
+					VertexBufferDECRIBTOR.ByteWidth = UINT(sizeof(VerticesType) * vertices.GetSize());
+					VertexBufferDECRIBTOR.StructureByteStride = sizeof(VerticesType);
+					D3D11_SUBRESOURCE_DATA VertexSUBRESOURCE_DATA;
+					VertexSUBRESOURCE_DATA.pSysMem = vertices.GetData();
+					MB_GRAPHIC_EXCEPTION(graphics.GetDevice()->CreateBuffer(&VertexBufferDECRIBTOR, &VertexSUBRESOURCE_DATA, &m_VertexBuffer));
+				}
 				void Bind(MafiaBar::Engine::Graphics::Graphics& graphics) override;
 			public:
 				unsigned int GetVertexBufferStride() const;

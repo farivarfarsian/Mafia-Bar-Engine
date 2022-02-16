@@ -11,7 +11,7 @@ namespace MafiaBar
 			class Pipline
 			{
 			public:
-				void BindThePipline(MafiaBar::Engine::Graphics::Graphics& graphics) { for (auto& b : Binds) { b->Bind(graphics); } }
+				void BindThePipline(MafiaBar::Engine::Graphics::Graphics& graphics) { for (int i = 0; i < Binds.size(); i++) { Binds[i]->Bind(graphics); } }
 				void BindToPipline(std::unique_ptr<MafiaBar::Engine::Graphics::Bindable> bind) { Binds.push_back(std::move(bind)); }
 			private:
 				std::vector<std::unique_ptr<MafiaBar::Engine::Graphics::Bindable>> Binds;

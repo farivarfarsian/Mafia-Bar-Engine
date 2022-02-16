@@ -7,14 +7,6 @@
 class Window
 {
 public:
-	MafiaBar::Keyboard keyboard;
-	MafiaBar::Mouse mouse;
-	MafiaBar::Console console;
-	MafiaBar::Hotkey hotkey;
-	MafiaBar::Logger log;
-	MafiaBar::WindowDialogs windialogs;
-	std::unique_ptr<MafiaBar::Engine::Graphics::Graphics> graphics;
-public:
 	struct GENGW_Exceptions : public MafiaBar::Exceptions
 	{
 		GENGW_Exceptions(int line, const char* file, HRESULT hr) noexcept;
@@ -77,28 +69,38 @@ public:
 	void Restart();
 	void Exit(int ExitCode); 
 public:
-	HWND GetHandle() const { return handle; }
-	HINSTANCE GetInstance() const { return hInstance; }
-	DWORD GetProcessID() const { return ProcID; }
-	int GetWindowWidth() const { return Width; }
-	int GetWindowHeight() const { return Height; }
-	bool GetFullscreenBoolean() const { return fullscreen; }
-	char* GetProgramFullPath() const
+	HWND GetHandle(void) const { return handle; }
+	HINSTANCE GetInstance(void) const { return hInstance; }
+	DWORD GetProcessID(void) const { return ProcID; }
+	int GetWindowWidth(void) const { return Width; }
+	int GetWindowHeight(void) const { return Height; }
+	bool GetFullscreenBoolean(void) const { return fullscreen; }
+	bool GetFocusBoolean(void) const { return focus; }
+	MafiaBar::Keyboard GetKeyboard(void) const { return keyboard; }
+	MafiaBar::Mouse GetMouse(void) const { return mouse; }
+	MafiaBar::Hotkey GetHotkey(void) const { return hotkey; }
+	MafiaBar::Engine::Graphics::Graphics& GetGraphics(void) const { return *graphics; }
+	char* GetProgramFullPath(void) const
 	{
 	   static char pathtofile[MAX_PATH] {};
 	   GetModuleFileNameA(hInstance, pathtofile, sizeof(pathtofile));
 	   return pathtofile;
 	}
-	MafiaBar::Engine::Graphics::Graphics& GetGraphics() const { return *graphics; }
 private:
-
+	int Width, Height;
+	const char* AppName;
+	bool fullscreen, focus;
 	HWND handle = NULL;
 	DWORD ProcID = GetCurrentProcessId();
 	HINSTANCE hInstance = GetModuleHandleA(NULL);
-	int Width, Height;
-	const char* AppName;
-	bool fullscreen;
 	HMENU WindowMenus;
+private:
+	MafiaBar::Keyboard keyboard;
+	MafiaBar::Mouse mouse;
+	MafiaBar::Console console;
+	MafiaBar::Hotkey hotkey;
+	MafiaBar::Logger log;
+	std::unique_ptr<MafiaBar::Engine::Graphics::Graphics> graphics;
 };
 
 extern Window* window;

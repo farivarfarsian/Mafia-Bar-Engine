@@ -9,15 +9,14 @@ namespace MafiaBar
 		{
 			class EXP_ENGINE GraphicException
 			{
-				typedef HRESULT DebugCode;
 			public:
 				GraphicException(const char* File, const char* Function, int Line, DebugCode debugcode)
 				{
 					Logger log;
 					if (debugcode == S_OK)
 					{
-						StringStream << "Function: " << Function << " At Line of " << Line << " In the File of " << File << " Have Succeeded With Graphic Operations.";
-						log.LogToFile(GetType(), StringStream.str().c_str());
+						//StringStream << "Function: " << Function << " At Line of " << Line << " In the File of " << File << " Have Succeeded With Graphic Operations.";
+						//log.LogToFile(GetType(), StringStream.str().c_str());
 					}
 					else
 					{

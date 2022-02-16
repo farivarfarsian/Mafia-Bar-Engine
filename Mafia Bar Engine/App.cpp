@@ -4,9 +4,10 @@ App::App()
 	: win("Mafia Bar Engine", 1200, 800, false)
 {
 	//Registering Mafia Bar Engine Default Hotkeys
-	win.hotkey.RegisterHotKey(win.GetHandle(), win.hotkey.ESC, NULL, VK_ESCAPE);
-	win.hotkey.RegisterHotKey(win.GetHandle(), win.hotkey.QUIT, MOD_CONTROL, win.keyboard.Q);
-	win.hotkey.RegisterHotKey(win.GetHandle(), win.hotkey.FULLSCREEN, MOD_CONTROL, win.keyboard.F);
+	win.GetHotkey().RegisterHotKey(win.GetHandle(), win.GetHotkey().ESC, NULL, VK_ESCAPE);
+	win.GetHotkey().RegisterHotKey(win.GetHandle(), win.GetHotkey().QUIT, MOD_CONTROL, win.GetKeyboard().Q);
+	win.GetHotkey().RegisterHotKey(win.GetHandle(), win.GetHotkey().FULLSCREEN, MOD_CONTROL, win.GetKeyboard().F);
+	
 
 	std::mt19937 rng(std::random_device{}());
 	std::uniform_real_distribution<float> adist(0.0f, 3.1415f * 2.0f);
@@ -20,7 +21,8 @@ App::App()
 			ddist, odist, rdist
 			));
 	}
-	win.graphics->SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
+
+	win.GetGraphics().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
 }
 
 int App::Go()
@@ -38,14 +40,12 @@ App::~App()
 
 void App::DoFrame()
 {
-	float delta_time = time.Mark();
-	win.graphics->Clear(DirectX::Colors::Black, 1.0f, 0);
-	for (auto& b : boxes)
+	win.GetGraphics().Clear(DirectX::Colors::Black, 1.0f, 0);
+	const float delta_time = time.Mark();
+	for (int i = 0; i < boxes.size(); i++)
 	{
-		b->Update(delta_time);
-		b->Draw(win.GetGraphics());
+		boxes[i]->Update(delta_time);
+		boxes[i]->Draw(win.GetGraphics());
 	}
-	//win.graphics->TestRenderingTriangle(-time.Peek(), 0, 0);
-	//win.graphics->TestRenderingTriangle(time.Peek(), win.mouse.GetPosX() / 600.0f - 1.0f, -win.mouse.GetPosY() / 400.0f + 1.0f);
-	win.graphics->EndFrame();
+	win.GetGraphics().EndFrame();
 }

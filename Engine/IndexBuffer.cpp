@@ -1,16 +1,16 @@
 #include "IndexBuffer.h"
 
-MafiaBar::Engine::Graphics::IndexBuffer::IndexBuffer(MafiaBar::Engine::Graphics::Graphics& graphics, const std::vector<unsigned short>& indicies)
-	: Count((unsigned int)indicies.size())
+MafiaBar::Engine::Graphics::IndexBuffer::IndexBuffer(MafiaBar::Engine::Graphics::Graphics& graphics, const MafiaBar::SDK::Vector<unsigned short>& indices)
+	: Count((unsigned int)indices.GetSize())
 {
 	D3D11_BUFFER_DESC IndexBufferDECRIBTOR = {};
 	IndexBufferDECRIBTOR.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	IndexBufferDECRIBTOR.ByteWidth = UINT(indicies.size() * sizeof(unsigned short));
+	IndexBufferDECRIBTOR.ByteWidth = UINT(indices.GetSize() * sizeof(unsigned short));
 	IndexBufferDECRIBTOR.CPUAccessFlags = 0u;
 	IndexBufferDECRIBTOR.MiscFlags = 0u;
 	IndexBufferDECRIBTOR.StructureByteStride = sizeof(unsigned short);
 	D3D11_SUBRESOURCE_DATA IndexSUBRESOURCE_DATA;
-	IndexSUBRESOURCE_DATA.pSysMem = indicies.data();
+	IndexSUBRESOURCE_DATA.pSysMem = indices.GetData();
 	MB_GRAPHIC_EXCEPTION(graphics.GetDevice()->CreateBuffer(&IndexBufferDECRIBTOR, &IndexSUBRESOURCE_DATA, &m_IndexBuffer));
 }
 

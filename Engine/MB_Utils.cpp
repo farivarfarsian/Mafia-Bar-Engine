@@ -53,11 +53,10 @@ const char* MafiaBar::Time::GetCurrentDateAndTime()
 
 void MafiaBar::Console::CreateWIN32Console()
 {
-    AllocConsole();
-    FILE* fp;
-    freopen_s(&fp, "CONOUT$", "w", stdout); // output only
-
-    freopen_s(&fp, "CONIN$", "r", stdin); //input only
+    AllocConsole(); FILE* fp;
+    freopen_s(&fp, "CONIN$", "r", stdin);
+    freopen_s(&fp, "CONOUT$", "w", stdout);
+    freopen_s(&fp, "CONOUT$", "w", stderr);
 
     SetConsoleTitleA("Mafia Bar Engine: Debug Console");
 }
