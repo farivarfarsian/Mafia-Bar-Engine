@@ -200,6 +200,8 @@
     <ClCompile Include="pch.cpp">
       <Filter>Precompiled Header</Filter>
     </ClCompile>
-    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="Logger.cpp">
+      <Filter>I/O\Logger</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
