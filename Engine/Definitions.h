@@ -13,3 +13,5 @@
 #define ERROR_MESSAGE(TITLE, MESSAGE) MafiaBar::Engine::Logger::Message(TITLE, MESSAGE, MB_ICONERROR) 
 
 #define MB_GRAPHIC_EXCEPTION(DEBUG_CODE) MafiaBar::Engine::Graphics::GraphicException(__FILE__, __FUNCSIG__, __LINE__, DEBUG_CODE)
+
+#define LINK_LIBRARY(LIB_NAME) __pragma(comment(lib, LIB_NAME))
