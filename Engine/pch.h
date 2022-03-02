@@ -31,9 +31,9 @@
 #include "DirectXTK/CommonStates.h"
 
 #ifdef _DEBUG
-	#pragma comment(lib, "../Engine/DirectXTK/Bin/Debug/DirectXTK.lib")
+	#pragma comment(lib, "../Engine/DirectXTK/Binary/Debug/DirectXTK.lib")
 #else
-	#pragma comment(lib, "../Engine/DirectXTK/Bin/Release/DirectXTK.lib")
+	#pragma comment(lib, "../Engine/DirectXTK/Binary/Release/DirectXTK.lib")
 #endif
 
 //Microsoft Windows Includes
