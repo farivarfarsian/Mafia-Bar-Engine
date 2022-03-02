@@ -1,5 +1,6 @@
 #pragma once
-#include "Engine.h"
+#include "Definitions.h"
+#include "pch.h"
 
 #include "WinRegistery.h"
 
@@ -9,7 +10,7 @@ namespace MafiaBar
 	{
 		namespace Information
 		{
-			class EXP_ENGINE Information
+			class MB_ENGINE_API Information
 			{
 			public:
 				#undef GetComputerName //Undefing Microsoft Windows A/W Macro
@@ -22,7 +23,7 @@ namespace MafiaBar
 			protected:
 				MafiaBar::Engine::Utilities::WinRegistery Registery;
 			};
-			class EXP_ENGINE OS : public Information
+			class MB_ENGINE_API OS : public Information
 			{
 			public:
 				const char* WindowsName();
@@ -32,7 +33,7 @@ namespace MafiaBar
 				const char* Branch();
 				const int Build();
 			};
-			class EXP_ENGINE Hardware : public Information
+			class MB_ENGINE_API Hardware : public Information
 			{
 			public:
 				Hardware();
@@ -44,11 +45,9 @@ namespace MafiaBar
 				DWORD CPUProcessorsCount();
 				//GPU Informations
 				const char* GPUName();
-				const char* GPUDeviceName();
-				const char* GPUDriverName();
+				unsigned int GPUMemorySize();
 				DWORD GPUVendorID();
 				DWORD GPUDeviceID();
-				int GetGraphicCardCount();
 				//BIOS and Board Informations
 				const char* BoardManufacturer();
 				const char* BoardProduct();
@@ -58,8 +57,7 @@ namespace MafiaBar
 				SYSTEM_INFO GetSystemInfo() const;
 			private:
 				SYSTEM_INFO SystemInfo;
-				IDirect3D9* d3dobject = Direct3DCreate9(D3D_SDK_VERSION);
-				D3DADAPTER_IDENTIFIER9* GraphicsAdaptors = (D3DADAPTER_IDENTIFIER9*)malloc(sizeof(D3DADAPTER_IDENTIFIER9) * GetGraphicCardCount());
+				DXGI_ADAPTER_DESC Adaptor_Desc{};
 			};
 		}
 	}

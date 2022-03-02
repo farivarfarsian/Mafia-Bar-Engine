@@ -1,8 +1,67 @@
 #include "Graphics.h"
 
-MafiaBar::Engine::Graphics::Graphics::Graphics(HWND hwnd, int Width, int Height)
-	: Width(Width), Height(Height)
+MafiaBar::Engine::Graphics::Graphics::Graphics(HWND hwnd, int O_Width, int O_Height, bool Fullscreen, bool Vsync)
 {
+	m_Vsync = Vsync;
+
+	IDXGIFactory* Factory = nullptr;
+	IDXGIAdapter* Adaptor = nullptr;
+	IDXGIOutput* Output = nullptr;
+	DXGI_MODE_DESC* DisplayModeListDesc = nullptr;
+	unsigned int NumMode = 0;
+	DXGI_ADAPTER_DESC AdaptorDesc{};
+
+	CreateDXGIFactory(__uuidof(IDXGIFactory), reinterpret_cast<void**>(&Factory));
+
+	Factory->EnumAdapters(0, &Adaptor);
+
+	Adaptor->EnumOutputs(0, &Output);
+
+	Output->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &NumMode, 0);
+
+	DisplayModeListDesc = new DXGI_MODE_DESC[NumMode];
+
+	Output->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &NumMode, DisplayModeListDesc);
+
+	for (int i = 0; i < NumMode; i++)
+	{
+		if (DisplayModeListDesc[i].Width == (unsigned int)Width)
+		{
+			if (DisplayModeListDesc[i].Height == (unsigned int)Height)
+			{
+				Numerator = DisplayModeListDesc[i].RefreshRate.Numerator;
+				Denominator = DisplayModeListDesc[i].RefreshRate.Denominator;
+			}
+		}
+	}
+
+	Adaptor->GetDesc(&AdaptorDesc);
+
+	m_GraphicCardMemorySize = (((AdaptorDesc.DedicatedVideoMemory / 1024) / 1024));
+
+	wcstombs(m_GraphicCardDescription, AdaptorDesc.Description, MAX_PATH);
+
+	Factory->Release(); Factory = 0;
+	Adaptor->Release(); Adaptor = 0;
+	Output->Release(); Output = 0;
+	delete[] DisplayModeListDesc;
+
+
+	if (O_Width == 0 && O_Height == 0)
+	{
+		RECT rect;
+		if (GetClientRect(hwnd, &rect) == TRUE)
+		{
+			this->Width = rect.right - rect.left;
+			this->Height = rect.bottom - rect.top;
+		}
+	}
+	else if (O_Width > 0 && O_Height > 0)
+	{
+		this->Width = O_Width;
+		this->Height = O_Height;
+	}
+
 	DXGI_SWAP_CHAIN_DESC sd = {};
 	//Changing to The Width And Height of the Windows
 	sd.BufferDesc.Width = Width;
@@ -10,9 +69,16 @@ MafiaBar::Engine::Graphics::Graphics::Graphics(HWND hwnd, int Width, int Height)
 
 	sd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM; //Pixel Layouts
 
-	//Picking the default Refreshrate
-	sd.BufferDesc.RefreshRate.Numerator = 0;
-	sd.BufferDesc.RefreshRate.Denominator = 0;
+	if (m_Vsync == true)
+	{
+		sd.BufferDesc.RefreshRate.Numerator = this->Numerator;
+		sd.BufferDesc.RefreshRate.Denominator = this->Denominator;
+	}
+	else if (m_Vsync == false)
+	{
+		sd.BufferDesc.RefreshRate.Numerator = 0;
+		sd.BufferDesc.RefreshRate.Denominator = 0;
+	}
 
 	sd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 	sd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
@@ -27,23 +93,27 @@ MafiaBar::Engine::Graphics::Graphics::Graphics(HWND hwnd, int Width, int Height)
 
 	//Window Stuff (Handle, Windowed)
 	sd.OutputWindow = hwnd;
-	sd.Windowed = true;
+	if (Fullscreen == true) { sd.Windowed = false; }
+	else if (Fullscreen == false) { sd.Windowed = true; }
 
 	sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 
-	//No Flags
-	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH | DXGI_SWAP_CHAIN_FLAG_GDI_COMPATIBLE;
+	
+	unsigned int SwapDeviceCreationFlags = 0u;
 
-	UINT swapCreateFlags = 0u;
-#ifndef _CRT_SECURE_NO_WARNINGS_CRT_SECURE_NO_WARNINGSNDEBUG
-	swapCreateFlags |= D3D11_CREATE_DEVICE_DEBUG;
-#endif
+	#if	_CONTAINER_DEBUG_LEVEL > 0
+		SwapDeviceCreationFlags |= D3D11_CREATE_DEVICE_DEBUG;
+	#else
+		SwapDeviceCreationFlags = 0u;
+	#endif //_CONTAINER_DEBUG_LEVEL > 0
 
-	D3D11CreateDeviceAndSwapChain(
+
+	MB_EXCEPTION(D3D11CreateDeviceAndSwapChain(
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
 		nullptr,
-		swapCreateFlags,
+		SwapDeviceCreationFlags,
 		nullptr,
 		0,
 		D3D11_SDK_VERSION,
@@ -52,19 +122,19 @@ MafiaBar::Engine::Graphics::Graphics::Graphics(HWND hwnd, int Width, int Height)
 		&m_Device,
 		nullptr,
 		&m_Context
-	);
+	));
 
 	//Creating Render Target View
 	Microsoft::WRL::ComPtr<ID3D11Resource> m_BackBuffer = nullptr;
 	m_Swap->GetBuffer(0, __uuidof(ID3D11Resource), &m_BackBuffer);
-	m_Device->CreateRenderTargetView(m_BackBuffer.Get(), nullptr, &m_RenderTarget);
+	MB_EXCEPTION(m_Device->CreateRenderTargetView(m_BackBuffer.Get(), nullptr, &m_RenderTarget));
 
 	//Creating Depth And Stencil State Buffer 
 	D3D11_DEPTH_STENCIL_DESC DepthStencilBufferDESC = {};
 	DepthStencilBufferDESC.DepthEnable = TRUE;
 	DepthStencilBufferDESC.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 	DepthStencilBufferDESC.DepthFunc = D3D11_COMPARISON_LESS;
-	m_Device->CreateDepthStencilState(&DepthStencilBufferDESC, &m_DepthStencilState);
+	MB_EXCEPTION(m_Device->CreateDepthStencilState(&DepthStencilBufferDESC, &m_DepthStencilState));
 	//bind depth state
 	m_Context->OMSetDepthStencilState(m_DepthStencilState.Get(), 1u);
 
@@ -81,21 +151,31 @@ MafiaBar::Engine::Graphics::Graphics::Graphics(HWND hwnd, int Width, int Height)
 	DepthStencilTextureDESC.Usage = D3D11_USAGE_DEFAULT;
 	DepthStencilTextureDESC.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 
-	m_Device->CreateTexture2D(&DepthStencilTextureDESC, nullptr, &DepthStencilTexure);
+	MB_EXCEPTION(m_Device->CreateTexture2D(&DepthStencilTextureDESC, nullptr, &DepthStencilTexure));
 
 
 	D3D11_DEPTH_STENCIL_VIEW_DESC DepthStencilViewDESC = {};
 	DepthStencilViewDESC.Format = DXGI_FORMAT_D32_FLOAT;
 	DepthStencilViewDESC.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	DepthStencilViewDESC.Texture2D.MipSlice = 0u;
-	m_Device->CreateDepthStencilView(DepthStencilTexure.Get(), &DepthStencilViewDESC, &m_DepthStencilView);
+	MB_EXCEPTION(m_Device->CreateDepthStencilView(DepthStencilTexure.Get(), &DepthStencilViewDESC, &m_DepthStencilView));
 
 	m_Context->OMSetRenderTargets(1u, m_RenderTarget.GetAddressOf(), m_DepthStencilView.Get());
 
 
+	D3D11_RASTERIZER_DESC RasterizerDesc{};
+	RasterizerDesc.FillMode = D3D11_FILL_SOLID;
+	RasterizerDesc.CullMode = D3D11_CULL_BACK;
+	MB_EXCEPTION(m_Device->CreateRasterizerState(&RasterizerDesc, m_RasterizerState.GetAddressOf()));
+
+	m_Context->RSSetState(m_RasterizerState.Get());
 }
 
-void MafiaBar::Engine::Graphics::Graphics::EndFrame() { m_Swap->Present(1u, 0u); }
+void MafiaBar::Engine::Graphics::Graphics::EndFrame() 
+{ 
+	if(m_Vsync == true) { m_Swap->Present(1u, 0u); }
+	else if (m_Vsync == false) { m_Swap->Present(0, 0); }	
+}
 
 void MafiaBar::Engine::Graphics::Graphics::CreateSprite(const wchar_t* font_path)
 {
@@ -139,5 +219,13 @@ DirectX::XMMATRIX MafiaBar::Engine::Graphics::Graphics::GetProjection() const { 
 DirectX::SpriteBatch* MafiaBar::Engine::Graphics::Graphics::GetSpriteBatch() const { return m_SpriteBatch.get(); }
 
 DirectX::SpriteFont* MafiaBar::Engine::Graphics::Graphics::GetSpriteFont() const { return m_SpriteFont.get(); }
+
+const unsigned long MafiaBar::Engine::Graphics::Graphics::GetGraphicCardMemorySize() const { return m_GraphicCardMemorySize; }
+
+const char* MafiaBar::Engine::Graphics::Graphics::GetGraphicCardDescription() const { return m_GraphicCardDescription; }
+
+const bool MafiaBar::Engine::Graphics::Graphics::GetVsyncBoolean() const { return m_Vsync; }
+
+constexpr std::pair<const char*, unsigned long> MafiaBar::Engine::Graphics::Graphics::GetGraphicCardInfo() const { return { m_GraphicCardDescription, m_GraphicCardMemorySize }; }
 
 void MafiaBar::Engine::Graphics::Graphics::SetProjection(DirectX::FXMMATRIX projection) { m_ProjectionGraphics = projection; }

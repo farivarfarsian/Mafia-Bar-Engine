@@ -5,7 +5,7 @@
 
 namespace MafiaBar
 {
-	class EXP_ENGINE Keyboard
+	class MB_ENGINE_API Keyboard
 	{
 		friend class Window;
 	public:

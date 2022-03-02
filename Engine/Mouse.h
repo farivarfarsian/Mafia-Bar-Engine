@@ -4,7 +4,7 @@
 
 namespace MafiaBar
 {
-	class EXP_ENGINE Mouse
+	class MB_ENGINE_API Mouse
 	{
 		friend class Window;
 	public:

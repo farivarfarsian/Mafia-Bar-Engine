@@ -1,5 +1,4 @@
 #pragma once
-#include "Engine.h"
 #include "Bindable.h"
 
 namespace MafiaBar
@@ -8,7 +7,7 @@ namespace MafiaBar
 	{
 		namespace Graphics
 		{
-			class EXP_ENGINE Viewport : public Bindable
+			class MB_ENGINE_API Viewport : public Bindable
 			{
 			public:
 				Viewport(MafiaBar::Engine::Graphics::Graphics& graphics);

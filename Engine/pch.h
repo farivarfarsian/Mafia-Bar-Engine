@@ -4,8 +4,9 @@
 			-----PreCompiled Header File-----
 */
 
-//Implementing DirectX Libraries
+//Implementing DirectX libraries
 #include <d3d11.h>
+
 #pragma comment(lib, "d3d11.lib")
 
 #include <d3d9.h> 
@@ -20,25 +21,42 @@
 #include <DirectXMath.h>
 #include <DirectXColors.h>
 
+#include <dxgi.h>
+#pragma comment(lib, "dxgi.lib")
+
+//Implementing DirectXTK library
+#include "DirectXTK/SpriteBatch.h"
+#include "DirectXTK/SpriteFont.h"
+#include "DirectXTK/ScreenGrab.h"
+#include "DirectXTK/CommonStates.h"
+
+#ifdef _DEBUG
+	#pragma comment(lib, "../Engine/DirectXTK/Bin/Debug/DirectXTK.lib")
+#else
+	#pragma comment(lib, "../Engine/DirectXTK/Bin/Release/DirectXTK.lib")
+#endif
+
 //Microsoft Windows Includes
 #include <Windows.h>
 #include <wrl.h>
 #include <windowsx.h>
+#include <wincodec.h>
 
 //STD Includes
 #include <chrono>
 #include <thread>
 #include <fstream>
 #include <random>
-#include <yvals.h>
+#include <mutex>
+#include <future>
+#include <filesystem>
 
 //MafiaBar SDK Includes
 #include <Vector.h>
+#include <VirtualVector.h>
 
-
+typedef BSTR CS_String;
+typedef std::string CP_String;
+typedef const char* C_String;
 typedef HRESULT DebugCode;
-
-
-
-
 

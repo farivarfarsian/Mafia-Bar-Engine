@@ -27,10 +27,19 @@ const int MafiaBar::Engine::Information::OS::Build() { return std::stoi(Register
 MafiaBar::Engine::Information::Hardware::Hardware()
 {
 	::GetSystemInfo(&SystemInfo);
-	for (int i = 0; i < GetGraphicCardCount(); i++) { d3dobject->GetAdapterIdentifier(i, 0, &(GraphicsAdaptors[i])); }
+
+	IDXGIAdapter* Adaptor = nullptr;
+	IDXGIFactory* Factory = nullptr;
+	CreateDXGIFactory(__uuidof(IDXGIFactory), reinterpret_cast<void**>(&Factory));
+	
+	Factory->EnumAdapters(0, &Adaptor);
+	Adaptor->GetDesc(&Adaptor_Desc);
+
+	Factory->Release(); Factory = 0;
+	Adaptor->Release(); Adaptor = 0;
 }
 
-MafiaBar::Engine::Information::Hardware::~Hardware() { d3dobject->Release(); }
+MafiaBar::Engine::Information::Hardware::~Hardware() { }
 
 const char* MafiaBar::Engine::Information::Hardware::CPUName() { return Registery.RegistryRead(L"HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0", L"ProcessorNameString", REG_SZ); }
 
@@ -40,17 +49,20 @@ DWORD MafiaBar::Engine::Information::Hardware::CPUType() { return SystemInfo.dwP
 
 DWORD MafiaBar::Engine::Information::Hardware::CPUProcessorsCount() { return SystemInfo.dwNumberOfProcessors; }
 
-const char* MafiaBar::Engine::Information::Hardware::GPUName() { return GraphicsAdaptors->Description; }
 
-const char* MafiaBar::Engine::Information::Hardware::GPUDeviceName() { return GraphicsAdaptors->DeviceName; }
+const char* MafiaBar::Engine::Information::Hardware::GPUName() 
+{ 
+	static char Name[MAX_PATH]{};
+	wcstombs(Name, Adaptor_Desc.Description, MAX_PATH);
+	return Name;
+}
 
-const char* MafiaBar::Engine::Information::Hardware::GPUDriverName() { return GraphicsAdaptors->Driver; }
+unsigned int MafiaBar::Engine::Information::Hardware::GPUMemorySize() { return ((Adaptor_Desc.DedicatedVideoMemory / 1024) / 1024); }
 
-DWORD MafiaBar::Engine::Information::Hardware::GPUVendorID() { return GraphicsAdaptors->VendorId; }
+DWORD MafiaBar::Engine::Information::Hardware::GPUVendorID() { return Adaptor_Desc.VendorId; }
 
-DWORD MafiaBar::Engine::Information::Hardware::GPUDeviceID() { return GraphicsAdaptors->DeviceId; }
+DWORD MafiaBar::Engine::Information::Hardware::GPUDeviceID() { return Adaptor_Desc.DeviceId; }
 
-int MafiaBar::Engine::Information::Hardware::GetGraphicCardCount() { return d3dobject->GetAdapterCount(); }
 
 const char* MafiaBar::Engine::Information::Hardware::BoardManufacturer() { return Registery.RegistryRead(L"HARDWARE\\DESCRIPTION\\System\\BIOS", L"BaseBoardManufacturer", REG_SZ); }
 

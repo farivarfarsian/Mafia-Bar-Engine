@@ -1,5 +1,6 @@
 #pragma once
-#include "Engine.h"
+#include "Definitions.h"
+#include "pch.h"
 
 
 namespace MafiaBar
@@ -10,7 +11,7 @@ namespace MafiaBar
         {
 
             /*---------------Window Registery Read/Write Class---------------*/
-            class EXP_ENGINE WinRegistery
+            class MB_ENGINE_API WinRegistery
             {
             public:
                 //Write a window registery, if the return value is true the opperation have completed.

@@ -1,7 +1,7 @@
 #pragma once
-#include "Engine.h"
 #include "Bindable.h"
 #include "MafiaBarString.h"
+#include "Logger.h"
 
 namespace MafiaBar
 {
@@ -16,7 +16,7 @@ namespace MafiaBar
 				GeometryShader,
 				HullShader,
 			};
-			class EXP_ENGINE Shader : public Bindable
+			class MB_ENGINE_API Shader : public Bindable
 			{
 			public:
 				Shader() = default; //Used in Inheritances of Shader Class 
@@ -35,14 +35,14 @@ namespace MafiaBar
 				bool ReadFile(const MafiaBar::MafiaBarString& ShaderPath);
 			};
 
-			class EXP_ENGINE VertexShader : public Shader
+			class MB_ENGINE_API VertexShader : public Shader
 			{
 			public:
 				VertexShader(MafiaBar::Engine::Graphics::Graphics& graphics, const MafiaBar::MafiaBarString& VertexShaderPathName);
 				void Bind(MafiaBar::Engine::Graphics::Graphics& graphics) override;
 			};
 
-			class EXP_ENGINE PixelShader : public Shader
+			class MB_ENGINE_API PixelShader : public Shader
 			{
 			public:
 				PixelShader(MafiaBar::Engine::Graphics::Graphics& graphics, const MafiaBar::MafiaBarString& PixelShaderPathName);

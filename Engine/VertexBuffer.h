@@ -1,5 +1,4 @@
 #pragma once
-#include "Engine.h"
 #include "Bindable.h"
 
 namespace MafiaBar
@@ -8,7 +7,7 @@ namespace MafiaBar
 	{
 		namespace Graphics
 		{
-			class EXP_ENGINE VertexBuffer : public Bindable
+			class MB_ENGINE_API VertexBuffer : public Bindable
 			{
 			public:
 				template<typename VerticesType>
@@ -24,7 +23,7 @@ namespace MafiaBar
 					VertexBufferDECRIBTOR.StructureByteStride = sizeof(VerticesType);
 					D3D11_SUBRESOURCE_DATA VertexSUBRESOURCE_DATA;
 					VertexSUBRESOURCE_DATA.pSysMem = vertices.GetData();
-					MB_GRAPHIC_EXCEPTION(graphics.GetDevice()->CreateBuffer(&VertexBufferDECRIBTOR, &VertexSUBRESOURCE_DATA, &m_VertexBuffer));
+					MB_EXCEPTION(graphics.GetDevice()->CreateBuffer(&VertexBufferDECRIBTOR, &VertexSUBRESOURCE_DATA, &m_VertexBuffer));
 				}
 				void Bind(MafiaBar::Engine::Graphics::Graphics& graphics) override;
 			public:

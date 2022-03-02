@@ -12,4 +12,10 @@ bool MafiaBar::MafiaBarFileStream::existence_of_a_file(const char* FilePath)
 	return (stat(FilePath, &buffer) == 0);
 }
 
+bool MafiaBar::MafiaBarFileStream::existence_of_a_file(const wchar_t* FilePath)
+{
+	struct _stat64i32 buffer;
+	return (_wstat64i32(FilePath, &buffer) == 0);
+}
+
 MafiaBar::MafiaBarString MafiaBar::MafiaBarFileStream::GetFileName() { return Filename; }

@@ -1,6 +1,5 @@
 #include "Window.h"
 
-/*--------------------------------------Initialie The Mafia Bar Engine Window Global Ojbect For Use In Everywhere--------------------------------------*/
 Window* window = nullptr;
 
 /*--------------------------------------The Mafia Bar Engine Window Menus ID Definitions--------------------------------------*/
@@ -10,8 +9,8 @@ Window* window = nullptr;
 /*--------------------------------------Initializing The Mafia Bar Engine Window--------------------------------------*/
 Window::Window(const char* WinTitle, int width, int height, bool fullscreen)
 {
-	if(FindWindowA(NULL, WinTitle) == NULL)
-	{
+	//if(FindWindowA(NULL, WinTitle) == NULL)
+	//{
 		this->RegisterWindowClass();
 
 		this->Width = width;
@@ -23,39 +22,44 @@ Window::Window(const char* WinTitle, int width, int height, bool fullscreen)
 			WinTitle, //Windows Title
 			WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, //Windows Styles
 			0, //Window X Position
-			0, //Windows Y Posiontion
-			width, //Window Width
-			height, //Window Height
+			0, //Window Y Posiontion
+			Width, //Window Width
+			Height, //Window Height
 			nullptr, //Handle of Parent of this Windows
 			nullptr, //Handle to menu or Child Windows Identifier
 			hInstance, //handle to the instance of module to be used with this class
 			this); //Param to Create Window
+		
+		if (this->handle == NULL) {  }
 
-		if (this->handle == NULL) { MB_LAST_EXCEPTION; }
+		AllocConsole(); FILE* fp;
+		freopen_s(&fp, "CONIN$", "r", stdin);
+		freopen_s(&fp, "CONOUT$", "w", stdout);
+		freopen_s(&fp, "CONOUT$", "w", stderr);
+
+		SetConsoleTitleA("Mafia Bar Engine: Debug Console");
 
 		CenterWindow(this->handle);
 		SetFocus(this->handle);
 		ShowWindow(this->handle, SW_SHOW);
 
-		console.CreateWIN32Console();
-
-		graphics = std::make_unique<MafiaBar::Engine::Graphics::Graphics>(handle, Width, Height);
+		Engine::Get().CreateGraphics(this->handle, fullscreen, true);
 
 		//Setting Fullscreen
 		if (fullscreen == true)
 		{
-			if (graphics->GetSwap()->SetFullscreenState(TRUE, nullptr) == S_OK) { this->fullscreen = true; }
-			else { log.Log("Setting Fullscreen On, Using SwapChain D3D11", "Failed"); }
+			if (Engine::Get().GetGraphics()->GetSwap()->SetFullscreenState(TRUE, nullptr) == S_OK) { this->fullscreen = true; }
+			else { MafiaBar::Engine::Engine::Get().GetLogger().Log("Setting Fullscreen On, Using SwapChain D3D11", "Failed"); }
 		}
 		if (fullscreen == false)
 		{
-			if (graphics->GetSwap()->SetFullscreenState(false, nullptr) == S_OK) { this->fullscreen = false; }
-			else { log.Log("Setting Fullscreen Off, Using SwapChain D3D11", "Failed"); }
+			if (Engine::Get().GetGraphics()->GetSwap()->SetFullscreenState(false, nullptr) == S_OK) { this->fullscreen = false; }
+			else { MafiaBar::Engine::Engine::Get().GetLogger().Log("Setting Fullscreen Off, Using SwapChain D3D11", "Failed"); }
 		}
 
 		window = this;
-	}
-	else { MafiaBar::Engine::Logger::Message("Mafia Bar Engine", "One of the Instance of Mafia Bar Engine is running, first close it and run the program again", MB_ICONERROR); }
+	//}
+	//else { MafiaBar::Engine::Logger::Message("Mafia Bar Engine", "One of the Instance of Mafia Bar Engine is running, first close it and run the program again", MB_ICONERROR); }
 }
 /*--------------------------------------Creates The Window Class/Style--------------------------------------*/
 void Window::RegisterWindowClass()
@@ -84,6 +88,7 @@ void Window::RegisterWindowClass()
 	RegisterClassEx(&wcex);
 }
 /*--------------------------------------WNDPROC For Mafia Bar Engine Window--------------------------------------*/
+
 std::optional<int> Window::ProcessMessages()
 {
 	MSG msg;
@@ -99,6 +104,7 @@ std::optional<int> Window::ProcessMessages()
 	}
 	return {};
 }
+
 LRESULT __stdcall Window::WindowProcedureSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	if (msg == WM_NCCREATE)
@@ -115,6 +121,7 @@ LRESULT __stdcall Window::WindowProcedureSetup(HWND hWnd, UINT msg, WPARAM wPara
 	}
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
+
 LRESULT __stdcall Window::WindowProcedureThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	Window* const pWnd = reinterpret_cast<Window*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
@@ -125,76 +132,62 @@ LRESULT Window::WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 {
 	switch (msg)
 	{
-		/*------------------------------ Console Window Events ------------------------------*/
-		case WM_CTLCOLORSTATIC:
-		{
-			HDC hdc = (HDC)wParam;
-			SetBkMode(hdc, TRANSPARENT);
-			console.SetTextColor(0, 0, 255);
-			SetTextColor(hdc, RGB(std::get<0>(console.GetColors()), std::get<1>(console.GetColors()), std::get<2>(console.GetColors())));
-			return (LRESULT)GetStockObject(BLACK_BRUSH);
-		}
 		/*------------------------------ Keyboard Events ------------------------------*/
 		case WM_KEYDOWN:
-		{
-			keyboard.OnKeyPressed(static_cast<unsigned char>(wParam));
+		{		
+			MafiaBar::Engine::Engine::Get().GetKeyboard().OnKeyPressed(static_cast<unsigned char>(wParam));
 			break;
 		}
 		case WM_KEYUP:
 		{
-			keyboard.OnKeyReleased(static_cast<unsigned char>(wParam));
+			MafiaBar::Engine::Engine::Get().GetKeyboard().OnKeyReleased(static_cast<unsigned char>(wParam));
 			break;
 		}
 		case WM_CHAR:
 		{
-			keyboard.OnChar(static_cast<char>(wParam));
+			MafiaBar::Engine::Engine::Get().GetKeyboard().OnChar(static_cast<char>(wParam));
 			break;
 		}
 		/*------------------------------ Mouse Events ------------------------------*/
 		case WM_MOUSEMOVE:
 		{
 			const POINTS pt = MAKEPOINTS(lParam); //Stroing The Mouse Moved Position
-			mouse.OnMouseMove(pt.x, pt.y);
+			MafiaBar::Engine::Engine::Get().GetMouse().OnMouseMove(pt.x, pt.y);
 			break;
 		}
 		case WM_LBUTTONDOWN:
 		{
 			const POINTS pt = MAKEPOINTS(lParam);
-			mouse.OnLeftPressed(pt.x, pt.y);
-			printf("%d, %d\n", GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			MafiaBar::Engine::Engine::Get().GetMouse().OnLeftPressed(pt.x, pt.y);
+			printf_s("%d, %d\n", GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			break;
 		}
 		case WM_LBUTTONUP:
 		{
 			const POINTS pt = MAKEPOINTS(lParam);
-			mouse.OnLeftReleased(pt.x, pt.y);
+			MafiaBar::Engine::Engine::Get().GetMouse().OnLeftReleased(pt.x, pt.y);
 			break;
 		}
 		case WM_RBUTTONDOWN:
 		{
 			const POINTS pt = MAKEPOINTS(lParam);
-			mouse.OnRightPressed(pt.x, pt.y);
+			MafiaBar::Engine::Engine::Get().GetMouse().OnRightPressed(pt.x, pt.y);
 			break;
 		}
 		case WM_RBUTTONUP:
 		{
 			const POINTS pt = MAKEPOINTS(lParam);
-			mouse.OnRightReleased(pt.x, pt.y);
+			MafiaBar::Engine::Engine::Get().GetMouse().OnRightReleased(pt.x, pt.y);
 			break;
 		}
 		case WM_MOUSEWHEEL:
 		{
 			const POINTS pt = MAKEPOINTS(lParam);
-			if (GET_WHEEL_DELTA_WPARAM(wParam) > 0) { mouse.OnWheelUp(pt.x, pt.y); }
-			else if (GET_WHEEL_DELTA_WPARAM(wParam < 0)) { mouse.OnWheelDown(pt.x, pt.y); }
+			if (GET_WHEEL_DELTA_WPARAM(wParam) > 0) { MafiaBar::Engine::Engine::Get().GetMouse().OnWheelUp(pt.x, pt.y); }
+			else if (GET_WHEEL_DELTA_WPARAM(wParam < 0)) { MafiaBar::Engine::Engine::Get().GetMouse().OnWheelDown(pt.x, pt.y); }
 			break;
 		}
 		/*------------------------------Mafia Bar Engine Window Events ------------------------------*/
-		case WM_CREATE:
-		{
-			AddMenus(hWnd);
-			break;
-		}
 		case WM_DESTROY:
 		{
 			PostQuitMessage(0);
@@ -215,7 +208,7 @@ LRESULT Window::WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 			{
 				if (focus == true)
 				{
-					graphics->GetSwap()->SetFullscreenState(FALSE, NULL);
+					Engine::Get().GetGraphics()->GetSwap()->SetFullscreenState(FALSE, NULL);
 					fullscreen = false;
 				}
 			}
@@ -231,25 +224,9 @@ LRESULT Window::WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 			{
 				if (focus == true)
 				{
-					graphics->GetSwap()->SetFullscreenState(TRUE, NULL);
+					Engine::Get().GetGraphics()->GetSwap()->SetFullscreenState(TRUE, NULL);
 					fullscreen = true;
 				}
-			}
-			break;
-		}
-		case WM_COMMAND:
-		{
-			switch (wParam)
-			{
-			case FILE_QUIT:
-				PostQuitMessage(0);
-				return 0;
-				break;
-			case FILE_TAKE_SCREENSHOT:
-				ScreenShot();
-				break;
-			default:
-				break;
 			}
 			break;
 		}
@@ -263,6 +240,7 @@ LRESULT Window::WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 			focus = false;
 			break;
 		}
+		#pragma region DrawingTheClientArea
 		/*
 		case WM_NCCALCSIZE:
 		{
@@ -309,6 +287,7 @@ LRESULT Window::WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 			return 0;
 		}
 		*/	
+		#pragma endregion
 	}
 
 	return DefWindowProc(hWnd, msg, wParam, lParam);
@@ -321,103 +300,51 @@ Window::~Window()
 		DestroyWindow(handle);
 	}
 }
-/*--------------------------------------Mafia Bar Engine Exceptions--------------------------------------*/
-Window::GENGW_Exceptions::GENGW_Exceptions(int line, const char* file, HRESULT hr) noexcept
-	: MafiaBar::Exceptions(line, file), hr( hr )
-{
-	printf_s("[Mafia Bar Engine Exception System]\tAn Exception Threw\n");
-}
-const char* Window::GENGW_Exceptions::what() const noexcept
-{
-	std::ostringstream oss;
-	oss << GetType() << '\n' << " [Error Code] " << hr << '\n'
-		<< " [Describtion] " << GetErrorString()  << GetOriginString();
-	whatBuffer = oss.str();
+/*--------------------------------------Window Util Functions--------------------------------------*/
 
-	return whatBuffer.c_str();
-}
-const char* Window::GENGW_Exceptions::GetType() const noexcept
-{
-	return "Mafia Bar Engine Exception";
-}
-std::string Window::GENGW_Exceptions::TranslteErrorCodes(HRESULT hr) noexcept
-{
-	char* msgbuffer = nullptr;
-	DWORD nmsglen = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS
-		, nullptr, hr, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), reinterpret_cast<LPSTR>(&msgbuffer), 0 , nullptr);
-
-	if (nmsglen == 0)
-	{
-		return "Unidentified Error Code";
-	}
-	std::string errorstring = msgbuffer;
-	LocalFree(msgbuffer);
-	return errorstring;
-}
-std::string Window::GENGW_Exceptions::GetErrorString() const noexcept
-{
-	return TranslteErrorCodes(hr);
-}
-/*--------------------------------------Window Utils Functions--------------------------------------*/
 void Window::SetWindowTransparency(std::uint8_t Transperancy)
 {
 	long wAttr = GetWindowLong(handle, GWL_EXSTYLE);
 	SetWindowLong(handle, GWL_EXSTYLE, wAttr | WS_EX_LAYERED);
 	SetLayeredWindowAttributes(handle, 0, Transperancy, 0x02);
 }
+
 void Window::SetWindowAsOverlay() { ::SetWindowPos(handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_DRAWFRAME | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW); }
-void Window::AddMenus(HWND hwnd)
-{
-	WindowMenus = CreateMenu();
-	HMENU hFileMenu = CreateMenu();
 
-	AppendMenuA(WindowMenus, MF_POPUP, (UINT_PTR)hFileMenu, "File");
-		AppendMenuA(hFileMenu, MF_STRING, FILE_TAKE_SCREENSHOT, "Take a Screenshot");
-		AppendMenuA(hFileMenu, MF_SEPARATOR, NULL, NULL);
-		AppendMenuA(hFileMenu, MF_STRING, FILE_QUIT, "Quit");
-
-	SetMenu(hwnd, WindowMenus);
-}
 BOOL Window::CenterWindow(HWND hwndWindow)
 {
-	HWND hwndParent;
-	RECT rectWindow, rectParent;
+	int CenterScreenX = GetSystemMetrics(SM_CXSCREEN) / 2 - Width / 2;
+	int CenterScreenY = GetSystemMetrics(SM_CYSCREEN) / 2 - Height / 2;
 
-	// make the window relative to its parent
-	if ((hwndParent = GetParent(hwndWindow)) != NULL)
-	{
-		GetWindowRect(hwndWindow, &rectWindow);
-		GetWindowRect(hwndParent, &rectParent);
+	RECT wr{};
+	wr.left = CenterScreenX;
+	wr.top = CenterScreenY;
+	wr.right = wr.left + Width;
+	wr.bottom = wr.top + Height;
+	if (AdjustWindowRect(&wr, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, false) == false) { return false; }
 
-		int nWidth = rectWindow.right - rectWindow.left;
-		int nHeight = rectWindow.bottom - rectWindow.top;
+	if (MoveWindow(hwndWindow, wr.left, wr.top, wr.right - wr.left, wr.bottom - wr.top, true) == false) { return false; }
 
-		int nX = ((rectParent.right - rectParent.left) - nWidth) / 2 + rectParent.left;
-		int nY = ((rectParent.bottom - rectParent.top) - nHeight) / 2 + rectParent.top;
-
-		int nScreenWidth = GetSystemMetrics(SM_CXSCREEN);
-		int nScreenHeight = GetSystemMetrics(SM_CYSCREEN);
-
-		// make sure that the dialog box never moves outside of the screen
-		if (nX < 0) nX = 0;
-		if (nY < 0) nY = 0;
-		if (nX + nWidth > nScreenWidth) nX = nScreenWidth - nWidth;
-		if (nY + nHeight > nScreenHeight) nY = nScreenHeight - nHeight;
-
-		MoveWindow(hwndWindow, nX, nY, nWidth, nHeight, FALSE);
-
-		return TRUE;
-	}
-
-	return FALSE;
+	return true;
 }
 
 void Window::Restart()
 {
-	log.Log("Mafia Bar Engine", "The Application Have Restarted");
-	ShellExecuteA(handle, "open", GetProgramFullPath(), NULL, NULL, SW_RESTORE);
-	PostQuitMessage(0);
-	ExitProcess(0);
+	PROCESS_INFORMATION processInformation{};
+	STARTUPINFOA startupInfo{};
+	startupInfo.cb = sizeof(startupInfo);
+	if (CreateProcessA(NULL, GetCommandLineA(), NULL, NULL, FALSE,
+		NORMAL_PRIORITY_CLASS | CREATE_NEW_CONSOLE | CREATE_NEW_PROCESS_GROUP, NULL, NULL, &startupInfo, &processInformation) == TRUE)
+	{
+		Engine::Get().GetLogger().Log("Restarting the application", "Application restarted");
+		PostQuitMessage(0);
+		ExitProcess(0);
+		Sleep(60);
+		ProcessID = processInformation.dwProcessId;
+		CloseHandle(processInformation.hProcess);
+		CloseHandle(processInformation.hThread);
+	}
+	else { MB_EXCEPTION(GetLastError()); };
 }
 
 void Window::Exit(int ExitCode)
@@ -428,5 +355,4 @@ void Window::Exit(int ExitCode)
 		UnregisterClassA("Mafia Bar", this->hInstance);
 		DestroyWindow(handle);
 	}
-
 }

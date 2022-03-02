@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Exception">
-      <UniqueIdentifier>{4d8bec38-0342-4a52-a5ac-078b3594333e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utilities">
       <UniqueIdentifier>{9be62652-f0a3-4239-899b-2797cf154397}</UniqueIdentifier>
     </Filter>
@@ -64,11 +61,20 @@
     <Filter Include="DataTypes\FileStream">
       <UniqueIdentifier>{0260ea27-7cb1-4176-8e24-6e4545a4b0f5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\GraphicException">
-      <UniqueIdentifier>{2ee23dfc-96f6-47ad-9c24-07c30d17cac1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Precompiled Header">
+    <Filter Include="Precompiled Header,Definitions">
       <UniqueIdentifier>{081c1aca-b151-4521-9e07-e0a2a7dd0abc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\DependencyFiles">
+      <UniqueIdentifier>{b47f619d-3e18-445a-b679-41a8b8849aa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\FPSCounter">
+      <UniqueIdentifier>{5d50a0e3-ebbc-43a5-9653-78aabb9c4490}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Exception">
+      <UniqueIdentifier>{4d8bec38-0342-4a52-a5ac-078b3594333e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="I/O\Console">
+      <UniqueIdentifier>{0cc3b242-79ac-4d95-9104-922e912d2740}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -136,22 +142,27 @@
     <ClInclude Include="GraphicsPipline.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicException.h">
-      <Filter>Graphics\GraphicException</Filter>
-    </ClInclude>
     <ClInclude Include="TransformCbuf.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h" />
     <ClInclude Include="pch.h">
-      <Filter>Precompiled Header</Filter>
+      <Filter>Precompiled Header,Definitions</Filter>
     </ClInclude>
-    <ClInclude Include="Definitions.h" />
+    <ClInclude Include="FPSCounter.h">
+      <Filter>Utilities\FPSCounter</Filter>
+    </ClInclude>
+    <ClInclude Include="Definitions.h">
+      <Filter>Precompiled Header,Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="DependencyFiles.h">
+      <Filter>Utilities\DependencyFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>I/O\Console</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Exception.cpp">
-      <Filter>Exception</Filter>
-    </ClCompile>
     <ClCompile Include="Keyboard.cpp">
       <Filter>I/O\Keyboard</Filter>
     </ClCompile>
@@ -198,10 +209,20 @@
       <Filter>DataTypes\FileStream</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>Precompiled Header</Filter>
+      <Filter>Precompiled Header,Definitions</Filter>
     </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>I/O\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="FPSCounter.cpp">
+      <Filter>Utilities\FPSCounter</Filter>
+    </ClCompile>
+    <ClCompile Include="DependencyFiles.cpp">
+      <Filter>Utilities\DependencyFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Exception.cpp">
+      <Filter>Exception</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

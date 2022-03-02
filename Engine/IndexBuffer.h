@@ -1,5 +1,4 @@
 #pragma once
-#include "Engine.h"
 #include "Bindable.h"
 
 namespace MafiaBar
@@ -8,7 +7,7 @@ namespace MafiaBar
 	{
 		namespace Graphics
 		{
-			class EXP_ENGINE IndexBuffer : public Bindable
+			class MB_ENGINE_API IndexBuffer : public Bindable
 			{
 			public:		
 				IndexBuffer(MafiaBar::Engine::Graphics::Graphics& graphics, const MafiaBar::SDK::Vector<unsigned short>& indices);

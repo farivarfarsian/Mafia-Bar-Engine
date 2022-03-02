@@ -1,9 +1,8 @@
 #pragma once
-#include "Engine.h"
+#include "Definitions.h"
+#include "pch.h"
 
-#include "DirectXTK/SpriteBatch.h"
-#include "DirectXTK/SpriteFont.h"
-LINK_LIBRARY("../Engine/DirectXTK/Bin_x64/DirectXTK.lib")
+#include "Exception.h"
 
 namespace MafiaBar
 {
@@ -11,12 +10,12 @@ namespace MafiaBar
 	{
 		namespace Graphics
 		{
-			class EXP_ENGINE Graphics
+			class MB_ENGINE_API Graphics final
 			{
 				friend class Bindable;
 			public:
 				//Initialize DirectX 11
-				Graphics(HWND hwnd, int Width, int Height);
+				Graphics(HWND hwnd, int O_Width, int O_Height, bool Fullscreen, bool Vsync);
 				Graphics(const Graphics&) = delete;
 				Graphics& operator=(const Graphics&) = delete;
 				~Graphics() = default;
@@ -30,8 +29,17 @@ namespace MafiaBar
 				void Clear(float ClearRenderColorR, float ClearRenderColorG, float ClearRenderColorB, float ClearRenderColorA, float ClearDepthBuffer, UINT8 ClearStencilBuffer);
 				// Render the scene
 				void EndFrame();
-				//Initializing Sprite Fonts
+				//Initializing Sprite Font
 				void CreateSprite(const wchar_t* path_name);
+				//Take a screenshot of what you're rendering(screen)
+				void ScreenShot() const
+				{				
+	  				ID3D11Texture2D* BackBuffer = nullptr;
+					MB_EXCEPTION(m_Swap->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&BackBuffer)));
+					MB_EXCEPTION(DirectX::SaveWICTextureToFile(m_Context.Get(), BackBuffer, GUID_ContainerFormatJpeg, L"Screenshot.jpg"));
+					BackBuffer->Release();
+					BackBuffer = 0;
+				}
 			public:
 				//Get D3D11 Device Object
 				ID3D11Device* GetDevice() const;
@@ -55,6 +63,14 @@ namespace MafiaBar
 				DirectX::SpriteBatch* GetSpriteBatch() const;
 				//Get Sprite Font
 				DirectX::SpriteFont* GetSpriteFont() const;
+				//Get VideoCard memory size in MBs
+				const unsigned long GetGraphicCardMemorySize() const;
+				//Get VideoCard description
+				const char* GetGraphicCardDescription() const;
+				//Get Vsync Boolean
+				const bool GetVsyncBoolean() const;
+				//Get GraphicCard informations with a pair, first element is description and the second one is the size of its memory
+				constexpr std::pair<const char*, unsigned long> GetGraphicCardInfo() const;
 			private:
 				Microsoft::WRL::ComPtr<ID3D11Device> m_Device = nullptr;
 				Microsoft::WRL::ComPtr<IDXGISwapChain> m_Swap = nullptr;
@@ -62,10 +78,17 @@ namespace MafiaBar
 				Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTarget = nullptr;
 				Microsoft::WRL::ComPtr<ID3D11DepthStencilState> m_DepthStencilState = nullptr;
 				Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_DepthStencilView = nullptr;
-				std::unique_ptr<DirectX::SpriteBatch> m_SpriteBatch;
-				std::unique_ptr<DirectX::SpriteFont> m_SpriteFont;
+				Microsoft::WRL::ComPtr<ID3D11RasterizerState> m_RasterizerState = nullptr;
+				Microsoft::WRL::ComPtr<ID3D11BlendState> m_BlendState = nullptr;
+				std::unique_ptr<DirectX::SpriteBatch> m_SpriteBatch = nullptr;
+				std::unique_ptr<DirectX::SpriteFont> m_SpriteFont = nullptr;
 				DirectX::XMMATRIX m_ProjectionGraphics;
 				int Width, Height;
+				bool m_Vsync = false;
+				char m_GraphicCardDescription[MAX_PATH];
+				unsigned long m_GraphicCardMemorySize = 0;
+				unsigned int Numerator = 0;
+				unsigned int Denominator = 0;
 			};
 			class Object
 			{

@@ -1,4 +1,5 @@
 #pragma once
+#include "Engine.h"
 #include "GraphicsPipline.h"
 
 
@@ -22,6 +23,7 @@ public:
 		theta(adist(rng)),
 		phi(adist(rng))
 	{
+		
 		MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex> vertices;
 		vertices.PushBack({ -1.0f, -1.0f, -1.0f });
 		vertices.PushBack({ 1.0f, -1.0f, -1.0f });

@@ -1,5 +1,4 @@
 #pragma once
-#include "Engine.h"
 #include "Bindable.h"
 
 
@@ -9,7 +8,7 @@ namespace MafiaBar
 	{
 		namespace Graphics
 		{
-			class EXP_ENGINE InputLayout : public Bindable
+			class MB_ENGINE_API InputLayout : public Bindable
 			{
 				//Please Replace The STD::vector with MafiaBar::SDK::Vector (In Future)
 			public:

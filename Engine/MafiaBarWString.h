@@ -1,10 +1,11 @@
 #pragma once
-#include "Engine.h"
+#include "Definitions.h"
+#include "pch.h"
 #include <codecvt>
 
 namespace MafiaBar
 {
-	class EXP_ENGINE MafiaBarWString : public std::wstring
+	class MB_ENGINE_API MafiaBarWString : public std::wstring
 	{
 	public:
 		MafiaBarWString();

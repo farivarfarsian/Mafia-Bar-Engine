@@ -1,9 +1,10 @@
 #pragma once
-#include "Engine.h"
+#include "Definitions.h"
+#include "pch.h"
 
 namespace MafiaBar
 {
-	class EXP_ENGINE Hotkey
+	class MB_ENGINE_API Hotkey
 	{
 	public:
 		enum DefaultHotkeyIDs
@@ -18,7 +19,7 @@ namespace MafiaBar
 	private:
 		int HotkeyID = 0;
 	};
-	class EXP_ENGINE Time
+	class MB_ENGINE_API Time
 	{
     public:
 		Time(const char* Process_Describ);
@@ -35,28 +36,7 @@ namespace MafiaBar
         const char* label;
 		std::chrono::steady_clock::time_point last;
 	};
-    class EXP_ENGINE Console
-    {
-	public:
-		Console() = default;
-		void CreateWIN32Console();
-		void CreateConsole(HWND ParentWindowHandle);
-		void Print(const std::string& Message);
-		void ClearConsole();
-		void ShowConsole();
-		void HideConsole();
-		void SetTextColor(int r, int g, int b);
-		void ChangeFont(int Font_Size, const char* Font_Name);
-	public:
-		int GetConsoleTextLength();
-		char* GetAllConsoleText();
-		HWND GetConsoleHandle() const;
-		std::tuple<int, int, int> GetColors() const;
-    private:
-		HWND ConsoleHandle = nullptr;
-		int r = 255, g = 255, b = 255;
-    };
-	class EXP_ENGINE WindowDialogs
+	class MB_ENGINE_API WindowDialogs
 	{
 	public:
 		class FileOperations
