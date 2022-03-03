@@ -3,8 +3,6 @@
 
 #include <Cube.h>
 
-#include <DependencyFiles.h>
-
 class App
 {
 public:
@@ -17,5 +15,4 @@ private:
 	MafiaBar::Time time;
 	Window win;
 	MafiaBar::SDK::Vector<Cube*> boxes;
-	MafiaBar::Engine::DependencyFiles DependencyFiles;
 };
