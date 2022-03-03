@@ -16,6 +16,6 @@ private:
 	void DoFrame();
 	MafiaBar::Time time;
 	Window win;
-	std::vector<std::unique_ptr<Cube>> boxes;
+	MafiaBar::SDK::Vector<Cube*> boxes;
 	MafiaBar::Engine::DependencyFiles DependencyFiles;
 };

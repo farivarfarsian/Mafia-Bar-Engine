@@ -18,7 +18,7 @@ App::App()
 	std::uniform_real_distribution<float> rdist(6.0f, 20.0f);
 	for (auto i = 0; i < 80; i++)
 	{
-		boxes.push_back(std::make_unique<Cube>(
+		boxes.PushBack(new Cube(
 			*Engine::Get().GetGraphics(), rng, adist,
 			ddist, odist, rdist
 			));
@@ -39,16 +39,14 @@ int App::Go()
 	}
 }
 
-App::~App()
-{
-}
+App::~App() { for (int i = 0; i < boxes.GetSize(); i++) { delete boxes[i]; } }
 
 void App::DoFrame()
 {
 	Engine::Get().GetGraphics()->Clear(DirectX::Colors::Black, 1.0f, 0);
 
 	const float delta_time = time.Mark();
-	for (int i = 0; i < boxes.size(); i++)
+	for (int i = 0; i < boxes.GetSize(); i++)
 	{
 		boxes[i]->Update(delta_time);
 		boxes[i]->Draw(*Engine::Get().GetGraphics());
