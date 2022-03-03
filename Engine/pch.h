@@ -49,7 +49,6 @@
 #include <random>
 #include <mutex>
 #include <future>
-#include <filesystem>
 
 //MafiaBar SDK Includes
 #include <Vector.h>

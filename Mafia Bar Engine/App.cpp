@@ -3,8 +3,6 @@
 App::App()
 	: win("Mafia Bar Engine", 1200, 800, false)
 {
-	DependencyFiles.AddDependencyFile("Assets/ConsoleFont.spritefont");
-	DependencyFiles.Check();
 
 	//Registering Mafia Bar Engine Default Hotkeys
 	window->GetHotkey().RegisterHotKey(win.GetHandle(), win.GetHotkey().ESC, NULL, VK_ESCAPE);
@@ -18,7 +16,7 @@ App::App()
 	std::uniform_real_distribution<float> rdist(6.0f, 20.0f);
 	for (auto i = 0; i < 80; i++)
 	{
-		boxes.push_back(std::make_unique<Cube>(
+		boxes.PushBack(new Cube(
 			*Engine::Get().GetGraphics(), rng, adist,
 			ddist, odist, rdist
 			));
@@ -26,7 +24,8 @@ App::App()
 
 	Engine::Get().GetGraphics()->SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
 
-	Engine::Get().GetGraphics()->CreateSprite(L"Assets/ConsoleFont.spritefont");
+	if (MafiaBar::Engine::filesystem::ExistenceFile("Assets/ConsoleFont.spritefont") == true) { Engine::Get().GetGraphics()->CreateSprite(L"Assets/ConsoleFont.spritefont"); }
+	else { ERROR_MESSAGE("Mafia Bar Engine", "Assets/ConsoleFont.spritefont file is needed but we can't find it"); }
 }
 
 int App::Go()
@@ -39,16 +38,14 @@ int App::Go()
 	}
 }
 
-App::~App()
-{
-}
+App::~App() { for (int i = 0; i < boxes.GetSize(); i++) { delete boxes[i]; } }
 
 void App::DoFrame()
 {
 	Engine::Get().GetGraphics()->Clear(DirectX::Colors::Black, 1.0f, 0);
 
 	const float delta_time = time.Mark();
-	for (int i = 0; i < boxes.size(); i++)
+	for (int i = 0; i < boxes.GetSize(); i++)
 	{
 		boxes[i]->Update(delta_time);
 		boxes[i]->Draw(*Engine::Get().GetGraphics());

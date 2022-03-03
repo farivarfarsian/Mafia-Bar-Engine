@@ -10,6 +10,8 @@
 
 #include "pch.h"
 
+#include "FileSystem.h"
+
 #include "Keyboard.h"
 
 #include "Mouse.h"

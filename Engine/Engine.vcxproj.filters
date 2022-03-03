@@ -161,6 +161,9 @@
     <ClInclude Include="Console.h">
       <Filter>I/O\Console</Filter>
     </ClInclude>
+    <ClInclude Include="FileSystem.h">
+      <Filter>I/O</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Keyboard.cpp">
@@ -224,5 +227,6 @@
     <ClCompile Include="Exception.cpp">
       <Filter>Exception</Filter>
     </ClCompile>
+    <ClCompile Include="FileSystem.cpp" />
   </ItemGroup>
 </Project>

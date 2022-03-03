@@ -76,7 +76,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>M:\Projects\C++ Engine DirectX\Mafia Bar Engine\Mafia Bar Engine\libs\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -99,7 +99,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>M:\Projects\C++ Engine DirectX\Mafia Bar Engine\Mafia Bar Engine\libs\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -110,6 +110,7 @@
     <ClInclude Include="Definitions.h" />
     <ClInclude Include="DependencyFiles.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="FileSystem.h" />
     <ClInclude Include="FPSCounter.h" />
     <ClInclude Include="GraphicDataTypes.h" />
     <ClInclude Include="GraphicsPipline.h" />
@@ -137,6 +138,7 @@
     <ClCompile Include="DependencyFiles.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Exception.cpp" />
+    <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="FPSCounter.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="Information.cpp" />
