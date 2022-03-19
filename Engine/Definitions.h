@@ -18,3 +18,9 @@
 #endif //MB_ENGINE
 
 #define MB_ENGINE_API_FUNCTION extern "C" __declspec(dllexport)
+
+#ifdef __cpp_consteval
+	#define _consteval consteval
+#else
+	#define _consteval constexpr
+#endif

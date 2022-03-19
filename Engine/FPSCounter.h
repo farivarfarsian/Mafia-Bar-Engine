@@ -6,15 +6,15 @@ namespace MafiaBar
 {
 	namespace Engine
 	{
-		namespace Graphics
+		namespace Performance
 		{
 			class MB_ENGINE_API FPSCounter
 			{
 			public:
 				FPSCounter();
 				void TheEnd();
-				__int64 GetFPS();
-				__int64 GetSeconds();
+				constexpr __int64 GetFPS();
+				constexpr __int64 GetSeconds();
 			private:
 				LARGE_INTEGER Start, End, Counts, Frequency, FPS, MS;
 				void CalculateCounts();

@@ -93,7 +93,7 @@ namespace MafiaBar
 			}
 		}
 		//Release the COM objects safely
-		inline void SafeRelease(IUnknown** value)
+		inline void SafeCOMRelease(IUnknown** value)
 		{
 			if (*value)
 			{

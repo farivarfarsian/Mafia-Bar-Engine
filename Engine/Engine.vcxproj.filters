@@ -64,17 +64,14 @@
     <Filter Include="Precompiled Header,Definitions">
       <UniqueIdentifier>{081c1aca-b151-4521-9e07-e0a2a7dd0abc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utilities\DependencyFiles">
-      <UniqueIdentifier>{b47f619d-3e18-445a-b679-41a8b8849aa9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Utilities\FPSCounter">
-      <UniqueIdentifier>{5d50a0e3-ebbc-43a5-9653-78aabb9c4490}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Exception">
       <UniqueIdentifier>{4d8bec38-0342-4a52-a5ac-078b3594333e}</UniqueIdentifier>
     </Filter>
     <Filter Include="I/O\Console">
       <UniqueIdentifier>{0cc3b242-79ac-4d95-9104-922e912d2740}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Performance">
+      <UniqueIdentifier>{19bc12a7-50a7-4a1f-a2e6-f8a8b51f23d3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -149,20 +146,23 @@
     <ClInclude Include="pch.h">
       <Filter>Precompiled Header,Definitions</Filter>
     </ClInclude>
-    <ClInclude Include="FPSCounter.h">
-      <Filter>Utilities\FPSCounter</Filter>
-    </ClInclude>
     <ClInclude Include="Definitions.h">
       <Filter>Precompiled Header,Definitions</Filter>
-    </ClInclude>
-    <ClInclude Include="DependencyFiles.h">
-      <Filter>Utilities\DependencyFiles</Filter>
     </ClInclude>
     <ClInclude Include="Console.h">
       <Filter>I/O\Console</Filter>
     </ClInclude>
+    <ClInclude Include="Performance.h">
+      <Filter>Utilities\Performance</Filter>
+    </ClInclude>
+    <ClInclude Include="CPUPerformance.h">
+      <Filter>Utilities\Performance</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSCounter.h">
+      <Filter>Utilities\Performance</Filter>
+    </ClInclude>
     <ClInclude Include="FileSystem.h">
-      <Filter>I/O</Filter>
+      <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -218,15 +218,17 @@
       <Filter>I/O\Logger</Filter>
     </ClCompile>
     <ClCompile Include="Engine.cpp" />
-    <ClCompile Include="FPSCounter.cpp">
-      <Filter>Utilities\FPSCounter</Filter>
-    </ClCompile>
-    <ClCompile Include="DependencyFiles.cpp">
-      <Filter>Utilities\DependencyFiles</Filter>
-    </ClCompile>
     <ClCompile Include="Exception.cpp">
       <Filter>Exception</Filter>
     </ClCompile>
-    <ClCompile Include="FileSystem.cpp" />
+    <ClCompile Include="FPSCounter.cpp">
+      <Filter>Utilities\Performance</Filter>
+    </ClCompile>
+    <ClCompile Include="CPUPerformance.cpp">
+      <Filter>Utilities\Performance</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystem.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
