@@ -1,18 +1,16 @@
 #pragma once
-#include "Window.h"
+#include <Engine.h>
+#include <Utilities.h>
 
-#include <Cube.h>
+#include "Cube.h"
 
-class App
+class App final : public MafiaBar::Engine::Application
 {
-public:
-	App();
-	int Go();
-	~App();
-
 private:
-	void DoFrame();
-	MafiaBar::Time time;
-	Window win;
+	void Frame() override;
+	void BeforeFrame() override;
+	//Entities
 	MafiaBar::SDK::Vector<Cube*> boxes;
+	//Utilities
+	MafiaBar::Utilities::Time Time;
 };

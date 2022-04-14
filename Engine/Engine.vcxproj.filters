@@ -70,8 +70,11 @@
     <Filter Include="I/O\Console">
       <UniqueIdentifier>{0cc3b242-79ac-4d95-9104-922e912d2740}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utilities\Performance">
+    <Filter Include="Performance">
       <UniqueIdentifier>{19bc12a7-50a7-4a1f-a2e6-f8a8b51f23d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application">
+      <UniqueIdentifier>{d14905e3-860a-415f-a774-ed6b7d91a5fa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -94,7 +97,7 @@
     <ClInclude Include="WinRegistery.h">
       <Filter>Utilities\WinRegistery</Filter>
     </ClInclude>
-    <ClInclude Include="MB_Utils.h">
+    <ClInclude Include="Utilities.h">
       <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Bindable.h">
@@ -136,13 +139,12 @@
     <ClInclude Include="GraphicDataTypes.h">
       <Filter>DataTypes</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicsPipline.h">
+    <ClInclude Include="Pipeline.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="TransformCbuf.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Cube.h" />
     <ClInclude Include="pch.h">
       <Filter>Precompiled Header,Definitions</Filter>
     </ClInclude>
@@ -153,16 +155,19 @@
       <Filter>I/O\Console</Filter>
     </ClInclude>
     <ClInclude Include="Performance.h">
-      <Filter>Utilities\Performance</Filter>
-    </ClInclude>
-    <ClInclude Include="CPUPerformance.h">
-      <Filter>Utilities\Performance</Filter>
+      <Filter>Performance</Filter>
     </ClInclude>
     <ClInclude Include="FPSCounter.h">
-      <Filter>Utilities\Performance</Filter>
+      <Filter>Performance</Filter>
     </ClInclude>
     <ClInclude Include="FileSystem.h">
       <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="CPUPerformance.h">
+      <Filter>Performance</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -181,7 +186,7 @@
     <ClCompile Include="WinRegistery.cpp">
       <Filter>Utilities\WinRegistery</Filter>
     </ClCompile>
-    <ClCompile Include="MB_Utils.cpp">
+    <ClCompile Include="Utilities.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
     <ClCompile Include="VertexBuffer.cpp">
@@ -222,13 +227,19 @@
       <Filter>Exception</Filter>
     </ClCompile>
     <ClCompile Include="FPSCounter.cpp">
-      <Filter>Utilities\Performance</Filter>
-    </ClCompile>
-    <ClCompile Include="CPUPerformance.cpp">
-      <Filter>Utilities\Performance</Filter>
+      <Filter>Performance</Filter>
     </ClCompile>
     <ClCompile Include="FileSystem.cpp">
       <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Pipeline.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="CPUPerformance.cpp">
+      <Filter>Performance</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

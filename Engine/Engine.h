@@ -20,6 +20,8 @@
 
 #include "Logger.h"
 
+#include "Application.h"
+
 #include "GraphicDataTypes.h"
 
 #include "Graphics.h"
@@ -51,8 +53,8 @@ namespace MafiaBar
 			Engine() = default;
 			~Engine();
 		public:
-			Engine(Engine& other) = delete;
-			void operator=(const Engine&) = delete;
+			Engine(Engine& Engine) = delete;
+			Engine& operator=(const Engine&) = delete;
 			void CreateGraphics(HWND hwnd, bool Fullscreen, bool Vsync, int Width = 0, int Height = 0);
 		public:
 			static Engine& Get();
@@ -68,39 +70,6 @@ namespace MafiaBar
 			MafiaBar::Engine::Exception Exception;
 			MafiaBar::Engine::Graphics::Graphics* Graphics;
 		};
-	}
-}
-
-namespace MafiaBar
-{
-	namespace Engine
-	{	
-		//Tries the function if it throws an exception or not with try,catch statements and if it throws shows a Ignore,Retry,Abort message box with the description. 
-		//Note: For now this function doesn't support class function pointers
-		//Example: void Foo(int a ) { printf_s("%d", a); }
-		//	 tryex(Foo, __FILE__, __FUNCSIG__, __LINE__, 2);
-		template<typename C, typename... Argv>
-		void tryex(C&& function, const char* File, const char* Function, int Line, Argv... args)
-		{
-			try { (*function)(std::forward<Argv>(args)...); }
-			catch (const std::exception& e)
-			{
-				MafiaBar::Engine::Logger::MessageEx(
-					"Mafia Bar Engine tryex",
-					MB_ABORTRETRYIGNORE | MB_ICONERROR,
-					FindWindowA(NULL, "Mafia Bar Engine"),
-					"Try Failed!\n[Exception Description]  %s\n[File] %s\n[Function] %s\n[Line] %d\n", e.what(), File, Function, Line);
-			}
-		}
-		//Release the COM objects safely
-		inline void SafeCOMRelease(IUnknown** value)
-		{
-			if (*value)
-			{
-				(*value)->Release();
-				*value = 0;
-			}
-		}
 	}
 }
 

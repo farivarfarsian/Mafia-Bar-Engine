@@ -3,7 +3,13 @@ LINK_LIBRARY("Engine.lib")
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
-	App app;
-	app.Go();
-	return 0;
+	App Application;
+
+	Application.Initialize("Mafia Bar Engine", "Mafia Bar", 1200, 800, false, 106, 103);
+
+	MafiaBar::Utilities::CenterWindow(Application.GetHandle());
+
+	Application.Present();
+
+	return App::ApplicationErrorCodes::SUCCEEDED;
 }

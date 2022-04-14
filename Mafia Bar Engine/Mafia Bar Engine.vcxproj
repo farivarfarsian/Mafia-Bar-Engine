@@ -51,15 +51,15 @@
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(LibraryPath);$(DXSDK_DIR)Lib\x64</LibraryPath>
     <IncludePath>$(IncludePath);$(SolutionDir)includes;$(DXSDK_DIR)Include;$(MB_SDK_DIR)\Include</IncludePath>
-    <IntDir>$(SolutionDir)Build\$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)Build\$(Configuration)\Bin</OutDir>
+    <IntDir>$(SolutionDir)Build\$(Configuration)\obj</IntDir>
+    <OutDir>$(SolutionDir)Build\$(Configuration)\bin</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(LibraryPath);$(DXSDK_DIR)Lib\x64</LibraryPath>
     <IncludePath>$(IncludePath);$(SolutionDir)includes;$(DXSDK_DIR)Include;$(MB_SDK_DIR)\Include</IncludePath>
-    <IntDir>$(SolutionDir)Build\$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)Build\$(Configuration)\Bin</OutDir>
+    <IntDir>$(SolutionDir)Build\$(Configuration)\obj</IntDir>
+    <OutDir>$(SolutionDir)Build\$(Configuration)\bin</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -112,31 +112,31 @@
   <ItemGroup>
     <ClCompile Include="App.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Window.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
-    <ClInclude Include="Window.h" />
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Mafia Bar Engine.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Resources\app.ico" />
     <Image Include="Resources\cursor.png" />
-    <Image Include="Resources\engine.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\mafia_bar_cursor\normal-select.cur" />
+    <None Include="..\Resources\Cursors\normal-select.cur" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\PixelShader.hlsl">

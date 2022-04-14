@@ -9,7 +9,7 @@ namespace MafiaBar
 	{
 		friend class Window;
 	public:
-        enum KeyboardKeys : unsigned char //Used From Keyboard.h (DirectX Library)
+        static enum KeyboardKeys : unsigned char //Used From Keyboard.h (DirectXTK Library)
         {
             Back = 0x8,
             Tab = 0x9,

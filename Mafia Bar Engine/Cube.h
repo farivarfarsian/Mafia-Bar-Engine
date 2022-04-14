@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine.h"
-#include "GraphicsPipline.h"
+#include "Pipeline.h"
 
 
 class Cube : public MafiaBar::Engine::Graphics::Object
@@ -23,7 +23,7 @@ public:
 		theta(adist(rng)),
 		phi(adist(rng))
 	{
-		
+
 		MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex> vertices;
 		vertices.PushBack({ -1.0f, -1.0f, -1.0f });
 		vertices.PushBack({ 1.0f, -1.0f, -1.0f });
@@ -34,7 +34,7 @@ public:
 		vertices.PushBack({ -1.0f, 1.0f, 1.0f });
 		vertices.PushBack({ 1.0f, 1.0f, 1.0f });
 
-		pipline.BindToPipline(std::make_unique<MafiaBar::Engine::Graphics::VertexBuffer>(graphics, vertices));
+		pipline.AddBindable(new MafiaBar::Engine::Graphics::VertexBuffer(graphics, vertices));
 
 		const MafiaBar::SDK::Vector<unsigned short> indices =
 		{
@@ -47,13 +47,12 @@ public:
 		};
 		IndicesCount = (UINT)indices.GetSize();
 
-		pipline.BindToPipline(std::make_unique<MafiaBar::Engine::Graphics::IndexBuffer>(graphics, indices));
+		pipline.AddBindable(new MafiaBar::Engine::Graphics::IndexBuffer(graphics, indices));
 
-		auto vertexshader = std::make_unique<MafiaBar::Engine::Graphics::VertexShader>(graphics, "Shaders/VertexShader.cso");
+		auto vertexshader = new MafiaBar::Engine::Graphics::VertexShader(graphics, "Shaders/VertexShader.cso");
 		auto vertexshadeblob = vertexshader->GetShaderBlob();
-		pipline.BindToPipline(std::move(vertexshader));
+		pipline.AddBindable(std::move(vertexshader));
 
-		pipline.BindToPipline(std::make_unique<MafiaBar::Engine::Graphics::TransformCbuf>(graphics, *this));
 
 		const MafiaBar::Graphics::ConstantBuffer2 constantbuffer2 =
 		{
@@ -67,19 +66,22 @@ public:
 			}
 		};
 
-		pipline.BindToPipline(std::make_unique<MafiaBar::Engine::Graphics::PixelConstantBuffer<MafiaBar::Graphics::ConstantBuffer2>>(graphics, constantbuffer2));
+		pipline.AddBindable(new MafiaBar::Engine::Graphics::PixelConstantBuffer<MafiaBar::Graphics::ConstantBuffer2>(graphics, constantbuffer2));
 
-		pipline.BindToPipline(std::make_unique<MafiaBar::Engine::Graphics::PixelShader>(graphics, "Shaders/PixelShader.cso"));
+		pipline.AddBindable(new MafiaBar::Engine::Graphics::PixelShader(graphics, "Shaders/PixelShader.cso"));
 
 		MafiaBar::SDK::Vector<D3D11_INPUT_ELEMENT_DESC> InputLayout;
 		InputLayout.PushBack({ "Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 });
-		pipline.BindToPipline(std::make_unique<MafiaBar::Engine::Graphics::InputLayout>(graphics, InputLayout, vertexshadeblob));
-		
+		pipline.AddBindable(new MafiaBar::Engine::Graphics::InputLayout(graphics, InputLayout, vertexshadeblob));
 
-		pipline.BindToPipline(std::make_unique<MafiaBar::Engine::Graphics::Topology>(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
+		pipline.AddBindable(new MafiaBar::Engine::Graphics::Topology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
 
-		pipline.BindToPipline(std::make_unique<MafiaBar::Engine::Graphics::Viewport>(graphics));
+		pipline.AddBindable(new MafiaBar::Engine::Graphics::Viewport(graphics));
+
+		pipline.AddBindable(new MafiaBar::Engine::Graphics::TransformCbuf(graphics, *this));
 	}
+	Cube(const Cube&) = default;
+	Cube& operator=(const Cube&) = default;
 	void Update(float delta_time) noexcept override
 	{
 		roll += droll * delta_time;
@@ -117,6 +119,6 @@ private:
 	float dtheta;
 	float dphi;
 	float dchi;
-	MafiaBar::Engine::Graphics::Pipline pipline;
+	MafiaBar::Engine::Graphics::Pipeline pipline;
 	unsigned int IndicesCount;
 };

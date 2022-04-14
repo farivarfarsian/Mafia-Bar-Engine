@@ -47,20 +47,20 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// Cursor
+//
+
+IDC_CURSOR1             CURSOR                  "..\\Resources\\Cursors\\normal-select.cur"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // Icon
 //
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON1               ICON                    "..\\Assets\\engine.ico"
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Cursor
-//
-
-IDC_CURSOR1             CURSOR                  "..\\Assets\\mafia_bar_cursor\\normal-select.cur"
+IDI_ICON1               ICON                    "..\\Resources\\app.ico"
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
