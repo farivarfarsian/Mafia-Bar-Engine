@@ -49,7 +49,7 @@ public:
 
 		pipline.AddBindable(new MafiaBar::Engine::Graphics::IndexBuffer(graphics, indices));
 
-		auto vertexshader = new MafiaBar::Engine::Graphics::VertexShader(graphics, "Shaders/VertexShader.cso");
+		auto vertexshader = new MafiaBar::Engine::Graphics::VertexShader(graphics, L"Shaders/VertexShader.cso");
 		auto vertexshadeblob = vertexshader->GetShaderBlob();
 		pipline.AddBindable(std::move(vertexshader));
 
@@ -68,7 +68,7 @@ public:
 
 		pipline.AddBindable(new MafiaBar::Engine::Graphics::PixelConstantBuffer<MafiaBar::Graphics::ConstantBuffer2>(graphics, constantbuffer2));
 
-		pipline.AddBindable(new MafiaBar::Engine::Graphics::PixelShader(graphics, "Shaders/PixelShader.cso"));
+		pipline.AddBindable(new MafiaBar::Engine::Graphics::PixelShader(graphics, L"Shaders/PixelShader.cso"));
 
 		MafiaBar::SDK::Vector<D3D11_INPUT_ELEMENT_DESC> InputLayout;
 		InputLayout.PushBack({ "Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 });

@@ -1,6 +1,6 @@
 #include "Shader.h"
 
-MafiaBar::Engine::Graphics::Shader::Shader(MafiaBar::Engine::Graphics::Graphics& graphics, const MafiaBar::MafiaBarString& ShaderPathName, ShaderType shadertype)
+MafiaBar::Engine::Graphics::Shader::Shader(MafiaBar::Engine::Graphics::Graphics& graphics, const std::wstring& ShaderPathName, ShaderType shadertype)
 	: Path(ShaderPathName.c_str())
 {
 	switch (shadertype)
@@ -22,26 +22,26 @@ MafiaBar::Engine::Graphics::Shader::Shader(MafiaBar::Engine::Graphics::Graphics&
 	}
 }
 
-const char* MafiaBar::Engine::Graphics::Shader::GetShaderPath() const { return Path; }
+const wchar_t* MafiaBar::Engine::Graphics::Shader::GetShaderPath() const { return Path; }
 
 ID3DBlob* MafiaBar::Engine::Graphics::Shader::GetShaderBlob() const { return ShaderBlob.Get(); }
 
-bool MafiaBar::Engine::Graphics::Shader::ReadFile(const MafiaBar::MafiaBarString& ShaderPath)
+bool MafiaBar::Engine::Graphics::Shader::ReadFile(const std::wstring& ShaderPath)
 {
 	#pragma message(__FILE__ "(" _CRT_STRINGIZE(__LINE__) ")"  ": warning: " "Fix this function, Improve")
-	HRESULT hr = D3DReadFileToBlob(ShaderPath.GetWString().c_str(), &ShaderBlob);
+	HRESULT hr = D3DReadFileToBlob(ShaderPath.c_str(), &ShaderBlob);
 	MB_EXCEPTION(hr);
 	if (hr == S_FALSE) { return false; }
 	else { return true; }
 }
 
-MafiaBar::Engine::Graphics::VertexShader::VertexShader(MafiaBar::Engine::Graphics::Graphics& graphics, const MafiaBar::MafiaBarString& VertexShaderPathName)
+MafiaBar::Engine::Graphics::VertexShader::VertexShader(MafiaBar::Engine::Graphics::Graphics& graphics, const std::wstring& VertexShaderPathName)
 	: Shader(graphics, VertexShaderPathName, ShaderType::VertexShader)
 {}
 
 void MafiaBar::Engine::Graphics::VertexShader::Bind(MafiaBar::Engine::Graphics::Graphics& graphics) { graphics.GetContext()->VSSetShader(mVertexShader.Get(), nullptr, 0u); }
 
-MafiaBar::Engine::Graphics::PixelShader::PixelShader(MafiaBar::Engine::Graphics::Graphics& graphics, const MafiaBar::MafiaBarString& PixelShaderPathName)
+MafiaBar::Engine::Graphics::PixelShader::PixelShader(MafiaBar::Engine::Graphics::Graphics& graphics, const std::wstring& PixelShaderPathName)
 	: Shader(graphics, PixelShaderPathName, ShaderType::PixelShader)
 {}
 
