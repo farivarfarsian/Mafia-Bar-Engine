@@ -52,15 +52,6 @@
     <Filter Include="DataTypes">
       <UniqueIdentifier>{4aa19878-be2c-44db-9f2a-9d58fd0c9896}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DataTypes\String">
-      <UniqueIdentifier>{d45857f3-a30b-4d3e-b21a-fcbd7f41076a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DataTypes\WString">
-      <UniqueIdentifier>{10954886-d801-463e-9cd0-c0eae02aea4a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DataTypes\FileStream">
-      <UniqueIdentifier>{0260ea27-7cb1-4176-8e24-6e4545a4b0f5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Precompiled Header,Definitions">
       <UniqueIdentifier>{081c1aca-b151-4521-9e07-e0a2a7dd0abc}</UniqueIdentifier>
     </Filter>
@@ -126,15 +117,6 @@
     </ClInclude>
     <ClInclude Include="Viewport.h">
       <Filter>Graphics\Viewport</Filter>
-    </ClInclude>
-    <ClInclude Include="MafiaBarString.h">
-      <Filter>DataTypes\String</Filter>
-    </ClInclude>
-    <ClInclude Include="MafiaBarWString.h">
-      <Filter>DataTypes\WString</Filter>
-    </ClInclude>
-    <ClInclude Include="MafiaBarFileStream.h">
-      <Filter>DataTypes\FileStream</Filter>
     </ClInclude>
     <ClInclude Include="GraphicDataTypes.h">
       <Filter>DataTypes</Filter>
@@ -206,15 +188,6 @@
     </ClCompile>
     <ClCompile Include="Viewport.cpp">
       <Filter>Graphics\Viewport</Filter>
-    </ClCompile>
-    <ClCompile Include="MafiaBarString.cpp">
-      <Filter>DataTypes\String</Filter>
-    </ClCompile>
-    <ClCompile Include="MafiaBarWString.cpp">
-      <Filter>DataTypes\WString</Filter>
-    </ClCompile>
-    <ClCompile Include="MafiaBarFileStream.cpp">
-      <Filter>DataTypes\FileStream</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Precompiled Header,Definitions</Filter>

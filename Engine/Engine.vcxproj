@@ -122,9 +122,6 @@
     <ClInclude Include="InputLayout.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Logger.h" />
-    <ClInclude Include="MafiaBarFileStream.h" />
-    <ClInclude Include="MafiaBarString.h" />
-    <ClInclude Include="MafiaBarWString.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="pch.h" />
@@ -149,9 +146,6 @@
     <ClCompile Include="InputLayout.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Logger.cpp" />
-    <ClCompile Include="MafiaBarFileStream.cpp" />
-    <ClCompile Include="MafiaBarString.cpp" />
-    <ClCompile Include="MafiaBarWString.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="pch.cpp">
