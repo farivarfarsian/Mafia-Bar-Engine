@@ -1,12 +1,13 @@
+#ifndef MB_ENGINE
+#define MB_ENGINE
+
 #pragma once
 #pragma warning(push)
 #pragma warning(disable: 4577)
 #pragma warning(disable:26444)
 #pragma warning(disable:26495)
 
-#define __FUNCTION_SIGNATURE__ __FUNCSIG__
-
-#include "Definitions.h"
+#include "def.h"
 
 #include "pch.h"
 
@@ -74,3 +75,5 @@ namespace MafiaBar
 }
 
 #pragma warning(pop)
+
+#endif //MB_ENGINE

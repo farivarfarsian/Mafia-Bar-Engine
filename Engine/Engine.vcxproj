@@ -108,8 +108,9 @@
     <ClInclude Include="Console.h" />
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="CPUPerformance.h" />
-    <ClInclude Include="Definitions.h" />
+    <ClInclude Include="def.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="FPSCounter.h" />
     <ClInclude Include="GraphicDataTypes.h" />

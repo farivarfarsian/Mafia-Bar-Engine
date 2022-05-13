@@ -1,5 +1,5 @@
 #pragma once
-#include "Definitions.h"
+#include "def.h"
 #include "pch.h"
 
 #include "Exception.h"
@@ -89,14 +89,6 @@ namespace MafiaBar
 				unsigned long m_GraphicCardMemorySize = 0;
 				unsigned int Numerator = 0;
 				unsigned int Denominator = 0;
-			};
-			class Object
-			{
-			public:
-				virtual void Input() {};
-				virtual void Update(float delta_time) {};
-				virtual void Draw(MafiaBar::Engine::Graphics::Graphics& graphics) {};
-				virtual DirectX::XMMATRIX GetTransformation() const { return DirectX::XMMATRIX(); };
 			};
 		}
 	}

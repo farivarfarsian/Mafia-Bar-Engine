@@ -25,8 +25,16 @@
 	#define _consteval constexpr
 #endif
 
-#ifdef _DEBUG
+#if defined DEBUG || _DEBUG
 	#define IS_DEBUG 1
 #else
 	#define IS_DEBUG 0
 #endif
+
+#define __FUNCTION_SIGNATURE__ __FUNCSIG__
+
+#define MB_NAMESPACE namespace MafiaBar {
+
+#define MB_NAMESPACE_END }
+
+typedef size_t Hash;

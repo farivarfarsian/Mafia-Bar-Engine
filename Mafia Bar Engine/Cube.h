@@ -2,8 +2,7 @@
 #include "Engine.h"
 #include "Pipeline.h"
 
-
-class Cube : public MafiaBar::Engine::Graphics::Object
+class Cube : public MafiaBar::Engine::Entity
 {
 public:
 	Cube(MafiaBar::Engine::Graphics::Graphics& graphics, std::mt19937& rng,

@@ -12,7 +12,7 @@ void App::BeforeFrame()
 		boxes.PushBack(new Cube(*MafiaBar::Engine::Engine::Get().GetGraphics(), rng, adist, ddist, odist, rdist));
 	}
 
-	MafiaBar::Engine::Engine::Get().GetGraphics()->SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
+	MafiaBar::Engine::Engine::Get().GetGraphics()->SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));	
 }
 
 void App::Frame()
@@ -25,18 +25,6 @@ void App::Frame()
 		boxes[i]->Update(delta_time);
 		boxes[i]->Draw(*MafiaBar::Engine::Engine::Get().GetGraphics());
 	}
-
-	/*
-	win.GetGraphics().GetSpriteBatch()->Begin(DirectX::SpriteSortMode_Deferred,m_States->NonPremultiplied()); //Fix the ID3D11BlendState, DirectX::CommonStates NonPremultiplied() would be helpful.
-	win.GetGraphics().GetSpriteFont()->DrawString(
-		win.GetGraphics().GetSpriteBatch(),
-		"Hello World",
-		DirectX::XMFLOAT2(0, 0),
-		DirectX::Colors::White, 0.0f,
-		DirectX::XMFLOAT2(0, 0),
-		DirectX::XMFLOAT2(1.0f, 1.0f));
-	win.GetGraphics().GetSpriteBatch()->End();
-	*/
 
 	MafiaBar::Engine::Engine::Get().GetGraphics()->EndFrame();
 }

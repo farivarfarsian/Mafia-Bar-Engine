@@ -67,6 +67,9 @@
     <Filter Include="Application">
       <UniqueIdentifier>{d14905e3-860a-415f-a774-ed6b7d91a5fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entity">
+      <UniqueIdentifier>{c6ec1f3a-969e-4ee0-8754-06b76d55a7b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger.h">
@@ -130,7 +133,7 @@
     <ClInclude Include="pch.h">
       <Filter>Precompiled Header,Definitions</Filter>
     </ClInclude>
-    <ClInclude Include="Definitions.h">
+    <ClInclude Include="def.h">
       <Filter>Precompiled Header,Definitions</Filter>
     </ClInclude>
     <ClInclude Include="Console.h">
@@ -150,6 +153,9 @@
     </ClInclude>
     <ClInclude Include="CPUPerformance.h">
       <Filter>Performance</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -95,3 +95,25 @@ MB_ENGINE_API BOOL MafiaBar::Utilities::CenterWindow(HWND Handle, int Width, int
 
     return true;
 }
+
+MB_ENGINE_API bool MafiaBar::Utilities::IsWindows11OrGreater()
+{
+    HMODULE DLLModule = LoadLibraryA("Ntdll.dll");
+    typedef NTSTATUS(CALLBACK* RTLGETVERSION) (PRTL_OSVERSIONINFOW lpVersionInformation);
+    RTLGETVERSION pRtlGetVersion;
+    pRtlGetVersion = (RTLGETVERSION)GetProcAddress(DLLModule, "RtlGetVersion");
+    RTL_OSVERSIONINFOW ovi = { 0 };
+    ovi.dwOSVersionInfoSize = sizeof(ovi);
+    NTSTATUS ntStatus = pRtlGetVersion(&ovi);
+    if (ntStatus == 0)
+    {
+        if (ovi.dwBuildNumber >= 22000)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}

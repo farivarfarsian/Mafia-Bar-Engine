@@ -30,9 +30,9 @@ void MafiaBar::Engine::Application::Initialize(const char* Title, const char* Cl
 
 	wcex.lpfnWndProc = WindowProcedureSetup;
 
-	RegisterClassEx(&wcex);
+	RegisterClassExW(&wcex);
 
-	//This feature has disabled for now, there's is problem with Restart function.
+	//This feature has been disabled for now, there is problem with the Restart function.
 	if (OneApplicationGuard == true && FindWindowA(NULL, ApplicationTitle) != NULL)
 	{
 		MafiaBar::Engine::Engine::Get().GetLogger().Message("Mafia Bar Engine", "One of the Instance of Mafia Bar Engine is aleady running, first close it and run the program again", MB_ICONERROR);
@@ -115,9 +115,9 @@ void MafiaBar::Engine::Application::Exit(int ExitCode)
 }
 
 std::optional<int> MafiaBar::Engine::Application::ProcessMessages()
-{
-	MSG msg;
-	while (PeekMessageA(&msg, nullptr, 0, 0, PM_REMOVE))
+{	
+	MSG msg{};
+	while (PeekMessageA(&msg, ApplicationHandle, 0,0,PM_REMOVE))
 	{
 		if (msg.message == WM_QUIT)
 		{
