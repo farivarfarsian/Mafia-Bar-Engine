@@ -57,6 +57,18 @@ void MafiaBar::Engine::Application::Initialize(const char* Title, const char* Cl
 
 	if (ApplicationHandle == NULL) { MB_EXCEPTION(GetLastError()); }
 
+	//Enabling Immersive Dark Mode for Mafia Bar Engine (Windows 11 Only)
+	if (MafiaBar::Utilities::IsWindows11OrGreater() == true)
+	{
+		int isDarkModeEnabled{ TRUE };
+
+		HRESULT DEBUGCODE = DwmSetWindowAttribute(ApplicationHandle, DWMWA_USE_IMMERSIVE_DARK_MODE, &isDarkModeEnabled, sizeof(isDarkModeEnabled));
+
+		#if IS_DEBUG
+			MB_EXCEPTION(DEBUGCODE);
+		#endif
+	}
+
 	//Creating Graphics
 	MafiaBar::Engine::Engine::Get().CreateGraphics(ApplicationHandle, Fullscreen, true);
 

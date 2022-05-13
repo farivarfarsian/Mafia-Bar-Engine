@@ -1,6 +1,15 @@
 #pragma once
 #include "Engine.h"
 
+//Using MafiaBar::Utilities::IsWindows11OrGreater() 
+#include "Utilities.h"
+
+//Customising the Window with DWM API (Windows Only)
+#ifdef _WIN32
+#include <dwmapi.h>
+LINK_LIBRARY("Dwmapi.lib")
+#endif
+
 namespace MafiaBar
 {
 	namespace Engine
