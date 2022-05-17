@@ -14,32 +14,19 @@ namespace MafiaBar
 			{
 				friend class Bindable;
 			public:
-				//Initialize DirectX 11
-				Graphics(HWND hwnd, int O_Width, int O_Height, bool Fullscreen, bool Vsync);
+				Graphics() = default;
 				Graphics(const Graphics&) = delete;
 				Graphics& operator=(const Graphics&) = delete;
 				~Graphics() = default;
 			public:
-				//Set Graphics Projection
-				void SetProjection(DirectX::FXMMATRIX projection);
-				//Draw Indexed Indicies 
-				void DrawIndexed(unsigned int Count);
-				// This functions clears the both Back buffer and the Depth and Stencil buffer
-				void Clear(const float ClearRenderColor[4], float ClearDepthBuffer, UINT8 ClearStencilBuffer);
-				void Clear(float ClearRenderColorR, float ClearRenderColorG, float ClearRenderColorB, float ClearRenderColorA, float ClearDepthBuffer, UINT8 ClearStencilBuffer);
-				// Render the scene
-				void EndFrame();
-				//Initializing Sprite Font
-				void CreateSprite(const wchar_t* path_name);
-				//Take a screenshot of what you're rendering(screen)
-				void ScreenShot() const
-				{				
-	  				ID3D11Texture2D* BackBuffer = nullptr;
-					MB_EXCEPTION(m_Swap->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&BackBuffer)));
-					MB_EXCEPTION(DirectX::SaveWICTextureToFile(m_Context.Get(), BackBuffer, GUID_ContainerFormatJpeg, L"Screenshot.jpg"));
-					BackBuffer->Release();
-					BackBuffer = 0;
-				}
+				//Initializes DirectX 11
+				void Initialize(HWND hwnd, bool Fullscreen = false, bool Vsync = false, int O_Width = 0, int O_Height = 0);
+				//Receives GraphicCardDescription, GraphicCardMemorySize, Numerator and Denominator and their value is available to use after this function
+				void ReceiveHardwareInformation();
+				//Creating DirectX::SpriteBatch class
+				void CreateSpriteBatch();
+				//Creating DirectX::CommonStates class
+				void CreateCommonStates();
 			public:
 				//Get D3D11 Device Object
 				ID3D11Device* GetDevice() const;
@@ -57,12 +44,10 @@ namespace MafiaBar
 				int GetWidth() const;
 				//Get Height of the Window
 				int GetHeight() const;
-				//Get Graphics Projection
-				DirectX::XMMATRIX GetProjection() const;
 				//Get Sprite Batch
 				DirectX::SpriteBatch* GetSpriteBatch() const;
-				//Get Sprite Font
-				DirectX::SpriteFont* GetSpriteFont() const;
+				//Get Common States
+				DirectX::CommonStates* GetCommonStates() const;
 				//Get VideoCard memory size in MBs
 				const unsigned long GetGraphicCardMemorySize() const;
 				//Get VideoCard description
@@ -81,8 +66,7 @@ namespace MafiaBar
 				Microsoft::WRL::ComPtr<ID3D11RasterizerState> m_RasterizerState = nullptr;
 				Microsoft::WRL::ComPtr<ID3D11BlendState> m_BlendState = nullptr;
 				std::unique_ptr<DirectX::SpriteBatch> m_SpriteBatch = nullptr;
-				std::unique_ptr<DirectX::SpriteFont> m_SpriteFont = nullptr;
-				DirectX::XMMATRIX m_ProjectionGraphics;
+				std::unique_ptr<DirectX::CommonStates> m_CommonStates = nullptr;
 				int Width, Height;
 				bool m_Vsync = false;
 				char m_GraphicCardDescription[MAX_PATH];

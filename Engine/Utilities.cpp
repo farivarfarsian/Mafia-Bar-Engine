@@ -117,3 +117,32 @@ MB_ENGINE_API bool MafiaBar::Utilities::IsWindows11OrGreater()
         }
     }
 }
+
+MB_ENGINE_API void MafiaBar::Utilities::TakeScreenshot(IDXGISwapChain* SwapChain, ID3D11DeviceContext* DeviceContext, HWND WindowHandle)
+{
+    OPENFILENAMEW ofn{};
+    wchar_t FileName[260];
+    ofn.lStructSize = sizeof(ofn);
+    ofn.hwndOwner = WindowHandle;
+    ofn.lpstrFile = FileName;
+    ofn.lpstrFile[0] = '\0';
+    ofn.nMaxFile = sizeof(FileName);
+    ofn.lpstrFilter = L"JPEG Format\0*.jpg\0";
+    ofn.nFilterIndex = 1;
+    ofn.lpstrFileTitle = NULL;
+    ofn.nMaxFileTitle = 0;
+    ofn.lpstrInitialDir = NULL;
+    ofn.Flags = OFN_PATHMUSTEXIST;
+
+    if (GetSaveFileNameW(&ofn) == TRUE)
+    {
+        ID3D11Texture2D* BackBuffer = nullptr;
+        if (SwapChain != nullptr && DeviceContext != nullptr)
+        {
+            MB_EXCEPTION(SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&BackBuffer)));
+            MB_EXCEPTION(DirectX::SaveWICTextureToFile(DeviceContext, BackBuffer, GUID_ContainerFormatJpeg, FileName));
+        }
+        BackBuffer->Release();
+        BackBuffer = 0;
+    }
+}

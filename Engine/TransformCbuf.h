@@ -3,6 +3,8 @@
 #include "ConstantBuffer.h"
 #include "Entity.h"
 
+#include "Engine.h"
+
 namespace MafiaBar
 {
 	namespace Engine
@@ -17,10 +19,10 @@ namespace MafiaBar
 				{
 					vertexconstantbuffer.Update(graphics,
 						DirectX::XMMatrixTranspose(
-							object.GetTransformation() * graphics.GetProjection()
+							object.GetTransformation() * MafiaBar::Engine::Engine::Get().GetScene().GetSceneProjection()
 						)
 					);
-					vertexconstantbuffer.Bind(graphics);
+					vertexconstantbuffer.Bind(graphics);			
 				}
 			private:
 				MafiaBar::Engine::Graphics::VertexConstantBuffer<DirectX::XMMATRIX> vertexconstantbuffer;

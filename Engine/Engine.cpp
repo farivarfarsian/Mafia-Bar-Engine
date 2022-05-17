@@ -2,8 +2,6 @@
 
 std::mutex MafiaBar::Engine::Engine::mutex;
 
-MafiaBar::Engine::Engine::~Engine() { delete Graphics; }
-
 MafiaBar::Engine::Engine& MafiaBar::Engine::Engine::Get()
 {
     std::lock_guard<std::mutex> lock(mutex);
@@ -11,7 +9,11 @@ MafiaBar::Engine::Engine& MafiaBar::Engine::Engine::Get()
     return Engine;
 }
 
-void MafiaBar::Engine::Engine::CreateGraphics(HWND hwnd, bool Fullscreen, bool Vsync, int Width, int Height)  { Graphics = new MafiaBar::Engine::Graphics::Graphics(hwnd, Width, Height, Fullscreen, Vsync);  }
+void MafiaBar::Engine::Engine::CreateGraphicsAndScene(HWND hwnd, bool Fullscreen, bool Vsync, int Width, int Height)  
+{ 
+    Graphics.Initialize(hwnd, Fullscreen, Vsync, Width, Height);  
+    Scene.Initialize(&Graphics);
+}
 
 constexpr MafiaBar::Keyboard& MafiaBar::Engine::Engine::GetKeyboard() { return Keyboard; }
 
@@ -19,7 +21,9 @@ constexpr MafiaBar::Mouse& MafiaBar::Engine::Engine::GetMouse() { return Mouse; 
 
 constexpr MafiaBar::Engine::Logger& MafiaBar::Engine::Engine::GetLogger() { return Log; }
 
-constexpr MafiaBar::Engine::Graphics::Graphics* MafiaBar::Engine::Engine::GetGraphics() { return Graphics; }
+constexpr MafiaBar::Engine::Graphics::Graphics& MafiaBar::Engine::Engine::GetGraphics() { return Graphics; }
+
+constexpr MafiaBar::Engine::Scene& MafiaBar::Engine::Engine::GetScene() { return Scene; }
 
 constexpr MafiaBar::Engine::Exception& MafiaBar::Engine::Engine::GetException() { return Exception; }
 

@@ -2,6 +2,7 @@
 #include "def.h"
 #include "pch.h"
 #include "Logger.h"
+#include "Exception.h"
 
 namespace MafiaBar
 {
@@ -36,6 +37,8 @@ namespace MafiaBar
 		MB_ENGINE_API BOOL CenterWindow(HWND Handle, int Width = 0, int Height = 0);
 
 		MB_ENGINE_API bool IsWindows11OrGreater();
+
+		MB_ENGINE_API void TakeScreenshot(IDXGISwapChain* SwapChain, ID3D11DeviceContext* DeviceContext, HWND WindowHandle = NULL);
 
 		enum WindowTransparency
 		{
@@ -115,6 +118,5 @@ namespace MafiaBar
 }
 
 //Utilities Definitions:
-
 
 #define try(ReturnType, ...) MafiaBar::Utilities::tryex<ReturnType>(__FILE__, __FUNCTION_SIGNATURE__, __LINE__ , __VA_ARGS__);

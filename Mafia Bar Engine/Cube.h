@@ -81,6 +81,13 @@ public:
 	}
 	Cube(const Cube&) = default;
 	Cube& operator=(const Cube&) = default;
+	void Input() override
+	{
+		if (MafiaBar::Engine::Engine::Get().GetKeyboard().IsKeyPressed(MafiaBar::Keyboard::W) == true)
+		{
+			printf_s("W Key Pressed\n");
+		}
+	}
 	void Update(float delta_time) noexcept override
 	{
 		roll += droll * delta_time;
@@ -100,7 +107,7 @@ public:
 	void Draw(MafiaBar::Engine::Graphics::Graphics& graphics) override
 	{
 		pipline.BindThePipline(graphics);
-		graphics.DrawIndexed(IndicesCount);
+		graphics.GetContext()->DrawIndexed(IndicesCount, 0u, 0u);
 	}
 private:
 	// positional

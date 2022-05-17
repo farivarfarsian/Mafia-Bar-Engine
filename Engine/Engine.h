@@ -27,6 +27,8 @@
 
 #include "Graphics.h"
 
+#include "Scene.h"
+
 /// <summary>Mafia Bar Engine Utilities aren't meant to be apart of Engine.h.
 /// <para>But if you want to include them into your Engine.h define ENGINE_UTILS definition before including Engine.h in your program.</para>
 /// </summary>
@@ -52,24 +54,26 @@ namespace MafiaBar
 		{			
 			static std::mutex mutex;
 			Engine() = default;
-			~Engine();
+			~Engine() = default;
 		public:
 			Engine(Engine& Engine) = delete;
 			Engine& operator=(const Engine&) = delete;
-			void CreateGraphics(HWND hwnd, bool Fullscreen, bool Vsync, int Width = 0, int Height = 0);
+			void CreateGraphicsAndScene(HWND hwnd, bool Fullscreen, bool Vsync, int Width = 0, int Height = 0);
 		public:
 			static Engine& Get();
 			constexpr MafiaBar::Keyboard& GetKeyboard();
 			constexpr MafiaBar::Mouse& GetMouse();
 			constexpr MafiaBar::Engine::Logger& GetLogger();
 			constexpr MafiaBar::Engine::Exception& GetException();
-			constexpr MafiaBar::Engine::Graphics::Graphics* GetGraphics();
+			constexpr MafiaBar::Engine::Graphics::Graphics& GetGraphics();
+			constexpr MafiaBar::Engine::Scene& GetScene();
 		private:
 			MafiaBar::Keyboard Keyboard;
 			MafiaBar::Mouse Mouse;
 			MafiaBar::Engine::Logger Log;
 			MafiaBar::Engine::Exception Exception;
-			MafiaBar::Engine::Graphics::Graphics* Graphics;
+			MafiaBar::Engine::Graphics::Graphics Graphics;
+			MafiaBar::Engine::Scene Scene;
 		};
 	}
 }

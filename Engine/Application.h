@@ -57,7 +57,7 @@ namespace MafiaBar
 			//This function runs when Application received WM_SETFOCUS message.
 			virtual void OnFocus();
 			//This function runs on Present method before the program loop.
-			virtual void BeforeFrame();
+			virtual void Setup();
 			//Do your rendering operations here.
 			virtual void Frame();
 			DWORD ApplicationID = GetCurrentProcessId();

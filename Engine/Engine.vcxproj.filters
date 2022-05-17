@@ -70,6 +70,15 @@
     <Filter Include="Entity">
       <UniqueIdentifier>{c6ec1f3a-969e-4ee0-8754-06b76d55a7b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utilities\FileSystem">
+      <UniqueIdentifier>{4ce90fbc-89f9-4cd1-a642-b4a0141a916b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{6657ee9f-905b-4c87-bfab-6f552866d828}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{7898f4be-b048-4de2-b25e-e925a8817293}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger.h">
@@ -145,9 +154,6 @@
     <ClInclude Include="FPSCounter.h">
       <Filter>Performance</Filter>
     </ClInclude>
-    <ClInclude Include="FileSystem.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Application.h">
       <Filter>Application</Filter>
     </ClInclude>
@@ -156,6 +162,12 @@
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystem.h">
+      <Filter>Utilities\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -208,9 +220,6 @@
     <ClCompile Include="FPSCounter.cpp">
       <Filter>Performance</Filter>
     </ClCompile>
-    <ClCompile Include="FileSystem.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="Pipeline.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
@@ -219,6 +228,15 @@
     </ClCompile>
     <ClCompile Include="CPUPerformance.cpp">
       <Filter>Performance</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystem.cpp">
+      <Filter>Utilities\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Entity</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

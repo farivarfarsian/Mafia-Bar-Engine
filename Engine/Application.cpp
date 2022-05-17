@@ -69,10 +69,10 @@ void MafiaBar::Engine::Application::Initialize(const char* Title, const char* Cl
 		#endif
 	}
 
-	//Creating Graphics
-	MafiaBar::Engine::Engine::Get().CreateGraphics(ApplicationHandle, Fullscreen, true);
+	//Creating Graphics And Scene
+	MafiaBar::Engine::Engine::Get().CreateGraphicsAndScene(ApplicationHandle, Fullscreen, true);
 
-	//Creatinh the Win32 Console
+	//Creating the Win32 Console
 	AllocConsole(); FILE* fp;
 	freopen_s(&fp, "CONIN$", "r", stdin);
 	freopen_s(&fp, "CONOUT$", "w", stdout);
@@ -85,12 +85,12 @@ void MafiaBar::Engine::Application::Initialize(const char* Title, const char* Cl
 	//Setting Fullscreen
 	if (IsFullScreen == true)
 	{
-		if (MafiaBar::Engine::Engine::Get().GetGraphics()->GetSwap()->SetFullscreenState(true, nullptr) == S_OK) { IsFullScreen = true; }
+		if (MafiaBar::Engine::Engine::Get().GetGraphics().GetSwap()->SetFullscreenState(true, nullptr) == S_OK) { IsFullScreen = true; }
 		else { MafiaBar::Engine::Engine::Get().GetLogger().Log("Setting Fullscreen On, Using SwapChain D3D11", "Failed"); }
 	}
 	else if (IsFullScreen == false)
 	{
-		if (MafiaBar::Engine::Engine::Get().GetGraphics()->GetSwap()->SetFullscreenState(false, nullptr) == S_OK) { IsFullScreen = false; }
+		if (MafiaBar::Engine::Engine::Get().GetGraphics().GetSwap()->SetFullscreenState(false, nullptr) == S_OK) { IsFullScreen = false; }
 		else { MafiaBar::Engine::Engine::Get().GetLogger().Log("Setting Fullscreen Off, Using SwapChain D3D11", "Failed"); }
 	}
 
@@ -283,7 +283,7 @@ void MafiaBar::Engine::Application::OnFocus()
 {
 }
 
-void MafiaBar::Engine::Application::BeforeFrame()
+void MafiaBar::Engine::Application::Setup()
 {
 }
 
@@ -293,7 +293,7 @@ void MafiaBar::Engine::Application::Frame()
 
 int MafiaBar::Engine::Application::Present()
 {
-	BeforeFrame();
+	Setup();
 
 	while (true)
 	{

@@ -8,7 +8,7 @@ class App final : public MafiaBar::Engine::Application
 {
 private:
 	void Frame() override;
-	void BeforeFrame() override;
+	void Setup() override;
 	//Entities
 	MafiaBar::SDK::Vector<Cube*> boxes;
 	//Utilities
