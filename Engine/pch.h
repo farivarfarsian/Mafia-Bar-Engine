@@ -54,6 +54,9 @@
 #include <Vector.h>
 #include <VirtualVector.h>
 
+//imgui Header File
+#include <imgui.h>
+
 typedef BSTR CS_String;
 typedef std::string CP_String;
 typedef const char* C_String;

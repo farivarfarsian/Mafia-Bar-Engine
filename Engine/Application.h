@@ -1,9 +1,6 @@
 #pragma once
 #include "Engine.h"
 
-//Using MafiaBar::Utilities::IsWindows11OrGreater() 
-#include "Utilities.h"
-
 //Customising the Window with DWM API (Windows Only)
 #ifdef _WIN32
 #include <dwmapi.h>
@@ -67,6 +64,7 @@ namespace MafiaBar
 			const char* ApplicationClassName = nullptr;
 			int Width = 0, Height = 0;
 			bool IsFullScreen = false, IsFocus = false, OneApplicationGuard = false;
+			BOOL LightModeEnabled = false;
 		};
 	}
 }

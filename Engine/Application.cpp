@@ -57,17 +57,18 @@ void MafiaBar::Engine::Application::Initialize(const char* Title, const char* Cl
 
 	if (ApplicationHandle == NULL) { MB_EXCEPTION(GetLastError()); }
 
-	//Enabling Immersive Dark Mode for Mafia Bar Engine (Windows 11 Only)
-	if (MafiaBar::Utilities::IsWindows11OrGreater() == true)
-	{
-		int isDarkModeEnabled{ TRUE };
-
-		HRESULT DEBUGCODE = DwmSetWindowAttribute(ApplicationHandle, DWMWA_USE_IMMERSIVE_DARK_MODE, &isDarkModeEnabled, sizeof(isDarkModeEnabled));
-
-		#if IS_DEBUG
-			MB_EXCEPTION(DEBUGCODE);
-		#endif
-	}
+	//Getting Dark/Light Mode Enabled Boolean, 
+	//Note: Be aware of that If you want to check that If the Dark mode is enabled you should do it like this: !LightModeEnabled .
+	unsigned long DarkModeEnabledSize = sizeof(LightModeEnabled);
+	MB_EXCEPTION(RegGetValueA(HKEY_CURRENT_USER, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "AppsUseLightTheme", RRF_RT_DWORD, NULL, &LightModeEnabled, &DarkModeEnabledSize));
+;
+	//Enabling Immersive Dark Mode for Mafia Bar Engine,
+	//Note: Does work for both Windows 10 and 11 but for using this feature and being able to compile the code, you have to use the Windows 11 SDK(10.0.22000.0v)
+	int isDarkModeEnabled{ !LightModeEnabled };
+	HRESULT DEBUGCODE = DwmSetWindowAttribute(ApplicationHandle, DWMWA_USE_IMMERSIVE_DARK_MODE, &isDarkModeEnabled, sizeof(isDarkModeEnabled));
+	#if IS_DEBUG
+		MB_EXCEPTION(DEBUGCODE);
+	#endif
 
 	//Creating Graphics And Scene
 	MafiaBar::Engine::Engine::Get().CreateGraphicsAndScene(ApplicationHandle, Fullscreen, true);

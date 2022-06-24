@@ -15,7 +15,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{c130b7a0-c684-410e-a686-8ec2030af661}</ProjectGuid>
     <RootNamespace>EngineToolkit</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
     <ProjectName>Engine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -68,7 +68,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine\Imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <FloatingPointModel>Fast</FloatingPointModel>
@@ -89,7 +89,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine\Imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <FloatingPointModel>Fast</FloatingPointModel>
@@ -114,6 +114,14 @@
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="FPSCounter.h" />
     <ClInclude Include="GraphicDataTypes.h" />
+    <ClInclude Include="Imgui\imconfig.h" />
+    <ClInclude Include="Imgui\imgui.h" />
+    <ClInclude Include="Imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="Imgui\imgui_impl_win32.h" />
+    <ClInclude Include="Imgui\imgui_internal.h" />
+    <ClInclude Include="Imgui\imstb_rectpack.h" />
+    <ClInclude Include="Imgui\imstb_textedit.h" />
+    <ClInclude Include="Imgui\imstb_truetype.h" />
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="Performance.h" />
     <ClInclude Include="IndexBuffer.h" />
@@ -124,6 +132,7 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="pch.h" />
@@ -142,6 +151,13 @@
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="FPSCounter.cpp" />
+    <ClCompile Include="Imgui\imgui.cpp" />
+    <ClCompile Include="Imgui\imgui_demo.cpp" />
+    <ClCompile Include="Imgui\imgui_draw.cpp" />
+    <ClCompile Include="Imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="Imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="Imgui\imgui_tables.cpp" />
+    <ClCompile Include="Imgui\imgui_widgets.cpp" />
     <ClCompile Include="Pipeline.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="Information.cpp" />
