@@ -74,7 +74,11 @@ namespace MafiaBar
 					//Creating the buffer.
 					DebugCode DEBUGCODE = Graphics.GetDevice()->CreateBuffer(&NewVertexConstantBufferDESC, &NewVertexConstantBufferData, mConstantBuffer.GetAddressOf());
 
-					if (DEBUGCODE != S_OK)
+					if (DEBUGCODE == S_OK)
+					{
+						mConstantBuffer = NewVertexConstantBuffer;
+					}
+					else
 					{
 						MB_EXCEPTION(DEBUGCODE);
 					}
@@ -109,7 +113,11 @@ namespace MafiaBar
 					//Creating the buffer.
 					DebugCode DEBUGCODE = Graphics.GetDevice()->CreateBuffer(&NewPixelConstantBufferDESC, &NewPixelConstantBufferData, mConstantBuffer.GetAddressOf());
 
-					if (DEBUGCODE != S_OK)
+					if (DEBUGCODE == S_OK)
+					{
+						mConstantBuffer = NewPixelConstantBuffer;
+					}
+					else
 					{
 						MB_EXCEPTION(DEBUGCODE);
 					}
