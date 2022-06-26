@@ -36,7 +36,7 @@ void MafiaBar::Engine::Application::Initialize(const char* Title, const char* Cl
 	if (OneApplicationGuard == true && FindWindowA(NULL, ApplicationTitle) != NULL)
 	{
 		MafiaBar::Engine::Engine::Get().GetLogger().Message("Mafia Bar Engine", "One of the Instance of Mafia Bar Engine is aleady running, first close it and run the program again", MB_ICONERROR);
-		Exit(ApplicationErrorCodes::TRYING_TO_RUN_MULTIPLE_INSTANCES_OF_APPLICATION);
+		Exit(MB_SYS_CODES::TRYING_TO_RUN_MULTIPLE_INSTANCES_OF_APPLICATION);
 		return;
 	}
 
@@ -57,11 +57,16 @@ void MafiaBar::Engine::Application::Initialize(const char* Title, const char* Cl
 
 	if (ApplicationHandle == NULL) { MB_EXCEPTION(GetLastError()); }
 
+	MafiaBar::Utilities::CenterWindow(ApplicationHandle);
+
 	//Getting Dark/Light Mode Enabled Boolean, 
 	//Note: Be aware of that If you want to check that If the Dark mode is enabled you should do it like this: !LightModeEnabled .
 	unsigned long DarkModeEnabledSize = sizeof(LightModeEnabled);
-	MB_EXCEPTION(RegGetValueA(HKEY_CURRENT_USER, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "AppsUseLightTheme", RRF_RT_DWORD, NULL, &LightModeEnabled, &DarkModeEnabledSize));
-;
+	LSTATUS Status = RegGetValueA(HKEY_CURRENT_USER, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "AppsUseLightTheme", RRF_RT_DWORD, NULL, &LightModeEnabled, &DarkModeEnabledSize);
+	#if IS_DEBUG
+		MB_EXCEPTION(Status);
+	#endif
+
 	//Enabling Immersive Dark Mode for Mafia Bar Engine,
 	//Note: Does work for both Windows 10 and 11 but for using this feature and being able to compile the code, you have to use the Windows 11 SDK(10.0.22000.0v)
 	int isDarkModeEnabled{ !LightModeEnabled };
@@ -173,11 +178,10 @@ LRESULT MafiaBar::Engine::Application::WindowProcedure(HWND hWnd, UINT msg, WPAR
 	/*------------------------------ Keyboard Events ------------------------------*/
 	case WM_KEYDOWN:
 	{
-		MafiaBar::Engine::Engine::Get().GetKeyboard().OnKeyPressed(static_cast<unsigned char>(wParam));
-		
+		MafiaBar::Engine::Engine::Get().GetKeyboard().OnKeyPressed(static_cast<unsigned char>(wParam));	
 		if (MafiaBar::Engine::Engine::Get().GetKeyboard().IsKeyPressed((unsigned char)VK_CONTROL) && MafiaBar::Engine::Engine::Get().GetKeyboard().IsKeyPressed((unsigned char)MafiaBar::Keyboard::Q))
 		{
-			Exit(ApplicationErrorCodes::SUCCEEDED);
+			Exit(MB_SYS_CODES::SUCCEEDED);
 		}
 		break;
 	}
@@ -202,7 +206,7 @@ LRESULT MafiaBar::Engine::Application::WindowProcedure(HWND hWnd, UINT msg, WPAR
 	{
 		const POINTS pt = MAKEPOINTS(lParam);
 		MafiaBar::Engine::Engine::Get().GetMouse().OnLeftPressed(pt.x, pt.y);
-		printf_s("%d, %d\n", GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		printf_s("[Debug Message] Mouse Cursor Point: %d, %d\n", GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 		break;
 	}
 	case WM_LBUTTONUP:

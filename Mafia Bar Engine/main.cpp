@@ -7,9 +7,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
 	Application.Initialize("Mafia Bar Engine", "Mafia Bar", 1200, 800, false, 106, 103);
 
-	MafiaBar::Utilities::CenterWindow(Application.GetHandle());
-
 	Application.Present();
 
-	return App::ApplicationErrorCodes::SUCCEEDED;
+	return App::MB_SYS_CODES::SUCCEEDED;
 }

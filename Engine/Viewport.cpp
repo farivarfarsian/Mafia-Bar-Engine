@@ -16,4 +16,6 @@ MafiaBar::Engine::Graphics::Viewport::Viewport(MafiaBar::Engine::Graphics::Graph
 
 void MafiaBar::Engine::Graphics::Viewport::Bind(MafiaBar::Engine::Graphics::Graphics& graphics) { graphics.GetContext()->RSSetViewports(1u, &mViewport); }
 
+void MafiaBar::Engine::Graphics::Viewport::Replace(Graphics& Graphics, const D3D11_VIEWPORT& Viewport) { this->mViewport = Viewport; }
+
 D3D11_VIEWPORT MafiaBar::Engine::Graphics::Viewport::GetViewport() const { return mViewport; }

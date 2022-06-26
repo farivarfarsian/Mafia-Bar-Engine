@@ -41,8 +41,48 @@ MafiaBar::Engine::Graphics::VertexShader::VertexShader(MafiaBar::Engine::Graphic
 
 void MafiaBar::Engine::Graphics::VertexShader::Bind(MafiaBar::Engine::Graphics::Graphics& graphics) { graphics.GetContext()->VSSetShader(mVertexShader.Get(), nullptr, 0u); }
 
+void MafiaBar::Engine::Graphics::VertexShader::Replace(Graphics& Graphics, const std::wstring& VertexShaderPathName)
+{
+	//Releasing the already existing data from the buffer and shader blob.
+	mVertexShader->Release();
+	ShaderBlob->Release();
+
+	//Reading the new Shader to Blob
+	if (ReadFile(VertexShaderPathName) == true)
+	{
+		//Creating the new VertexShaderBuffer
+		DebugCode DEBUGCODE = Graphics.GetDevice()->CreateVertexShader(ShaderBlob->GetBufferPointer(), ShaderBlob->GetBufferSize(), nullptr, mVertexShader.GetAddressOf());
+		MB_EXCEPTION(DEBUGCODE);
+	}
+
+	//Copying the VertexShader Path
+	this->Path = VertexShaderPathName.c_str();
+}
+
+ID3D11VertexShader* MafiaBar::Engine::Graphics::VertexShader::GetVertexShader() const { return mVertexShader.Get(); }
+
 MafiaBar::Engine::Graphics::PixelShader::PixelShader(MafiaBar::Engine::Graphics::Graphics& graphics, const std::wstring& PixelShaderPathName)
 	: Shader(graphics, PixelShaderPathName, ShaderType::PixelShader)
 {}
 
 void MafiaBar::Engine::Graphics::PixelShader::Bind(MafiaBar::Engine::Graphics::Graphics & graphics) { graphics.GetContext()->PSSetShader(mPixelShader.Get(), nullptr, 0u); }
+
+void MafiaBar::Engine::Graphics::PixelShader::Replace(Graphics& Graphics, const std::wstring& PixelShaderPathName)
+{
+	//Releasing the already existing data from the buffer and shader blob.
+	mVertexShader->Release();
+	ShaderBlob->Release();
+
+	//Reading the new Shader to Blob
+	if (ReadFile(PixelShaderPathName) == true)
+	{
+		//Creating the new PixelShaderBuffer
+		DebugCode DEBUGCODE = Graphics.GetDevice()->CreatePixelShader(ShaderBlob->GetBufferPointer(), ShaderBlob->GetBufferSize(), nullptr, mPixelShader.GetAddressOf());
+		MB_EXCEPTION(DEBUGCODE);
+	}
+
+	//Copying the VertexShader Path
+	this->Path = PixelShaderPathName.c_str();
+}
+
+ID3D11PixelShader* MafiaBar::Engine::Graphics::PixelShader::GetPixelShader() const { return mPixelShader.Get(); }

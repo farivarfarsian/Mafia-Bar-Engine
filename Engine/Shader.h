@@ -31,7 +31,6 @@ namespace MafiaBar
 				Microsoft::WRL::ComPtr<ID3D11VertexShader> mVertexShader;
 				Microsoft::WRL::ComPtr<ID3D11GeometryShader> mGeometryShader;
 				Microsoft::WRL::ComPtr<ID3D11HullShader> mHullShader;
-			private:
 				bool ReadFile(const std::wstring& ShaderPath);
 			};
 
@@ -40,6 +39,12 @@ namespace MafiaBar
 			public:
 				VertexShader(MafiaBar::Engine::Graphics::Graphics& graphics, const std::wstring& VertexShaderPathName);
 				void Bind(MafiaBar::Engine::Graphics::Graphics& graphics) override;
+				/// <summary>
+				///  Replaces the old VertexShader with the new one.
+				/// </summary>
+				void Replace(Graphics& Graphics, const std::wstring& VertexShaderPathName);
+			public:
+				ID3D11VertexShader* GetVertexShader() const;
 			};
 
 			class MB_ENGINE_API PixelShader : public Shader
@@ -47,6 +52,12 @@ namespace MafiaBar
 			public:
 				PixelShader(MafiaBar::Engine::Graphics::Graphics& graphics, const std::wstring& PixelShaderPathName);
 				void Bind(MafiaBar::Engine::Graphics::Graphics& graphics) override;
+				/// <summary>
+				///  Replaces the old PixelShader with the new one.
+				/// </summary>
+				void Replace(Graphics& Graphics, const std::wstring& PixelShaderPathName);
+			public:
+				ID3D11PixelShader* GetPixelShader() const;
 			};
 		}
 	}

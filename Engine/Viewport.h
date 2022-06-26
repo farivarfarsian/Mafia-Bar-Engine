@@ -13,6 +13,10 @@ namespace MafiaBar
 				Viewport(MafiaBar::Engine::Graphics::Graphics& graphics);
 				Viewport(MafiaBar::Engine::Graphics::Graphics& graphics, float Width, float Height);
 				void Bind(MafiaBar::Engine::Graphics::Graphics& graphics) override;
+				/// <summary>
+				///  Replaces the old Viewport with the new one.
+				/// </summary>
+				void Replace(Graphics& Graphics, const D3D11_VIEWPORT& Viewport);
 			public:
 				D3D11_VIEWPORT GetViewport() const;
 			private:

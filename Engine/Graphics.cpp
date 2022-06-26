@@ -81,10 +81,7 @@ void MafiaBar::Engine::Graphics::Graphics::Initialize(HWND hwnd, bool Fullscreen
 		&m_Context
 	));
 
-	//Creating Render Target View
-	Microsoft::WRL::ComPtr<ID3D11Resource> m_BackBuffer = nullptr;
-	m_Swap->GetBuffer(0, __uuidof(ID3D11Resource), &m_BackBuffer);
-	MB_EXCEPTION(m_Device->CreateRenderTargetView(m_BackBuffer.Get(), nullptr, &m_RenderTarget));
+	CreateRenderTarget();
 
 	//Creating Depth And Stencil State Buffer 
 	D3D11_DEPTH_STENCIL_DESC DepthStencilBufferDESC = {};
@@ -181,6 +178,16 @@ void MafiaBar::Engine::Graphics::Graphics::CreateSpriteBatch()
 void MafiaBar::Engine::Graphics::Graphics::CreateCommonStates()
 {
 	m_CommonStates = std::make_unique<DirectX::CommonStates>(m_Device.Get());
+}
+
+void MafiaBar::Engine::Graphics::Graphics::CreateRenderTarget()
+{
+	Microsoft::WRL::ComPtr<ID3D11Resource> m_BackBuffer = nullptr;
+	m_Swap->GetBuffer(0, __uuidof(ID3D11Resource), &m_BackBuffer);
+	HRESULT DEBUGCODE = m_Device->CreateRenderTargetView(m_BackBuffer.Get(), nullptr, &m_RenderTarget);
+	#if IS_DEBUG
+		MB_EXCEPTION(DEBUGCODE);
+	#endif
 }
 
 ID3D11Device* MafiaBar::Engine::Graphics::Graphics::Graphics::GetDevice() const 

@@ -27,6 +27,8 @@ namespace MafiaBar
 				void CreateSpriteBatch();
 				//Creating DirectX::CommonStates class
 				void CreateCommonStates();
+				//Creating a new RenderTarget, Be aware of that It doesn't bind it to the pipeline.
+				void CreateRenderTarget();
 			public:
 				//Get D3D11 Device Object
 				ID3D11Device* GetDevice() const;

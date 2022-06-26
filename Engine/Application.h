@@ -1,6 +1,9 @@
 #pragma once
 #include "Engine.h"
 
+//Using MafiaBar::Utilities::CenterWindow
+#include "Utilities.h"
+
 //Customising the Window with DWM API (Windows Only)
 #ifdef _WIN32
 #include <dwmapi.h>
@@ -32,7 +35,7 @@ namespace MafiaBar
 			constexpr bool GetFullScreen() const;
 			constexpr bool GetFocus() const;
 		public:
-			static enum ApplicationErrorCodes
+			static enum MB_SYS_CODES
 			{
 				SUCCEEDED = 0,
 				TRYING_TO_RUN_MULTIPLE_INSTANCES_OF_APPLICATION = 6456
