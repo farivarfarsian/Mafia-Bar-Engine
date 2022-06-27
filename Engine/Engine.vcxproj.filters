@@ -82,6 +82,9 @@
     <Filter Include="Imgui Files">
       <UniqueIdentifier>{f0220ca5-92b0-4bc7-b096-4b05b1bec9fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{87abdafe-55fa-4597-a6a2-da80153de61e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger.h">
@@ -199,6 +202,9 @@
     <ClInclude Include="Imgui\imgui.h">
       <Filter>Imgui Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Keyboard.cpp">
@@ -288,6 +294,9 @@
     </ClCompile>
     <ClCompile Include="Imgui\imgui_draw.cpp">
       <Filter>Imgui Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

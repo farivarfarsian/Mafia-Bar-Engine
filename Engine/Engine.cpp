@@ -25,6 +25,8 @@ constexpr MafiaBar::Engine::Graphics::Graphics& MafiaBar::Engine::Engine::GetGra
 
 constexpr MafiaBar::Engine::Scene& MafiaBar::Engine::Engine::GetScene() { return Scene; }
 
+constexpr MafiaBar::Engine::UI& MafiaBar::Engine::Engine::GetUI() { return UI; }
+
 constexpr MafiaBar::Engine::Exception& MafiaBar::Engine::Engine::GetException() { return Exception; }
 
 int __stdcall DllMain(HMODULE hinstDLL, DWORD fdwReason, LPVOID lpReserved)

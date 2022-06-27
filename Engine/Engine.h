@@ -29,6 +29,8 @@
 
 #include "Scene.h"
 
+#include "UI.h"
+
 /// <summary>Mafia Bar Engine Utilities aren't meant to be apart of Engine.h.
 /// <para>But if you want to include them into your Engine.h define ENGINE_UTILS definition before including Engine.h in your program.</para>
 /// </summary>
@@ -67,11 +69,13 @@ namespace MafiaBar
 			constexpr MafiaBar::Engine::Exception& GetException();
 			constexpr MafiaBar::Engine::Graphics::Graphics& GetGraphics();
 			constexpr MafiaBar::Engine::Scene& GetScene();
+			constexpr MafiaBar::Engine::UI& GetUI();
 		private:
 			MafiaBar::Keyboard Keyboard;
 			MafiaBar::Mouse Mouse;
 			MafiaBar::Engine::Logger Log;
 			MafiaBar::Engine::Exception Exception;
+			MafiaBar::Engine::UI UI;
 			MafiaBar::Engine::Graphics::Graphics Graphics;
 			MafiaBar::Engine::Scene Scene;
 		};

@@ -17,8 +17,6 @@ void App::Setup()
 
 void App::Frame()
 {
-	MafiaBar::Engine::Engine::Get().GetScene().Clear(DirectX::Colors::Black, 1.0f, 0);
-
 	const float delta_time = Time.Mark();
 	for (int i = 0; i < boxes.GetSize(); i++)
 	{
@@ -27,5 +25,12 @@ void App::Frame()
 		boxes[i]->Draw(MafiaBar::Engine::Engine::Get().GetGraphics());
 	}
 
-	MafiaBar::Engine::Engine::Get().GetScene().Render();
+	{
+		ImGui::Begin("Test Window");
+		ImGui::SetWindowPos(ImVec2(0.0f, 0.0f));
+		ImGui::SetWindowSize(ImVec2(500.0f, 500.0f));
+		ImGui::Button("HelloWorld");
+		ImGui::Text("Frame (%.1f FPS)", ImGui::GetIO().Framerate);
+		ImGui::End();
+	}
 }

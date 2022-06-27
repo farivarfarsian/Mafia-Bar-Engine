@@ -63,20 +63,23 @@ void MafiaBar::Engine::Application::Initialize(const char* Title, const char* Cl
 	//Note: Be aware of that If you want to check that If the Dark mode is enabled you should do it like this: !LightModeEnabled .
 	unsigned long DarkModeEnabledSize = sizeof(LightModeEnabled);
 	LSTATUS Status = RegGetValueA(HKEY_CURRENT_USER, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "AppsUseLightTheme", RRF_RT_DWORD, NULL, &LightModeEnabled, &DarkModeEnabledSize);
-	#if IS_DEBUG
-		MB_EXCEPTION(Status);
-	#endif
+#if IS_DEBUG
+	MB_EXCEPTION(Status);
+#endif
 
 	//Enabling Immersive Dark Mode for Mafia Bar Engine,
 	//Note: Does work for both Windows 10 and 11 but for using this feature and being able to compile the code, you have to use the Windows 11 SDK(10.0.22000.0v)
 	int isDarkModeEnabled{ !LightModeEnabled };
 	HRESULT DEBUGCODE = DwmSetWindowAttribute(ApplicationHandle, DWMWA_USE_IMMERSIVE_DARK_MODE, &isDarkModeEnabled, sizeof(isDarkModeEnabled));
-	#if IS_DEBUG
-		MB_EXCEPTION(DEBUGCODE);
-	#endif
+#if IS_DEBUG
+	MB_EXCEPTION(DEBUGCODE);
+#endif
 
 	//Creating Graphics And Scene
 	MafiaBar::Engine::Engine::Get().CreateGraphicsAndScene(ApplicationHandle, Fullscreen, true);
+	
+	//Initializing the UI
+	Engine::Get().GetUI().Initialize(ApplicationHandle, Engine::Get().GetGraphics().GetDevice(), Engine::Get().GetGraphics().GetContext(), LightModeEnabled);
 
 	//Creating the Win32 Console
 	AllocConsole(); FILE* fp;
@@ -171,8 +174,15 @@ LRESULT __stdcall MafiaBar::Engine::Application::WindowProcedureThunk(HWND hWnd,
 	return pWnd->WindowProcedure(hWnd, msg, wParam, lParam);
 }
 
+//Getting the ImGui WndProc Handler from Imgui.cpp
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 LRESULT MafiaBar::Engine::Application::WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	//Calling the ImGUI WndProc Handler.
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+		return true;
+
 	switch (msg)
 	{
 	/*------------------------------ Keyboard Events ------------------------------*/
@@ -304,7 +314,20 @@ int MafiaBar::Engine::Application::Present()
 	{
 		if (const auto ecode = ProcessMessages()) { return *ecode; }
 
-		std::future<void> Frame = std::async(std::launch::async, &Application::Frame, this);
+		///Rendering on a new thread is impossible from now on because UI and the things that we want to render has to be on same thread to integrate with each other.
+		//std::future<void> Frame = std::async(std::launch::async, &Application::Frame, this);
+
+		//Clearing the Scene for UI and Entities to Render.
+		MafiaBar::Engine::Engine::Get().GetScene().Clear(DirectX::Colors::Black, 1.0f, 0);
+
+		Engine::Get().GetUI().NewFrame();
+
+		Frame();
+
+		Engine::Get().GetUI().Render();
+
+		//Render Function from App::Frame() method moved to Application::Present, User don't have to be worry about calling the Render function anymore in App::Frame. user now can only focus on Entities and Custom UI that wants to render.
+		MafiaBar::Engine::Engine::Get().GetScene().Render();
 	}
 }
 
