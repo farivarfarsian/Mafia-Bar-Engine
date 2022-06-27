@@ -16,8 +16,8 @@ MafiaBar::Engine::UI::~UI()
 void MafiaBar::Engine::UI::Initialize(HWND Handle, ID3D11Device* Device, ID3D11DeviceContext* Context, bool LightMode)
 {
 #if IS_DEBUG
-	assert(Device == nullptr);
-	assert(Context == nullptr);
+	assert(Device != nullptr);
+	assert(Context != nullptr);
 #endif
 
 	if (LightMode == true)

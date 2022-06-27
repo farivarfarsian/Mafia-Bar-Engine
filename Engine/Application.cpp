@@ -191,7 +191,7 @@ LRESULT MafiaBar::Engine::Application::WindowProcedure(HWND hWnd, UINT msg, WPAR
 		MafiaBar::Engine::Engine::Get().GetKeyboard().OnKeyPressed(static_cast<unsigned char>(wParam));	
 		if (MafiaBar::Engine::Engine::Get().GetKeyboard().IsKeyPressed((unsigned char)VK_CONTROL) && MafiaBar::Engine::Engine::Get().GetKeyboard().IsKeyPressed((unsigned char)MafiaBar::Keyboard::Q))
 		{
-			Exit(MB_SYS_CODES::SUCCEEDED);
+			PostMessageA(hWnd, WM_CLOSE, wParam, lParam);
 		}
 		break;
 	}
