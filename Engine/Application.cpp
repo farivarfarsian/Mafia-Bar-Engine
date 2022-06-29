@@ -189,11 +189,6 @@ LRESULT MafiaBar::Engine::Application::WindowProcedure(HWND hWnd, UINT msg, WPAR
 	case WM_KEYDOWN:
 	{
 		MafiaBar::Engine::Engine::Get().GetKeyboard().OnKeyPressed(static_cast<unsigned char>(wParam));	
-		if (MafiaBar::Engine::Engine::Get().GetKeyboard().IsKeyPressed((unsigned char)VK_CONTROL) && MafiaBar::Engine::Engine::Get().GetKeyboard().IsKeyPressed((unsigned char)MafiaBar::Keyboard::Q))
-		{
-			//PostMessageA(hWnd, WM_CLOSE, wParam, lParam);
-			//It breaks the Keyboard Events and perhaps all of the Win32 Events. Needs to be fixed.
-		}
 		break;
 	}
 	case WM_KEYUP:
