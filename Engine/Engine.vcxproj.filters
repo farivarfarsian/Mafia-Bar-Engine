@@ -85,6 +85,9 @@
     <Filter Include="UI">
       <UniqueIdentifier>{87abdafe-55fa-4597-a6a2-da80153de61e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Transform">
+      <UniqueIdentifier>{77ce420e-6261-42ff-9ee3-a2f0b0d1fdfd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger.h">
@@ -175,9 +178,6 @@
     <ClInclude Include="Scene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Imgui\imgui_impl_dx11.h">
       <Filter>Imgui Files</Filter>
     </ClInclude>
@@ -204,6 +204,12 @@
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Components\Transform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -297,6 +303,12 @@
     </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Components\Transform</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

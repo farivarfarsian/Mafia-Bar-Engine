@@ -5,10 +5,6 @@
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Farivar|x64">
-      <Configuration>Farivar</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
@@ -35,9 +31,6 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Farivar|x64'">
-    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -112,6 +105,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Bindable.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="CPUPerformance.h" />
@@ -153,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="CPUPerformance.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -175,6 +170,7 @@
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="pch.cpp">

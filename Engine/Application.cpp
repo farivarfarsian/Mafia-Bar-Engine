@@ -252,7 +252,7 @@ LRESULT MafiaBar::Engine::Application::WindowProcedure(HWND hWnd, UINT msg, WPAR
 			PostQuitMessage(0);
 			return 0;
 		}
-		break;
+		return 0;
 	}
 	case WM_DESTROY:
 	{

@@ -114,6 +114,45 @@ namespace MafiaBar
 				return Buffer.c_str();
 			}
 		}
+
+		/// <summary>
+		/// It's like the Utilities::GetTypeName(), but It's been changed a bit for the Components structures.
+		/// <para>Note: The Function is "inline" because altough we are getting a ref to the Component object, we don't want stack copying from the compiler when you call the Function.</para>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="Component: ">The Component Variable that you want to get its Name.</param>
+		/// <returns>The Component Name.</returns>
+		template<typename T>
+		inline const char* GetComponentName(const T& Component = T())
+		{
+			std::string Name = typeid(Component).name();
+			std::string Buffer;
+
+			int Index = Name.find("struct ");
+			if (Index != std::string::npos)
+			{
+				for (int i = 7; i < Name.length(); i++)
+				{
+					Buffer += Name[i];
+				}
+			}
+			Index = Buffer.find("Component");
+			if (Index != std::string::npos)
+			{
+				static std::string BufferWithNoClassOrComponent;
+				for (int i = 0; i < Index; i++)
+				{
+					BufferWithNoClassOrComponent += Buffer[i];
+				}
+				return BufferWithNoClassOrComponent.c_str();
+			}
+			else
+			{
+				return nullptr;
+			}
+
+			//TODO: Could Delete the Namespace MafiaBar::Engine from it too.
+		}
 	}
 }
 
