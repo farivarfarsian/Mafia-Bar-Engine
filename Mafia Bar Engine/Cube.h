@@ -53,7 +53,7 @@ public:
 		pipline.AddBindable(std::move(vertexshader));
 
 
-		const MafiaBar::Graphics::ConstantBuffer2 constantbuffer2 =
+		MafiaBar::Graphics::PixelConstantBufferFaceColors Face_Colors =
 		{
 			{
 				{1.0f,0.0f,1.0f},
@@ -65,7 +65,7 @@ public:
 			}
 		};
 
-		pipline.AddBindable(new MafiaBar::Engine::Graphics::PixelConstantBuffer<MafiaBar::Graphics::ConstantBuffer2>(graphics, constantbuffer2));
+		pipline.AddBindable(new MafiaBar::Engine::Graphics::PixelConstantBuffer<MafiaBar::Graphics::PixelConstantBufferFaceColors>(graphics, Face_Colors));
 
 		pipline.AddBindable(new MafiaBar::Engine::Graphics::PixelShader(graphics, L"Shaders/PixelShader.cso"));
 

@@ -123,6 +123,9 @@
     <ClInclude Include="Imgui\imstb_rectpack.h" />
     <ClInclude Include="Imgui\imstb_textedit.h" />
     <ClInclude Include="Imgui\imstb_truetype.h" />
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="Performance.h" />
     <ClInclude Include="IndexBuffer.h" />
@@ -141,6 +144,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Topology.h" />
     <ClInclude Include="TransformCbuf.h" />
+    <ClInclude Include="UUID.h" />
     <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="Viewport.h" />
     <ClInclude Include="WinRegistery.h" />
@@ -161,6 +165,9 @@
     <ClCompile Include="Imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="Imgui\imgui_tables.cpp" />
     <ClCompile Include="Imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="Pipeline.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="Information.cpp" />
@@ -179,6 +186,7 @@
     </ClCompile>
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Topology.cpp" />
+    <ClCompile Include="UUID.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
     <ClCompile Include="Viewport.cpp" />
     <ClCompile Include="WinRegistery.cpp" />

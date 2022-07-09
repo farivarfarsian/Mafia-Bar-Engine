@@ -46,32 +46,31 @@ void MafiaBar::Engine::Graphics::Graphics::Initialize(HWND hwnd, bool Fullscreen
 
 	// Using this Buffer for the Render Target (one Back Buffer, one Front Buffer)
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-	sd.BufferCount = 1;
+	sd.BufferCount = 2;
 
 	//Window Stuff (Handle, Windowed)
 	sd.OutputWindow = hwnd;
 	if (Fullscreen == true) { sd.Windowed = false; }
 	else if (Fullscreen == false) { sd.Windowed = true; }
 
-	sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+	sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
 
 	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH | DXGI_SWAP_CHAIN_FLAG_GDI_COMPATIBLE;
 
-	unsigned int SwapDeviceCreationFlags = 0u;
+	unsigned int SwapDeviceCreationFlags = D3D11_CREATE_DEVICE_SINGLETHREADED | DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING; //For Now that Mafia Bar Engine only relies on One-Thread, We use D3D11_CREATE_DEVICE_SINGLETHREADED Flag, perhaps This Flag would change in the future.
 
-#if	_CONTAINER_DEBUG_LEVEL > 0
+#if IS_DEBUG
 	SwapDeviceCreationFlags |= D3D11_CREATE_DEVICE_DEBUG;
 #else
-	SwapDeviceCreationFlags = 0u;
-#endif //_CONTAINER_DEBUG_LEVEL > 0
-
+	SwapDeviceCreationFlags |= 0u;
+#endif
 
 	MB_EXCEPTION(D3D11CreateDeviceAndSwapChain(
-		nullptr,
+		NULL,
 		D3D_DRIVER_TYPE_HARDWARE,
-		nullptr,
+		NULL,
 		SwapDeviceCreationFlags,
-		nullptr,
+		NULL,
 		0,
 		D3D11_SDK_VERSION,
 		&sd,
@@ -172,12 +171,18 @@ void MafiaBar::Engine::Graphics::Graphics::Graphics::ReceiveHardwareInformation(
 
 void MafiaBar::Engine::Graphics::Graphics::CreateSpriteBatch()
 {
-	m_SpriteBatch = std::make_unique<DirectX::SpriteBatch>(m_Context.Get());
+	if (m_SpriteBatch == nullptr)
+	{
+		m_SpriteBatch = std::make_unique<DirectX::SpriteBatch>(m_Context.Get());
+	}
 }
 
 void MafiaBar::Engine::Graphics::Graphics::CreateCommonStates()
 {
-	m_CommonStates = std::make_unique<DirectX::CommonStates>(m_Device.Get());
+	if (m_CommonStates == nullptr)
+	{
+		m_CommonStates = std::make_unique<DirectX::CommonStates>(m_Device.Get());
+	}
 }
 
 void MafiaBar::Engine::Graphics::Graphics::CreateRenderTarget()
@@ -207,7 +212,12 @@ ID3D11DeviceContext* MafiaBar::Engine::Graphics::Graphics::Graphics::GetContext(
 
 ID3D11RenderTargetView* MafiaBar::Engine::Graphics::Graphics::Graphics::GetRenderTarget() const 
 { 
-	return m_RenderTarget.Get(); 
+	return m_RenderTarget.Get();
+}
+
+ID3D11RenderTargetView* const* MafiaBar::Engine::Graphics::Graphics::GetRenderTargetPP() const
+{
+	return m_RenderTarget.GetAddressOf();
 }
 
 ID3D11DepthStencilState* MafiaBar::Engine::Graphics::Graphics::Graphics::GetDepthStencilState() const 

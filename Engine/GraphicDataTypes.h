@@ -14,11 +14,7 @@ namespace MafiaBar
 				float z;
 			} position;
 		};
-		struct ConstantBuffer
-		{
-			DirectX::XMMATRIX transform;
-		};
-		struct ConstantBuffer2
+		struct PixelConstantBufferFaceColors
 		{
 			struct
 			{

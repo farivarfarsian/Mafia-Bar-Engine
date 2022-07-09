@@ -1,6 +1,6 @@
 #include "UI.h"
 
-MafiaBar::Engine::UI::UI()
+MafiaBar::Engine::UI::UI() 
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -20,6 +20,12 @@ void MafiaBar::Engine::UI::Initialize(HWND Handle, ID3D11Device* Device, ID3D11D
 	assert(Context != nullptr);
 #endif
 
+	//Enabling Docking And Keyboard and Gamepad Controls
+	ImGuiIO& IO = ImGui::GetIO();
+	IO.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	IO.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+	IO.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
 	if (LightMode == true)
 	{
 		ImGui::StyleColorsLight();
@@ -29,9 +35,6 @@ void MafiaBar::Engine::UI::Initialize(HWND Handle, ID3D11Device* Device, ID3D11D
 		ImGui::StyleColorsDark();
 	}
 
-	ImGui_ImplWin32_Init(Handle);
-	ImGui_ImplDX11_Init(Device, Context);
-
 	//Setting the Custom Style for UI
 	ImGuiStyle& Style = ImGui::GetStyle();
 	Style.WindowRounding = 10.0f;
@@ -39,6 +42,9 @@ void MafiaBar::Engine::UI::Initialize(HWND Handle, ID3D11Device* Device, ID3D11D
 	Style.Colors[ImGuiCol_TitleBg] = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
 	Style.Colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
 	Style.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+	ImGui_ImplWin32_Init(Handle);
+	ImGui_ImplDX11_Init(Device, Context);
 
 	//Setting the default Font
 	//ImGui::GetIO().Fonts->AddFontFromFileTTF("Engine Content/Fonts/Roboto-Regular.ttf", 14.0f);

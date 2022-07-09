@@ -88,6 +88,15 @@
     <Filter Include="Components\Transform">
       <UniqueIdentifier>{77ce420e-6261-42ff-9ee3-a2f0b0d1fdfd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Material">
+      <UniqueIdentifier>{101db449-94d5-4abf-b1a7-13643e460aaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Mesh">
+      <UniqueIdentifier>{19dea7de-b72c-4104-9bfe-962f40f26e0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{d5bf489e-9f6b-4ecd-b0b3-f69493e9b77b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger.h">
@@ -211,6 +220,18 @@
     <ClInclude Include="Transform.h">
       <Filter>Components\Transform</Filter>
     </ClInclude>
+    <ClInclude Include="MeshComponent.h">
+      <Filter>Components\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Components\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Components\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="UUID.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Keyboard.cpp">
@@ -309,6 +330,18 @@
     </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>Components\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshComponent.cpp">
+      <Filter>Components\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Components\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Components\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="UUID.cpp">
+      <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

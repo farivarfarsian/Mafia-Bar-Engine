@@ -38,6 +38,8 @@ namespace MafiaBar
 				ID3D11DeviceContext* GetContext() const;
 				//Get D3D11 RenderTarget Object
 				ID3D11RenderTargetView* GetRenderTarget() const;
+				//Get D3D11 Pointer-To-Pointer RenderTarget Object
+				ID3D11RenderTargetView* const * GetRenderTargetPP() const;
 				//Get D3D11 DepthStencilState Object
 				ID3D11DepthStencilState* GetDepthStencilState() const;
 				//Get D3D11 DepthStencilView Object

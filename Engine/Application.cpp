@@ -313,8 +313,10 @@ int MafiaBar::Engine::Application::Present()
 		///Rendering on a new thread is impossible from now on because UI and the things that we want to render has to be on same thread to integrate with each other.
 		//std::future<void> Frame = std::async(std::launch::async, &Application::Frame, this);
 
+		Engine::Get().GetGraphics().GetContext()->OMSetRenderTargets(1u, Engine::Get().GetGraphics().GetRenderTargetPP(), Engine::Get().GetGraphics().GetDepthStencilView());
+
 		//Clearing the Scene for UI and Entities to Render.
-		MafiaBar::Engine::Engine::Get().GetScene().Clear(DirectX::Colors::Black, 1.0f, 0);
+		MafiaBar::Engine::Engine::Get().GetScene().Clear(1.0f, 0);
 
 		Engine::Get().GetUI().NewFrame();
 
