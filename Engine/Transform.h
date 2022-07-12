@@ -24,11 +24,12 @@ namespace MafiaBar
 			DirectX::XMFLOAT3 GetPosition() const;
 			DirectX::XMFLOAT3 GetScale() const;
 			DirectX::XMFLOAT3 GetRotation() const;
+			DirectX::XMMATRIX GetTransform() const;
 			const char* GetName() const override;
 		private:
-			DirectX::XMFLOAT3 Position{};
+			DirectX::XMFLOAT3 Position{ 0.0f, 0.0f, 0.0f };
 			DirectX::XMFLOAT3 Scale{ 1.0f, 1.0f, 1.0f };
-			DirectX::XMFLOAT3 Rotation{};
+			DirectX::XMFLOAT3 Rotation{ 0.0f, 0.0f, 0.0f };
 		};
 	}
 }

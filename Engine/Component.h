@@ -16,5 +16,23 @@ namespace MafiaBar
 			virtual const char* GetName() const;
 			virtual ~Component();
 		};
+
+		/// <summary>
+		/// Generating Component IDs for Using in ECS.
+		/// </summary>
+		class ComponentID
+		{
+		public:
+			template <typename T>
+			static int GetComponentID()
+			{
+				static int ComponentID = m_ComponentCounter++;
+				return ComponentID;
+			}
+		private:
+			static int m_ComponentCounter;
+		};
+
+		__declspec(selectany) int ComponentID::m_ComponentCounter;
 	}
 }

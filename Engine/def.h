@@ -38,3 +38,4 @@
 #define MB_NAMESPACE_END }
 
 typedef size_t Hash;
+typedef unsigned long long EntityID;

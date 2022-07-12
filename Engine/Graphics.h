@@ -20,7 +20,7 @@ namespace MafiaBar
 				~Graphics() = default;
 			public:
 				//Initializes DirectX 11
-				void Initialize(HWND hwnd, bool Fullscreen = false, bool Vsync = false, int O_Width = 0, int O_Height = 0);
+				void Initialize(HWND hwnd, bool Fullscreen = false, bool Vsync = false, float O_Width = 0.0f, float O_Height = 0.0f);
 				//Receives GraphicCardDescription, GraphicCardMemorySize, Numerator and Denominator and their value is available to use after this function
 				void ReceiveHardwareInformation();
 				//Creating DirectX::SpriteBatch class
@@ -45,9 +45,9 @@ namespace MafiaBar
 				//Get D3D11 DepthStencilView Object
 				ID3D11DepthStencilView* GetDepthStencilView() const;
 				//Get Width of the Window
-				int GetWidth() const;
+				float GetWidth() const;
 				//Get Height of the Window
-				int GetHeight() const;
+				float GetHeight() const;
 				//Get Sprite Batch
 				DirectX::SpriteBatch* GetSpriteBatch() const;
 				//Get Common States
@@ -71,7 +71,7 @@ namespace MafiaBar
 				Microsoft::WRL::ComPtr<ID3D11BlendState> m_BlendState = nullptr;
 				std::unique_ptr<DirectX::SpriteBatch> m_SpriteBatch = nullptr;
 				std::unique_ptr<DirectX::CommonStates> m_CommonStates = nullptr;
-				int Width, Height;
+				float Width, Height;
 				bool m_Vsync = false;
 				char m_GraphicCardDescription[MAX_PATH];
 				unsigned long m_GraphicCardMemorySize = 0;

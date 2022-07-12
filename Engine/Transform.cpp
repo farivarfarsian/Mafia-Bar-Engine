@@ -135,6 +135,14 @@ DirectX::XMFLOAT3 MafiaBar::Engine::TransformComponent::GetRotation() const
 	return Rotation;
 }
 
+DirectX::XMMATRIX MafiaBar::Engine::TransformComponent::GetTransform() const
+{
+	return
+		DirectX::XMMatrixRotationRollPitchYaw(Rotation.x, Rotation.y, Rotation.z) * //Rotation
+		DirectX::XMMatrixTranslation(Position.x, Position.y, Position.z) * //Posiion
+		DirectX::XMMatrixScaling(Scale.x, Scale.y, Scale.z); //Scale
+}
+
 const char* MafiaBar::Engine::TransformComponent::GetName() const
 {
 	return "Transform";

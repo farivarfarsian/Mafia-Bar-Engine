@@ -1,6 +1,6 @@
 #include "Graphics.h"
 
-void MafiaBar::Engine::Graphics::Graphics::Initialize(HWND hwnd, bool Fullscreen, bool Vsync, int O_Width, int O_Height)
+void MafiaBar::Engine::Graphics::Graphics::Initialize(HWND hwnd, bool Fullscreen, bool Vsync, float O_Width, float O_Height)
 {
 	m_Vsync = Vsync;
 
@@ -230,12 +230,12 @@ ID3D11DepthStencilView* MafiaBar::Engine::Graphics::Graphics::Graphics::GetDepth
 	return m_DepthStencilView.Get(); 
 }
 
-int MafiaBar::Engine::Graphics::Graphics::Graphics::GetWidth() const 
+float MafiaBar::Engine::Graphics::Graphics::Graphics::GetWidth() const 
 {
 	return Width; 
 }
 
-int MafiaBar::Engine::Graphics::Graphics::Graphics::GetHeight() const 
+float MafiaBar::Engine::Graphics::Graphics::Graphics::GetHeight() const 
 { 
 	return Height; 
 }
