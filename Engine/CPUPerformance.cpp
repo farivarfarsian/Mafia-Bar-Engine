@@ -2,31 +2,40 @@
 
 MafiaBar::Engine::Performance::CPUPerformance::CPUPerformance()
 {
-	PDH_STATUS pStatus = PdhOpenQuery(nullptr, 0, &m_QueryHandle);
-	if (pStatus != ERROR_SUCCESS) { Engine::Get().GetException().Check(__FILE__, __FUNCSIG__, __LINE__, pStatus); }
-	//set query object to poll all cpus in the system
-	pStatus = PdhAddCounter(m_QueryHandle, TEXT("\\Processor(_Total)\\% processor time"), 0, &m_CounterHandle);
-	if (pStatus != ERROR_SUCCESS) { Engine::Get().GetException().Check(__FILE__, __FUNCSIG__, __LINE__, pStatus); }
+    SYSTEM_INFO sysInfo;
+    FILETIME ftime, fsys, fuser;
 
-	m_LastSampleTime = GetTickCount();
-	m_CPUUsage = 0u;
+    GetSystemInfo(&sysInfo);
+    NumberOfProcessors = sysInfo.dwNumberOfProcessors;
+
+    GetSystemTimeAsFileTime(&ftime);
+    memcpy(&LastCPU, &ftime, sizeof(FILETIME));
+
+    Process = GetCurrentProcess();
+    GetProcessTimes(Process, &ftime, &ftime, &fsys, &fuser);
+    memcpy(&LastSysCPU, &fsys, sizeof(FILETIME));
+    memcpy(&LastUserCPU, &fuser, sizeof(FILETIME));
 }
 
-MafiaBar::Engine::Performance::CPUPerformance::~CPUPerformance() { PdhCloseQuery(m_QueryHandle); }
-
-void MafiaBar::Engine::Performance::CPUPerformance::Calculate()
+double MafiaBar::Engine::Performance::CPUPerformance::GetCPUPercentage()
 {
-	PDH_FMT_COUNTERVALUE value;
-	if ((m_LastSampleTime + 1000) < GetTickCount())
-	{
-		m_LastSampleTime = GetTickCount();
+    FILETIME ftime, fsys, fuser;
+    ULARGE_INTEGER now, sys, user;
+    double percent;
 
-		PdhCollectQueryData(m_QueryHandle);
+    GetSystemTimeAsFileTime(&ftime);
+    memcpy(&now, &ftime, sizeof(FILETIME));
 
-		PdhGetFormattedCounterValue(m_CounterHandle, PDH_FMT_LONG, nullptr, &value);
+    GetProcessTimes(Process, &ftime, &ftime, &fsys, &fuser);
+    memcpy(&sys, &fsys, sizeof(FILETIME));
+    memcpy(&user, &fuser, sizeof(FILETIME));
+    percent = (sys.QuadPart - LastSysCPU.QuadPart) +
+        (user.QuadPart - LastUserCPU.QuadPart);
+    percent /= (now.QuadPart - LastCPU.QuadPart);
+    percent /= NumberOfProcessors;
+    LastCPU = now;
+    LastUserCPU = user;
+    LastSysCPU = sys;
 
-		m_CPUUsage = value.longValue;
-	}
+    return percent * 100;
 }
-
-constexpr int MafiaBar::Engine::Performance::CPUPerformance::GetCPUPercentage() const { return static_cast<int>(m_CPUUsage); }

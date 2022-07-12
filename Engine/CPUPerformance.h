@@ -1,9 +1,6 @@
 #pragma once
 #include "def.h"
-#include "Engine.h"
-
-#include <Pdh.h>
-LINK_LIBRARY("pdh.lib");
+#include "pch.h"
 
 namespace MafiaBar
 {
@@ -17,15 +14,13 @@ namespace MafiaBar
 				CPUPerformance();
 				CPUPerformance(const CPUPerformance&) = delete;
 				CPUPerformance& operator=(const CPUPerformance&) = delete;
-				~CPUPerformance();
-				void Calculate();
-				constexpr int GetCPUPercentage() const;
+				~CPUPerformance() = default;
+				double GetCPUPercentage();
 			private:
-				HQUERY m_QueryHandle;
-				HCOUNTER m_CounterHandle;
-				unsigned long m_LastSampleTime;
-				unsigned long m_CPUUsage;
-			};
+				ULARGE_INTEGER LastCPU, LastSysCPU, LastUserCPU;
+				int NumberOfProcessors;
+				HANDLE Process;	
+			}; //The Old Version had some bugs, New Version has been scrapped from: https://stackoverflow.com/questions/63166/how-to-determine-cpu-and-memory-consumption-from-inside-a-process here. This New Version still has some bugs because in low cpu percentages it seems that the value is zero but it's not.
 		}
 	}
 }
