@@ -3,7 +3,8 @@
 #include "ConstantBuffer.h"
 #include "Entity.h"
 
-#include "Engine.h"
+#include "Engine.h" //Using the Scene instance.
+#include "Transform.h" //Getting the TransformComponent of each entity.
 
 namespace MafiaBar
 {
@@ -19,7 +20,7 @@ namespace MafiaBar
 				{
 					vertexconstantbuffer.Update(graphics,
 						DirectX::XMMatrixTranspose(
-							object.GetTransformation() * MafiaBar::Engine::Engine::Get().GetScene().GetSceneProjection()
+							object.GetComponent<TransformComponent>()->GetTransform() * MafiaBar::Engine::Engine::Get().GetScene().GetSceneProjection()
 						)
 					);
 					vertexconstantbuffer.Bind(graphics);			

@@ -15,11 +15,6 @@ void MafiaBar::Engine::Entity::Draw(MafiaBar::Engine::Graphics::Graphics& Graphi
 
 }
 
-DirectX::XMMATRIX MafiaBar::Engine::Entity::GetTransformation() const
-{
-	return DirectX::XMMATRIX();
-}
-
 MafiaBar::SDK::Vector<void*> MafiaBar::Engine::Entity::GetComponents() const
 {
 	return Components;

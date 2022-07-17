@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine.h"
 #include "Pipeline.h"
+#include "Transform.h"
 
 class Cube : public MafiaBar::Engine::Entity
 {
@@ -22,6 +23,8 @@ public:
 		theta(adist(rng)),
 		phi(adist(rng))
 	{
+
+		Assign<MafiaBar::Engine::TransformComponent>(*new MafiaBar::Engine::TransformComponent({ 0.0f, 0.0f, 5.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f }));
 
 		MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex> vertices;
 		vertices.PushBack({ -1.0f, -1.0f, -1.0f });
@@ -90,19 +93,14 @@ public:
 	}
 	void Update(float delta_time) noexcept override
 	{
+		/*
 		roll += droll * delta_time;
 		pitch += dpitch * delta_time;
 		yaw += dyaw * delta_time;
 		theta += dtheta * delta_time;
 		phi += dphi * delta_time;
 		chi += dchi * delta_time;
-	}
-	DirectX::XMMATRIX GetTransformation() const noexcept override
-	{
-		return DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
-			DirectX::XMMatrixTranslation(r, 0.0f, 0.0f) *
-			DirectX::XMMatrixRotationRollPitchYaw(theta, phi, chi) *
-			DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f);
+		*/
 	}
 	void Draw(MafiaBar::Engine::Graphics::Graphics& graphics) override
 	{
