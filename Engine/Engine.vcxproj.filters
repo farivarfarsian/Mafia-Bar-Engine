@@ -343,5 +343,8 @@
     <ClCompile Include="UUID.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="Bindable.cpp">
+      <Filter>Graphics\Bindable</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

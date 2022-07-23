@@ -8,6 +8,10 @@
 
 #include "FileSystem.h"
 
+
+#include "IndexBuffer.h"
+#include "VertexBuffer.h"
+
 namespace MafiaBar
 {
 	namespace Engine
@@ -17,15 +21,16 @@ namespace MafiaBar
 		public:
 			Mesh() = default;
 			~Mesh() = default;
-			void Initialize(const MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>& Vertices, const MafiaBar::SDK::Vector<unsigned short>& Indices);
-			void Initialize(const MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>& Vertices, const MafiaBar::SDK::Vector<unsigned short>& Indices, Material* Material);
-			void Initialize(MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>&& Vertices, MafiaBar::SDK::Vector<unsigned short>&& Indices);
-			void InitializeFromFile(const char* MeshPath);
+			Mesh(const MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>& Vertices, const MafiaBar::SDK::Vector<unsigned short>& Indices);
+			Mesh(MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>&& Vertices, MafiaBar::SDK::Vector<unsigned short>&& Indices);
+			Mesh(const MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>& Vertices, const MafiaBar::SDK::Vector<unsigned short>& Indices, Material* Material);
+			Mesh(const char* MeshPath);
 		public:
 			Material* GetMeshMaterial() const;
 			const char* GetMeshPath() const;
-			const MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex> GetVertices() const;
-			const MafiaBar::SDK::Vector<unsigned short> GetIndices() const;
+			MafiaBar::Engine::Graphics::IndexBuffer* GetIndexBuffer() const;
+			MafiaBar::Engine::Graphics::VertexBuffer* GetVertexBuffer() const;
+			inline const unsigned int GetIndicesCount() const;
 		public:
 			static Mesh* ReadObj(const char* MeshPath) //Needs Implementation.
 			{
@@ -38,8 +43,8 @@ namespace MafiaBar
 		private:
 			Material* mMaterial = nullptr;
 			const char* mMeshPath = nullptr;
-			MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex> mVertices;
-			MafiaBar::SDK::Vector<unsigned short> mIndices;
+			std::unique_ptr<MafiaBar::Engine::Graphics::VertexBuffer> mVertexBuffer;
+			std::unique_ptr<MafiaBar::Engine::Graphics::IndexBuffer> mIndexBuffer;
 		};  //The structure is absolutely incomplete, Needs a lot more implementations and improvements will get to them when implementing the Assimp library.
 	}
 }

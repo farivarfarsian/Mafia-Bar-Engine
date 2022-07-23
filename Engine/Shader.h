@@ -20,7 +20,7 @@ namespace MafiaBar
 			{
 			public:
 				Shader() = default; //Used in Inheritances of Shader Class 
-				Shader(MafiaBar::Engine::Graphics::Graphics& graphics, const std::wstring& ShaderPathName, ShaderType shadertype);
+				Shader(const std::wstring& ShaderPathName, ShaderType shadertype);
 			public:
 				const wchar_t* GetShaderPath() const;
 				ID3DBlob* GetShaderBlob() const;
@@ -37,12 +37,12 @@ namespace MafiaBar
 			class MB_ENGINE_API VertexShader : public Shader
 			{
 			public:
-				VertexShader(MafiaBar::Engine::Graphics::Graphics& graphics, const std::wstring& VertexShaderPathName);
-				void Bind(MafiaBar::Engine::Graphics::Graphics& graphics) override;
+				VertexShader( const std::wstring& VertexShaderPathName);
+				void Bind() override;
 				/// <summary>
 				///  Replaces the old VertexShader with the new one.
 				/// </summary>
-				void Replace(Graphics& Graphics, const std::wstring& VertexShaderPathName);
+				void Replace(const std::wstring& VertexShaderPathName);
 			public:
 				ID3D11VertexShader* GetVertexShader() const;
 			};
@@ -50,12 +50,12 @@ namespace MafiaBar
 			class MB_ENGINE_API PixelShader : public Shader
 			{
 			public:
-				PixelShader(MafiaBar::Engine::Graphics::Graphics& graphics, const std::wstring& PixelShaderPathName);
-				void Bind(MafiaBar::Engine::Graphics::Graphics& graphics) override;
+				PixelShader(const std::wstring& PixelShaderPathName);
+				void Bind() override;
 				/// <summary>
 				///  Replaces the old PixelShader with the new one.
 				/// </summary>
-				void Replace(Graphics& Graphics, const std::wstring& PixelShaderPathName);
+				void Replace(const std::wstring& PixelShaderPathName);
 			public:
 				ID3D11PixelShader* GetPixelShader() const;
 			};

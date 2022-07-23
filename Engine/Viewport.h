@@ -10,13 +10,13 @@ namespace MafiaBar
 			class MB_ENGINE_API Viewport : public Bindable
 			{
 			public:
-				Viewport(MafiaBar::Engine::Graphics::Graphics& graphics);
-				Viewport(MafiaBar::Engine::Graphics::Graphics& graphics, float Width, float Height);
-				void Bind(MafiaBar::Engine::Graphics::Graphics& graphics) override;
+				Viewport();
+				Viewport(float Width, float Height);
+				void Bind() override;
 				/// <summary>
 				///  Replaces the old Viewport with the new one.
 				/// </summary>
-				void Replace(Graphics& Graphics, const D3D11_VIEWPORT& Viewport);
+				void Replace(const D3D11_VIEWPORT& Viewport);
 			public:
 				D3D11_VIEWPORT GetViewport() const;
 			private:

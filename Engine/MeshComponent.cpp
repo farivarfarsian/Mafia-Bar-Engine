@@ -1,28 +1,45 @@
 #include "MeshComponent.h"
 
-inline void MafiaBar::Engine::MeshComponent::Initialize(const MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>& Vertices, const MafiaBar::SDK::Vector<unsigned short>& Indices, Material* Material)
+MafiaBar::Engine::MeshComponent::~MeshComponent()
 {
-	Mesh->Initialize(Vertices, Indices, Material);
+	if (Mesh != nullptr)
+	{
+		delete Mesh;
+	}
 }
 
-inline void MafiaBar::Engine::MeshComponent::Initialize(const MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>& Vertices, const MafiaBar::SDK::Vector<unsigned short>& Indices)
+inline MafiaBar::Engine::MeshComponent::MeshComponent(const MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>& Vertices, const MafiaBar::SDK::Vector<unsigned short>& Indices, Material* Material)
 {
-	Mesh->Initialize(Vertices, Indices);
+	Mesh = new MafiaBar::Engine::Mesh(Vertices, Indices, Material);
 }
 
-inline void MafiaBar::Engine::MeshComponent::Initialize(MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>&& Vertices, MafiaBar::SDK::Vector<unsigned short>&& Indices)
+inline MafiaBar::Engine::MeshComponent::MeshComponent(const MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>& Vertices, const MafiaBar::SDK::Vector<unsigned short>& Indices)
 {
-	Mesh->Initialize(Vertices, Indices);
+	Mesh = new MafiaBar::Engine::Mesh(Vertices, Indices);
 }
 
-inline void MafiaBar::Engine::MeshComponent::Initialize(MafiaBar::Engine::Mesh* Mesh)
+inline MafiaBar::Engine::MeshComponent::MeshComponent(MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>&& Vertices, MafiaBar::SDK::Vector<unsigned short>&& Indices)
+{
+	Mesh = new MafiaBar::Engine::Mesh(std::move(Vertices), std::move(Indices));
+}
+
+inline MafiaBar::Engine::MeshComponent::MeshComponent(MafiaBar::Engine::Mesh* Mesh)
 {
 	this->Mesh = Mesh;
 }
 
-inline void MafiaBar::Engine::MeshComponent::InitializeFromFile(const char* MeshPath)
+inline MafiaBar::Engine::MeshComponent::MeshComponent(const char* MeshPath)
 {
-	Mesh->InitializeFromFile(MeshPath);
+	Mesh = new MafiaBar::Engine::Mesh(MeshPath);
+}
+
+void MafiaBar::Engine::MeshComponent::Run()
+{
+	if (Mesh != nullptr)
+	{
+		Mesh->GetVertexBuffer()->Bind();
+		Mesh->GetIndexBuffer()->Bind();
+	}
 }
 
 const char* MafiaBar::Engine::MeshComponent::GetName() const

@@ -12,17 +12,19 @@ namespace MafiaBar
 
 			public:
 				Pipeline() = default;
-				~Pipeline();
+				~Pipeline() = default;
 				Pipeline(Pipeline& Pipeline) = delete;
 				Pipeline& operator=(const Pipeline&) = delete;
-				void BindThePipline(Graphics& Graphics);
-				void AddBindable(Bindable* Bind);
+				void BindThePipline();
+				void AddBindable(const std::shared_ptr<Bindable>& Bind);
+				void AddBindable(std::shared_ptr<Bindable>&& Bind);
 				static constexpr bool IsStaticBindablesInitialized();
-				static void AddStaticBindable(Bindable* Bind);
-				static void BindTheStaticPipline(Graphics& Graphics);
+				static void AddStaticBindable(const std::shared_ptr<Bindable>& Bind);
+				static void AddStaticBindable(std::shared_ptr<Bindable>&& Bind);
+				static void BindTheStaticPipline();
 			private:
-				MafiaBar::SDK::Vector<Bindable*> Bindables;
-				static MafiaBar::SDK::Vector<Bindable*> StaticBindables;
+				MafiaBar::SDK::Vector<std::shared_ptr<Bindable>> Bindables;
+				static MafiaBar::SDK::Vector<std::shared_ptr<Bindable>> StaticBindables;
 			};
 		}
 	}

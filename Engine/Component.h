@@ -1,4 +1,5 @@
 #pragma once
+#include "Graphics.h"
 #include "def.h"
 #include <DirectXMath.h>
 
@@ -13,6 +14,7 @@ namespace MafiaBar
 		{
 		public:
 			Component();
+			virtual void Run(); //Some Components have Bindable classes which they need to be run per frame and call the Bind method, so Run is a virtual method for the compoents that hold the Bindable classes to call bind method in it.
 			virtual const char* GetName() const;
 			virtual ~Component();
 		};

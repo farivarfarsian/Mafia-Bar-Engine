@@ -29,19 +29,16 @@ namespace MafiaBar
 			void SetSceneClearColor(const float ClearRenderColor[4]);
 			void SetSceneClearColor(float R, float G, float B, float A);
 			void SetSceneProjection(const DirectX::FXMMATRIX& Projection);
-			void SetSceneViewport(const D3D11_VIEWPORT& Viewport);
 		public: //Getters
 			DirectX::XMMATRIX GetSceneProjection() const;
-			D3D11_VIEWPORT GetSceneViewport() const;
 			const float* GetSceneClearColor() const;
 			float GetDeltaTime() const;
 		private:
 			DirectX::XMMATRIX m_SceneProjection;
-			D3D11_VIEWPORT m_SceneViewport;
 			float m_SceneClearColor[4] = {0.0f, 0.0f, 0.0f, 1.0f};
 			float m_DeltaTime = 1.0f / 60.0f;
 			MafiaBar::Engine::Graphics::Graphics* m_Graphics;
 			std::unordered_map<UUID, std::shared_ptr<Entity>> Entities;
-		}; //TODO: For Entities Use the Custom Smart Pointer Type, Implementing the use of the Scene Viewport.
+		}; //TODO: For Entities Use the Custom Smart Pointer Type.
 	}
 }

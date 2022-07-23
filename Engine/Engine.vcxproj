@@ -151,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Bindable.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CPUPerformance.cpp" />
     <ClCompile Include="Engine.cpp" />

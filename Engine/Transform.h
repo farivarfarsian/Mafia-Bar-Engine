@@ -20,6 +20,7 @@ namespace MafiaBar
 			void SetPosition(float X, float Y, float Z);
 			void SetScale(float X, float Y, float Z);
 			void SetRotation(float X, float Y, float Z);
+			void Run() override;
 		public:
 			DirectX::XMFLOAT3 GetPosition() const;
 			DirectX::XMFLOAT3 GetScale() const;

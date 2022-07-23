@@ -9,7 +9,6 @@ void MafiaBar::Engine::Scene::Initialize(MafiaBar::Engine::Graphics::Graphics* G
 	}
 	m_Graphics = Graphics;
 
-	m_SceneViewport = { 0.0f, 0.0f, m_Graphics->GetWidth(), m_Graphics->GetHeight(), 0.0f, 1.0f };
 	m_SceneProjection = DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f);
 }
 
@@ -38,16 +37,6 @@ void MafiaBar::Engine::Scene::SetSceneClearColor(float R, float G, float B, floa
 void MafiaBar::Engine::Scene::SetSceneProjection(const DirectX::FXMMATRIX& Projection) 
 { 
 	m_SceneProjection = Projection; 
-}
-
-void MafiaBar::Engine::Scene::SetSceneViewport(const D3D11_VIEWPORT& Viewport)
-{
-	m_SceneViewport.TopLeftX = Viewport.TopLeftX;
-	m_SceneViewport.TopLeftY = Viewport.TopLeftY;
-	m_SceneViewport.Width = Viewport.Width;
-	m_SceneViewport.Height = Viewport.Height;
-	m_SceneViewport.MinDepth = Viewport.MinDepth;
-	m_SceneViewport.MaxDepth = Viewport.MaxDepth;
 }
 
 void MafiaBar::Engine::Scene::NewFrame()
@@ -97,11 +86,6 @@ MafiaBar::Engine::Entity* MafiaBar::Engine::Scene::GetEntity(EntityID EntityID)
 DirectX::XMMATRIX MafiaBar::Engine::Scene::GetSceneProjection() const 
 { 
 	return m_SceneProjection; 
-}
-
-D3D11_VIEWPORT MafiaBar::Engine::Scene::GetSceneViewport() const
-{
-	return m_SceneViewport;
 }
 
 const float* MafiaBar::Engine::Scene::GetSceneClearColor() const

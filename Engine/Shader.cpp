@@ -1,16 +1,16 @@
 #include "Shader.h"
 
-MafiaBar::Engine::Graphics::Shader::Shader(MafiaBar::Engine::Graphics::Graphics& graphics, const std::wstring& ShaderPathName, ShaderType shadertype)
+MafiaBar::Engine::Graphics::Shader::Shader(const std::wstring& ShaderPathName, ShaderType shadertype)
 	: Path(ShaderPathName.c_str())
 {
 	switch (shadertype)
 	{
 	case ShaderType::VertexShader:
-		if (ReadFile(ShaderPathName) == true) { MB_EXCEPTION(graphics.GetDevice()->CreateVertexShader(ShaderBlob->GetBufferPointer(), ShaderBlob->GetBufferSize(), nullptr, &mVertexShader)); }
+		if (ReadFile(ShaderPathName) == true) { MB_EXCEPTION(Graphics->GetDevice()->CreateVertexShader(ShaderBlob->GetBufferPointer(), ShaderBlob->GetBufferSize(), nullptr, &mVertexShader)); }
 		else { Logger::Message("Mafia Bar Engine: Shader Class: Error", "Shader Class: Failed to read the Vertex Shader to Blob", MB_ICONERROR); }
 		break;
 	case ShaderType::PixelShader:
-		if (ReadFile(ShaderPathName) == true) { MB_EXCEPTION(graphics.GetDevice()->CreatePixelShader(ShaderBlob->GetBufferPointer(), ShaderBlob->GetBufferSize(), nullptr, &mPixelShader)); }
+		if (ReadFile(ShaderPathName) == true) { MB_EXCEPTION(Graphics->GetDevice()->CreatePixelShader(ShaderBlob->GetBufferPointer(), ShaderBlob->GetBufferSize(), nullptr, &mPixelShader)); }
 		else { Logger::Message("Mafia Bar Engine: Shader Class: Error", "Shader Class: Failed to read the Pixel Shader to Blob", MB_ICONERROR); }
 		break;
 	case ShaderType::GeometryShader:
@@ -35,13 +35,13 @@ bool MafiaBar::Engine::Graphics::Shader::ReadFile(const std::wstring& ShaderPath
 	else { return true; }
 }
 
-MafiaBar::Engine::Graphics::VertexShader::VertexShader(MafiaBar::Engine::Graphics::Graphics& graphics, const std::wstring& VertexShaderPathName)
-	: Shader(graphics, VertexShaderPathName, ShaderType::VertexShader)
+MafiaBar::Engine::Graphics::VertexShader::VertexShader(const std::wstring& VertexShaderPathName)
+	: Shader(VertexShaderPathName, ShaderType::VertexShader)
 {}
 
-void MafiaBar::Engine::Graphics::VertexShader::Bind(MafiaBar::Engine::Graphics::Graphics& graphics) { graphics.GetContext()->VSSetShader(mVertexShader.Get(), nullptr, 0u); }
+void MafiaBar::Engine::Graphics::VertexShader::Bind() { Graphics->GetContext()->VSSetShader(mVertexShader.Get(), nullptr, 0u); }
 
-void MafiaBar::Engine::Graphics::VertexShader::Replace(Graphics& Graphics, const std::wstring& VertexShaderPathName)
+void MafiaBar::Engine::Graphics::VertexShader::Replace(const std::wstring& VertexShaderPathName)
 {
 	//Releasing the already existing data from the buffer and shader blob.
 	mVertexShader->Release();
@@ -51,7 +51,7 @@ void MafiaBar::Engine::Graphics::VertexShader::Replace(Graphics& Graphics, const
 	if (ReadFile(VertexShaderPathName) == true)
 	{
 		//Creating the new VertexShaderBuffer
-		DebugCode DEBUGCODE = Graphics.GetDevice()->CreateVertexShader(ShaderBlob->GetBufferPointer(), ShaderBlob->GetBufferSize(), nullptr, mVertexShader.GetAddressOf());
+		DebugCode DEBUGCODE = Graphics->GetDevice()->CreateVertexShader(ShaderBlob->GetBufferPointer(), ShaderBlob->GetBufferSize(), nullptr, mVertexShader.GetAddressOf());
 		MB_EXCEPTION(DEBUGCODE);
 	}
 
@@ -61,13 +61,13 @@ void MafiaBar::Engine::Graphics::VertexShader::Replace(Graphics& Graphics, const
 
 ID3D11VertexShader* MafiaBar::Engine::Graphics::VertexShader::GetVertexShader() const { return mVertexShader.Get(); }
 
-MafiaBar::Engine::Graphics::PixelShader::PixelShader(MafiaBar::Engine::Graphics::Graphics& graphics, const std::wstring& PixelShaderPathName)
-	: Shader(graphics, PixelShaderPathName, ShaderType::PixelShader)
+MafiaBar::Engine::Graphics::PixelShader::PixelShader(const std::wstring& PixelShaderPathName)
+	: Shader(PixelShaderPathName, ShaderType::PixelShader)
 {}
 
-void MafiaBar::Engine::Graphics::PixelShader::Bind(MafiaBar::Engine::Graphics::Graphics & graphics) { graphics.GetContext()->PSSetShader(mPixelShader.Get(), nullptr, 0u); }
+void MafiaBar::Engine::Graphics::PixelShader::Bind() { Graphics->GetContext()->PSSetShader(mPixelShader.Get(), nullptr, 0u); }
 
-void MafiaBar::Engine::Graphics::PixelShader::Replace(Graphics& Graphics, const std::wstring& PixelShaderPathName)
+void MafiaBar::Engine::Graphics::PixelShader::Replace(const std::wstring& PixelShaderPathName)
 {
 	//Releasing the already existing data from the buffer and shader blob.
 	mVertexShader->Release();
@@ -77,7 +77,7 @@ void MafiaBar::Engine::Graphics::PixelShader::Replace(Graphics& Graphics, const 
 	if (ReadFile(PixelShaderPathName) == true)
 	{
 		//Creating the new PixelShaderBuffer
-		DebugCode DEBUGCODE = Graphics.GetDevice()->CreatePixelShader(ShaderBlob->GetBufferPointer(), ShaderBlob->GetBufferSize(), nullptr, mPixelShader.GetAddressOf());
+		DebugCode DEBUGCODE = Graphics->GetDevice()->CreatePixelShader(ShaderBlob->GetBufferPointer(), ShaderBlob->GetBufferSize(), nullptr, mPixelShader.GetAddressOf());
 		MB_EXCEPTION(DEBUGCODE);
 	}
 

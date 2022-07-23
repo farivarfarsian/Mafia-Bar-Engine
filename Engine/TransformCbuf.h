@@ -15,19 +15,19 @@ namespace MafiaBar
 			class TransformCbuf : public MafiaBar::Engine::Graphics::Bindable
 			{
 			public:
-				TransformCbuf(MafiaBar::Engine::Graphics::Graphics& graphics, const MafiaBar::Engine::Entity& object) : vertexconstantbuffer(graphics), object(object) {}
-				void Bind(MafiaBar::Engine::Graphics::Graphics& graphics) override
+				TransformCbuf(Entity* Entity) : vertexconstantbuffer(), Entity(Entity) {}
+				void Bind() override
 				{
-					vertexconstantbuffer.Update(graphics,
+					vertexconstantbuffer.Update(
 						DirectX::XMMatrixTranspose(
-							object.GetComponent<TransformComponent>()->GetTransform() * MafiaBar::Engine::Engine::Get().GetScene().GetSceneProjection()
+							Entity->GetComponent<TransformComponent>()->GetTransform() * MafiaBar::Engine::Engine::Get().GetScene().GetSceneProjection()
 						)
 					);
-					vertexconstantbuffer.Bind(graphics);			
+					vertexconstantbuffer.Bind();			
 				}
 			private:
 				MafiaBar::Engine::Graphics::VertexConstantBuffer<DirectX::XMMATRIX> vertexconstantbuffer;
-				const MafiaBar::Engine::Entity& object;
+				MafiaBar::Engine::Entity* Entity;
 			};
 		}
 	}

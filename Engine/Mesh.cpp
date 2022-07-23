@@ -1,35 +1,40 @@
 #include "Mesh.h"
 
-void MafiaBar::Engine::Mesh::Initialize(const MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>& Vertices, const MafiaBar::SDK::Vector<unsigned short>& Indices)
+MafiaBar::Engine::Mesh::Mesh(const MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>& Vertices, const MafiaBar::SDK::Vector<unsigned short>& Indices) 
 {
-	mVertices = Vertices;
-	mIndices = Indices;
+	mVertexBuffer = std::make_unique<MafiaBar::Engine::Graphics::VertexBuffer>(Vertices);
+	mIndexBuffer = std::make_unique<MafiaBar::Engine::Graphics::IndexBuffer>(Indices);
 }
 
-void MafiaBar::Engine::Mesh::Initialize(const MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>& Vertices, const MafiaBar::SDK::Vector<unsigned short>& Indices, Material* Material)
+MafiaBar::Engine::Mesh::Mesh(MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>&& Vertices, MafiaBar::SDK::Vector<unsigned short>&& Indices)
 {
-	mVertices = Vertices;
-	mIndices = Indices;
-	mMaterial = Material;
+	mVertexBuffer = std::make_unique<MafiaBar::Engine::Graphics::VertexBuffer>(std::move(Vertices));
+	mIndexBuffer = std::make_unique<MafiaBar::Engine::Graphics::IndexBuffer>(std::move(Indices));
 }
 
-void MafiaBar::Engine::Mesh::Initialize(MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>&& Vertices, MafiaBar::SDK::Vector<unsigned short>&& Indices)
+MafiaBar::Engine::Mesh::Mesh(const MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>& Vertices, const MafiaBar::SDK::Vector<unsigned short>& Indices, Material* Material)
+	: mMaterial(Material)
 {
-	mVertices = std::move(Vertices);
-	mIndices = std::move(Indices);
+	mVertexBuffer = std::make_unique<MafiaBar::Engine::Graphics::VertexBuffer>(Vertices);
+	mIndexBuffer = std::make_unique<MafiaBar::Engine::Graphics::IndexBuffer>(Indices);
 }
 
-void MafiaBar::Engine::Mesh::InitializeFromFile(const char* MeshPath)
+MafiaBar::Engine::Mesh::Mesh(const char* MeshPath)
+	: mMeshPath(MeshPath)
 {
 	std::string MeshFileExtention = MafiaBar::Engine::filesystem::GetFileExtension(MeshPath);
 	
 	if (MeshFileExtention == "obj")
 	{
-		ReadObj(MeshPath);
+		ReadObj(MeshPath); 
+
+		//Creating Vertex And Index Buffers
 	}
 	else if (MeshFileExtention == "fbx")
 	{
 		ReadFBX(MeshPath);
+
+		//Creating Vertex And Index Buffers
 	}
 }
 
@@ -43,12 +48,17 @@ const char* MafiaBar::Engine::Mesh::GetMeshPath() const
 	return mMeshPath;
 }
 
-const MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex> MafiaBar::Engine::Mesh::GetVertices() const
+MafiaBar::Engine::Graphics::IndexBuffer* MafiaBar::Engine::Mesh::GetIndexBuffer() const
 {
-	return mVertices;
+	return mIndexBuffer.get();
 }
 
-const MafiaBar::SDK::Vector<unsigned short> MafiaBar::Engine::Mesh::GetIndices() const
+MafiaBar::Engine::Graphics::VertexBuffer* MafiaBar::Engine::Mesh::GetVertexBuffer() const
 {
-	return mIndices;
+	return mVertexBuffer.get();
+}
+
+inline const unsigned int MafiaBar::Engine::Mesh::GetIndicesCount() const
+{
+	return mIndexBuffer->GetIndiciesCount();
 }

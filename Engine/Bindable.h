@@ -1,5 +1,4 @@
 #pragma once
-#include "Exception.h"
 #include "Graphics.h"
 
 namespace MafiaBar
@@ -11,8 +10,11 @@ namespace MafiaBar
 			class MB_ENGINE_API Bindable
 			{
 			public:
-				virtual void Bind(MafiaBar::Engine::Graphics::Graphics& graphics) = 0;
+				Bindable();
+				virtual void Bind() = 0;
 				virtual ~Bindable() = default;
+			protected:
+				Graphics* Graphics;
 			};
 		}
 	}

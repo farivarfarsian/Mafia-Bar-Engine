@@ -120,6 +120,11 @@ void MafiaBar::Engine::TransformComponent::SetRotation(float X, float Y, float Z
 	Rotation.z = Z;
 }
 
+void MafiaBar::Engine::TransformComponent::Run()
+{
+	//TransformComponent doesn't hold a Bindable so It doesn't need to do anything in the Run Method.
+}
+
 DirectX::XMFLOAT3 MafiaBar::Engine::TransformComponent::GetPosition() const
 {
 	return Position;
