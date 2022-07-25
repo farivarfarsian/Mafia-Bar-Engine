@@ -11,8 +11,14 @@ class Cube : public MafiaBar::Engine::Entity
 public:
 	Cube()
 	{
-		Assign<MafiaBar::Engine::TransformComponent>(*new MafiaBar::Engine::TransformComponent({ 0.0f, 0.0f, 5.0f}, { 1.0f, 1.0f, 1.0f}, { 0.0f, 0.0f, 0.0f}));
-		Assign<MafiaBar::Engine::MeshComponent>(*new MafiaBar::Engine::MeshComponent(
+		Assign<MafiaBar::Engine::TransformComponent>(std::make_shared<MafiaBar::Engine::TransformComponent>(
+			DirectX::XMFLOAT3{ 0.0f, 0.0f, 5.0f },
+			DirectX::XMFLOAT3{ 1.0f, 1.0f, 1.0f },
+			DirectX::XMFLOAT3{ 0.0f, 0.0f, 0.0f }
+		));
+		Assign<MafiaBar::Engine::MeshComponent>(std::make_shared<MafiaBar::Engine::MeshComponent>(
+			std::initializer_list<MafiaBar::Graphics::Vertex>
+			(
 				{//Vertices
 					{ -1.0f, -1.0f, -1.0f },
 					{ 1.0f, -1.0f, -1.0f },
@@ -20,10 +26,13 @@ public:
 					{ 1.0f, 1.0f, -1.0f },
 					{ -1.0f, -1.0f, 1.0f },
 					{ 1.0f, -1.0f, 1.0f },
-					{ -1.0f, 1.0f, 1.0f },
+					{-1.0f, 1.0f, 1.0f },
 					{ 1.0f, 1.0f, 1.0f }
 				}
+			)
 			,
+			std::initializer_list<unsigned short>
+			(
 				{ //Indices
 					0,2,1, 2,3,1,
 					1,3,5, 3,7,5,
@@ -32,6 +41,7 @@ public:
 					0,4,2, 2,4,6,
 					0,1,4, 1,5,4
 				}
+			)
 		));
 
 		auto vertexshader = std::make_shared<MafiaBar::Engine::Graphics::VertexShader>(L"Shaders/VertexShader.cso");
@@ -82,7 +92,7 @@ public:
 	{
 		for (auto& Component : Components)
 		{
-			static_cast<MafiaBar::Engine::Component*>(Component)->Run();
+			Component->Run();
 		}
 
 		pipline.BindThePipline();

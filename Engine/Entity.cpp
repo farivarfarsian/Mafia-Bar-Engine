@@ -14,11 +14,11 @@ void MafiaBar::Engine::Entity::Draw(Graphics::Graphics& Graphics)
 {
 	for (auto& Component : Components)
 	{
-		static_cast<MafiaBar::Engine::Component*>(Component)->Run();
+		Component->Run();
 	}
 }
 
-MafiaBar::SDK::Vector<void*> MafiaBar::Engine::Entity::GetComponents() const
+MafiaBar::SDK::Vector<std::shared_ptr<MafiaBar::Engine::Component>> MafiaBar::Engine::Entity::GetComponents() const
 {
 	return Components;
 }
