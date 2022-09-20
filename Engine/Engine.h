@@ -53,13 +53,14 @@ namespace MafiaBar
 	namespace Engine
 	{
 		class MB_ENGINE_API Engine final
-		{			
+		{
 			static std::mutex mutex;
 			Engine() = default;
-			~Engine() = default;
 		public:
+			~Engine() = default;
 			Engine(Engine& Engine) = delete;
 			Engine& operator=(const Engine&) = delete;
+			void Shutdown();
 			void CreateGraphicsAndScene(HWND hwnd, bool Fullscreen, bool Vsync, int Width = 0, int Height = 0);
 		public:
 			static Engine& Get();
@@ -75,9 +76,9 @@ namespace MafiaBar
 			MafiaBar::Mouse Mouse;
 			MafiaBar::Engine::Logger Log;
 			MafiaBar::Engine::Exception Exception;
+			MafiaBar::Engine::Scene Scene;
 			MafiaBar::Engine::UI UI;
 			MafiaBar::Engine::Graphics::Graphics Graphics;
-			MafiaBar::Engine::Scene Scene;
 		};
 	}
 }

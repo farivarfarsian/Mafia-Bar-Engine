@@ -6,7 +6,6 @@
 
 //Implementing DirectX libraries
 #include <d3d11.h>
-
 #pragma comment(lib, "d3d11.lib")
 
 #include <d3d9.h> 
@@ -23,6 +22,10 @@
 
 #include <dxgi.h>
 #pragma comment(lib, "dxgi.lib")
+
+#include <dxgidebug.h>
+#include <dxgi1_3.h>
+#pragma comment(lib, "dxguid.lib")
 
 //Implementing DirectXTK library
 #include "DirectXTK/SpriteBatch.h"

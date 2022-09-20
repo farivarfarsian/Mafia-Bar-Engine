@@ -25,7 +25,6 @@ namespace MafiaBar
 				std::vector<MafiaBar::Graphics::Vertex> GetVertices() const;
 			private:
 				Microsoft::WRL::ComPtr<ID3D11Buffer> m_VertexBuffer;
-				MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex> mVertices;
 				unsigned int VertexBufferStride;
 				unsigned int Offset = 0u;
 			};

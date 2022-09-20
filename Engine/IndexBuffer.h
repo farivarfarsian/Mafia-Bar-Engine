@@ -10,7 +10,7 @@ namespace MafiaBar
 			class MB_ENGINE_API IndexBuffer : public Bindable
 			{
 			public:		
-				IndexBuffer( const MafiaBar::SDK::Vector<unsigned short>& indices);
+				IndexBuffer(const MafiaBar::SDK::Vector<unsigned short>& indices);
 				void Bind() override;
 				/// <summary>
 				///  Replaces the Passed IndexBuffer Instance with the already existing one, It replaces the IndexBuffer, Indices, Offset and Indices Count.

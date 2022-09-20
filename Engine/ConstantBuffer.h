@@ -25,6 +25,7 @@ namespace MafiaBar
 					D3D11_SUBRESOURCE_DATA ConstantSUBRESOURCE_DATA{};
 					ConstantSUBRESOURCE_DATA.pSysMem = &ConstantType;
 					MB_EXCEPTION(Graphics->GetDevice()->CreateBuffer(&ConstantBufferDECRIBTOR, &ConstantSUBRESOURCE_DATA, &mConstantBuffer));
+					SetDebugCOMObjectName(mConstantBuffer.Get(), "Constant Buffer From MafiaBar::Engine::Graphics::ConstantBuffer class");
 				}
 				ConstantBuffer()
 				{
@@ -36,6 +37,7 @@ namespace MafiaBar
 					ConstantBufferDECRIBTOR.ByteWidth = sizeof(ConstantTemplateType);
 					ConstantBufferDECRIBTOR.StructureByteStride = 0u;
 					MB_EXCEPTION(Graphics->GetDevice()->CreateBuffer(&ConstantBufferDECRIBTOR, nullptr, &mConstantBuffer));
+					SetDebugCOMObjectName(mConstantBuffer.Get(), "Constant Buffer From MafiaBar::Engine::Graphics::ConstantBuffer class (Default Constructor)");
 				}
 				void Update(const ConstantTemplateType& ConstantType)
 				{

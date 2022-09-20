@@ -9,5 +9,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
 	Application.Present();
 
+	MafiaBar::Engine::Engine::Get().Shutdown(); //The "Engine" Singleton for some reason isn't releasing itself and its objects, So we have to do it manually. PLEASE FIX THIS
+
 	return App::MB_SYS_CODES::SUCCEEDED;
 }

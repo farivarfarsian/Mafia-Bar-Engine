@@ -61,6 +61,20 @@ namespace MafiaBar
 				//Get GraphicCard informations with a pair, first element is description and the second one is the size of its memory
 				constexpr std::pair<const char*, unsigned long> GetGraphicCardInfo() const;
 			private:
+				struct ReportLiveObjectGuard
+				{
+					~ReportLiveObjectGuard()
+					{
+					#ifdef _DEBUG
+						Microsoft::WRL::ComPtr<IDXGIDebug1> Debug;
+						if(SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(&Debug))))
+						{
+							Debug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_IGNORE_INTERNAL);
+						}
+					#endif
+					}
+				} MemoryGuard;
+			private:
 				Microsoft::WRL::ComPtr<ID3D11Device> m_Device = nullptr;
 				Microsoft::WRL::ComPtr<IDXGISwapChain> m_Swap = nullptr;
 				Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_Context = nullptr;
@@ -71,9 +85,9 @@ namespace MafiaBar
 				Microsoft::WRL::ComPtr<ID3D11BlendState> m_BlendState = nullptr;
 				std::unique_ptr<DirectX::SpriteBatch> m_SpriteBatch = nullptr;
 				std::unique_ptr<DirectX::CommonStates> m_CommonStates = nullptr;
-				float Width, Height;
+				float Width = 0.0f, Height = 0.0f;
 				bool m_Vsync = false;
-				char m_GraphicCardDescription[MAX_PATH];
+				char m_GraphicCardDescription[MAX_PATH]{};
 				unsigned long m_GraphicCardMemorySize = 0;
 				unsigned int Numerator = 0;
 				unsigned int Denominator = 0;
@@ -82,3 +96,10 @@ namespace MafiaBar
 	}
 }
 
+template<UINT TNameLength>
+inline void SetDebugCOMObjectName(_In_ ID3D11DeviceChild* resource, _In_z_ const char(&name)[TNameLength])
+{
+#if defined(_DEBUG) || defined(PROFILE)
+	resource->SetPrivateData(WKPDID_D3DDebugObjectName, TNameLength - 1, name);
+#endif
+}

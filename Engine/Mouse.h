@@ -48,6 +48,7 @@ namespace MafiaBar
 		};
 	public:
 		Mouse() = default;
+		~Mouse() = default;
 		Mouse& operator= (const Mouse&) = delete;
 		std::pair<int, int> GetPos() const;
 		int GetPosX() const;

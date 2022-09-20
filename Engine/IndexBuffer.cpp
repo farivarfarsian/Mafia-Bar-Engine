@@ -12,6 +12,7 @@ MafiaBar::Engine::Graphics::IndexBuffer::IndexBuffer(const MafiaBar::SDK::Vector
 	D3D11_SUBRESOURCE_DATA IndexSUBRESOURCE_DATA;
 	IndexSUBRESOURCE_DATA.pSysMem = indices.GetData();
 	MB_EXCEPTION(Graphics->GetDevice()->CreateBuffer(&IndexBufferDECRIBTOR, &IndexSUBRESOURCE_DATA, &m_IndexBuffer));
+	SetDebugCOMObjectName(m_IndexBuffer.Get(), "Index Buffer From MafiaBar::Engine::Graphics::IndexBuffer class");
 }
 
 void MafiaBar::Engine::Graphics::IndexBuffer::Bind() { Graphics->GetContext()->IASetIndexBuffer(m_IndexBuffer.Get(), DXGI_FORMAT_R16_UINT, Offset); }

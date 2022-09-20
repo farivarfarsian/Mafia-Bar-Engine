@@ -1,7 +1,7 @@
 #include "VertexBuffer.h"
 
 MafiaBar::Engine::Graphics::VertexBuffer::VertexBuffer(const MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>& Vertices)
-	: VertexBufferStride(sizeof(MafiaBar::Graphics::Vertex)), mVertices(Vertices)
+	: VertexBufferStride(sizeof(MafiaBar::Graphics::Vertex))
 {
 	D3D11_BUFFER_DESC VertexBufferDECRIBTOR = {};
 	VertexBufferDECRIBTOR.Usage = D3D11_USAGE_DEFAULT;
@@ -13,10 +13,11 @@ MafiaBar::Engine::Graphics::VertexBuffer::VertexBuffer(const MafiaBar::SDK::Vect
 	D3D11_SUBRESOURCE_DATA VertexSUBRESOURCE_DATA;
 	VertexSUBRESOURCE_DATA.pSysMem = Vertices.GetData();
 	MB_EXCEPTION(Graphics->GetDevice()->CreateBuffer(&VertexBufferDECRIBTOR, &VertexSUBRESOURCE_DATA, &m_VertexBuffer));
+	SetDebugCOMObjectName(m_VertexBuffer.Get(), "Vertex Buffer From MafiaBar::Engine::Graphics::VertexBuffer class");
 }
 
 MafiaBar::Engine::Graphics::VertexBuffer::VertexBuffer(MafiaBar::SDK::Vector<MafiaBar::Graphics::Vertex>&& Vertices)
-	: VertexBufferStride(sizeof(MafiaBar::Graphics::Vertex)), mVertices(std::move(Vertices))
+	: VertexBufferStride(sizeof(MafiaBar::Graphics::Vertex))
 {
 	D3D11_BUFFER_DESC VertexBufferDECRIBTOR = {};
 	VertexBufferDECRIBTOR.Usage = D3D11_USAGE_DEFAULT;
@@ -28,6 +29,7 @@ MafiaBar::Engine::Graphics::VertexBuffer::VertexBuffer(MafiaBar::SDK::Vector<Maf
 	D3D11_SUBRESOURCE_DATA VertexSUBRESOURCE_DATA;
 	VertexSUBRESOURCE_DATA.pSysMem = Vertices.GetData();
 	MB_EXCEPTION(Graphics->GetDevice()->CreateBuffer(&VertexBufferDECRIBTOR, &VertexSUBRESOURCE_DATA, &m_VertexBuffer));
+	SetDebugCOMObjectName(m_VertexBuffer.Get(), "Vertex Buffer From MafiaBar::Engine::Graphics::VertexBuffer class");
 }
 
 void MafiaBar::Engine::Graphics::VertexBuffer::Bind() { Graphics->GetContext()->IASetVertexBuffers(0u, 1u, m_VertexBuffer.GetAddressOf(), &VertexBufferStride, &Offset); }
