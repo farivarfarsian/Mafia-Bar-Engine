@@ -69,7 +69,7 @@ namespace MafiaBar
 						Microsoft::WRL::ComPtr<IDXGIDebug1> Debug;
 						if(SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(&Debug))))
 						{
-							Debug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_IGNORE_INTERNAL);
+							Debug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_DETAIL);
 						}
 					#endif
 					}
