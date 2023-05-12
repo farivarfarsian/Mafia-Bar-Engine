@@ -4,6 +4,15 @@
 #include "Logger.h"
 #include "Exception.h"
 
+typedef  unsigned int MessageBoxFlag;
+enum MessageBoxFlags_
+{
+	OK_BUTTON = 0x313f,
+	CANCEL_BUTTON = 0x0eb0,
+	CLOSE_BUTTON = 0xf26d
+};
+DEFINE_ENUM_FLAG_OPERATORS(MessageBoxFlags_);
+
 namespace MafiaBar
 {
 	namespace Utilities
@@ -39,6 +48,10 @@ namespace MafiaBar
 		MB_ENGINE_API bool IsWindows11OrGreater();
 
 		MB_ENGINE_API void TakeScreenshot(IDXGISwapChain* SwapChain, ID3D11DeviceContext* DeviceContext, HWND WindowHandle = NULL);
+
+		#undef MessageBox //Undefining the Windows API macro.
+		MB_ENGINE_API MessageBoxFlag MessageBox(const char* Caption, const char* Text, MessageBoxFlag Flags, ImGuiWindowFlags ImGuiFlags = ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings);
+		//ToDo: 1- Optimization of this function, 2- make it work with all the combination of dialogs e.g( OK_BUTTON | CLOSE_BUTTON, or , CLOSE_BUTTON | CANCEL_BUTTON )
 
 		enum WindowTransparency
 		{

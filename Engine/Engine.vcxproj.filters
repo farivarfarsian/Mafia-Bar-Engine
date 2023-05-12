@@ -97,9 +97,6 @@
     <Filter Include="Common">
       <UniqueIdentifier>{d5bf489e-9f6b-4ecd-b0b3-f69493e9b77b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MemLeakDetect">
-      <UniqueIdentifier>{fa72b946-0e8c-4313-9fbe-bbb04a428a4b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger.h">

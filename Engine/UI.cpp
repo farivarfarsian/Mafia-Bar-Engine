@@ -25,6 +25,7 @@ void MafiaBar::Engine::UI::Initialize(HWND Handle, ID3D11Device* Device, ID3D11D
 	IO.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	IO.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 	IO.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	IO.IniFilename = NULL; //ImGui config file for now 
 
 	if (LightMode == true)
 	{

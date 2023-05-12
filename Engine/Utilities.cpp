@@ -146,3 +146,74 @@ MB_ENGINE_API void MafiaBar::Utilities::TakeScreenshot(IDXGISwapChain* SwapChain
         BackBuffer = 0;
     }
 }
+
+MB_ENGINE_API MessageBoxFlag MafiaBar::Utilities::MessageBox(const char* Caption, const char* Text, MessageBoxFlag Flags, ImGuiWindowFlags ImGuiFlags)
+{
+    //Run the ImGui::Popup Function only once
+    static bool FunctionOnce = [Caption]()
+    {
+        ImGui::OpenPopup(Caption, ImGuiPopupFlags_::ImGuiPopupFlags_NoOpenOverExistingPopup);
+        return true;
+    } ();
+
+    bool Open = true;
+    if (ImGui::BeginPopupModal(Caption, &Open, ImGuiFlags))
+    {
+        ImGui::Text(Text);
+        if (Flags == OK_BUTTON)
+        {
+            if (ImGui::Button("OK"))
+            {
+                ImGui::CloseCurrentPopup();
+                ImGui::EndPopup();
+                return OK_BUTTON;
+            }
+        }
+        else if (Flags == CANCEL_BUTTON)
+        {
+            if (ImGui::Button("Cancel"))
+            {
+                ImGui::CloseCurrentPopup();
+                ImGui::EndPopup();
+                return CANCEL_BUTTON;
+            }
+        }
+        else if (Flags == CLOSE_BUTTON)
+        {
+            if (ImGui::Button("Close"))
+            {
+                ImGui::CloseCurrentPopup();
+                ImGui::EndPopup();
+                return CLOSE_BUTTON;
+            }
+        }
+        else if (Flags && (OK_BUTTON | CLOSE_BUTTON | CANCEL_BUTTON))
+        {
+            if (ImGui::Button("OK"))
+            {
+                ImGui::CloseCurrentPopup();
+                ImGui::EndPopup();
+                return OK_BUTTON;
+            }
+            if (ImGui::Button("Cancel"))
+            {
+                ImGui::CloseCurrentPopup();
+                ImGui::EndPopup();
+                return CANCEL_BUTTON;
+            }
+            if (ImGui::Button("Close"))
+            {
+                ImGui::CloseCurrentPopup();
+                ImGui::EndPopup();
+                return CLOSE_BUTTON;
+            }
+            else
+            {
+                ImGui::EndPopup();
+                return false;
+            }
+        }
+        ImGui::EndPopup();
+    }
+
+}

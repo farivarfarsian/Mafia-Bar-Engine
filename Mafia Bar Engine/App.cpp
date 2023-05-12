@@ -1,12 +1,11 @@
 #include "App.h"
 #include "Cube.h" //Cube Entity
+#include <Utilities.h>
+#include <iostream>
 
 void App::Setup()
 {
-	for (int i = 0; i < 200; i++)
-	{
-		MafiaBar::Engine::Engine::Get().GetScene().AddEntity(std::make_shared<Cube>());
-	}
+	MafiaBar::Engine::Engine::Get().GetScene().AddEntity(std::make_shared<Cube>());
 }
 
 void App::Frame()
